@@ -1,0 +1,678 @@
+<!DOCTYPE html><html class="scroll-smooth" lang="es" style="min-height: 100vh;"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Galería — Instituto Everest León</title>
+<!-- Tipografías y Fuentes -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400;1,600&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              red: "#DA474A",
+              blue: "#557EBD",
+              darkBlue: "#546FAC",
+              navy: "#0A1128",
+              green: "#2E9F6E",
+              yellow: "#E5A93C",
+              surface: "#F8FAFC",
+              card: "#FFFFFF",
+              border: "#E2E8F0"
+            }
+          },
+          fontFamily: {
+            display: ['"Playfair Display"', 'Georgia', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif']
+          }
+        }
+      }
+    };
+  </script>
+<style>
+    @keyframes gentle-float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-5px); }
+    }
+    .animate-float {
+      animation: gentle-float 4s ease-in-out infinite;
+    }
+    .glass-header {
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+    }
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    /* Clases de transición precisa para cada celda independiente */
+    .slot-item {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      will-change: transform;
+      transition: transform 550ms cubic-bezier(0.25, 1, 0.5, 1);
+    }
+  </style>
+<meta content="web_standard" name="shell-type">
+</head>
+<body class="bg-brand-surface font-sans text-slate-800 antialiased min-h-screen selection:bg-brand-blue/20 selection:text-brand-darkBlue" style="min-height: 100vh; height: auto; overflow-y: auto;">
+<!-- ================= NAVBAR FLOTANTE GLASS ================= -->
+<header class="fixed top-4 left-0 right-0 mx-auto w-[94%] max-w-[1280px] z-50 transition-all duration-300 glass-header shadow-[0_10px_30px_rgba(0,0,0,0.08)] rounded-2xl">
+<div class="h-20 max-w-[1280px] mx-auto px-6 sm:px-8 flex items-center justify-between gap-4">
+<!-- Logotipo Oficial Instituto Everest -->
+<a class="flex items-center gap-3 group" href="/">
+<div class="p-2 rounded-xl bg-white shadow-sm flex items-center justify-center border border-slate-100 group-hover:scale-105 transition-transform duration-200">
+<img alt="Instituto Everest León Logo" class="h-10 sm:h-12 w-auto object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBN4-Kn1BVdRrJW5NvWwJ7DfJbt36s2KjbErR4wM718s23hFhQU-W0-f_v49wjuHOSjuoS9FeFuEHtY_JIuW5pEjY3wJC7XAh0ZNu5dLXK-HpUe5yXDbGHlgs3prcYtkiwzwrejb8XVouglPW0X4O4jrow7vTomCBLjfk5ly18s0xIANtlvAcgWkoL7KSjsZttse__63_a35c4FTKPi8664SGbt3oPk2ZgGHiqteYVXqsEVxSn4f_2v">
+</div>
+<div class="flex flex-col">
+<span class="font-display font-bold text-slate-900 text-lg sm:text-xl tracking-tight leading-tight">Instituto Everest</span>
+<span class="text-xs font-semibold text-brand-darkBlue uppercase tracking-wider">Campus León</span>
+</div>
+</a>
+<!-- Enlaces de Navegación con Dropdowns -->
+<nav class="hidden lg:flex items-center gap-7">
+  <a class="text-sm font-medium text-slate-600 hover:text-brand-darkBlue transition-colors py-2" href="/">Inicio</a>
+  <div class="relative group py-2">
+    <button class="flex items-center gap-1 text-sm font-medium text-slate-600 group-hover:text-brand-darkBlue transition-colors focus:outline-none">
+      <span class="">Niveles educativos</span>
+      <span class="material-symbols-outlined text-[18px] transition-transform duration-200 group-hover:rotate-180">expand_more</span>
+    </button>
+    <div class="absolute left-0 top-full pt-2 w-52 opacity-0 translate-y-2 pointer-events-none group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto transition-all duration-200 z-50">
+      <div class="bg-white/95 backdrop-blur-md rounded-2xl p-2 shadow-2xl border border-slate-100 flex flex-col gap-1 text-slate-800">
+        <a class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-sm font-semibold text-slate-700 hover:text-brand-darkBlue hover:bg-slate-50 transition-colors" href="/maternal">
+          <span class="w-2.5 h-2.5 rounded-full bg-brand-yellow"></span>
+          <span class="">Maternal</span>
+        </a>
+        <a class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-sm font-semibold text-slate-700 hover:text-brand-darkBlue hover:bg-slate-50 transition-colors" href="/preescolar">
+          <span class="w-2.5 h-2.5 rounded-full bg-brand-blue"></span>
+          <span class="">Preescolar</span>
+        </a>
+        <a class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-sm font-semibold text-slate-700 hover:text-brand-darkBlue hover:bg-slate-50 transition-colors" href="/primaria">
+          <span class="w-2.5 h-2.5 rounded-full bg-brand-red"></span>
+          <span class="">Primaria</span>
+        </a>
+        <a class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-sm font-semibold text-slate-700 hover:text-brand-darkBlue hover:bg-slate-50 transition-colors" href="/#niveles-educativos">
+          <span class="material-symbols-outlined text-[18px] text-brand-darkBlue">schedule</span>
+          <span class="">Horario Extendido</span>
+        </a>
+      </div>
+    </div>
+  </div>
+  <a class="text-sm font-medium text-slate-600 hover:text-brand-darkBlue transition-colors py-2" href="/#footer-everest">Nuestro colegio</a>
+  <a class="text-sm font-medium text-slate-600 hover:text-brand-darkBlue transition-colors py-2" href="/galeria">Galería</a>
+  <a class="text-sm font-medium text-slate-600 hover:text-brand-darkBlue transition-colors py-2" href="/contacto">Contacto</a>
+</nav>
+<!-- Botón CTA Admisiones -->
+<div class="flex items-center gap-3">
+<a class="inline-flex items-center justify-center px-5 py-2.5 rounded-xl text-white font-semibold text-sm transition-all duration-300 shadow-md hover:shadow-lg hover:scale-105 active:scale-95" href="/contacto" style="background-color: #DA474A; box-shadow: rgba(218, 71, 74, 0.35) 0px 4px 14px;">
+<span class="">Admisiones</span>
+</a>
+</div>
+</div>
+</header>
+<!-- ================= MAIN CONTENT ================= -->
+<main class="w-full pt-28 pb-16">
+<!-- Contenedor casi a los extremos de pantalla con padding reducido para diseño panorámico inmersivo -->
+<div class="w-full max-w-[98%] xl:max-w-[1360px] mx-auto px-2 sm:px-4 md:px-5 pt-16">
+<!-- Encabezado de Galería & Filtros por categoría -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-5 px-1 sm:px-2 mb-10">
+<div>
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-blue/10 text-brand-darkBlue text-xs font-semibold tracking-wider uppercase mb-2">
+<span class="w-2 h-2 rounded-full bg-brand-darkBlue animate-pulse"></span>
+          Vida en Campus León
+        </div>
+<h1 class="text-5xl sm:text-6xl md:text-7xl font-bold tracking-tight text-slate-900 font-display">Galería</h1>
+<p class="text-slate-500 text-xs sm:text-sm mt-1 max-w-xl">Explora momentos significativos de nuestra comunidad escolar y actividades en Campus León.</p>
+</div>
+<!-- Barra horizontal estilizada de categorías con píldoras interactivas -->
+<div class="flex items-center gap-1.5 sm:gap-2 overflow-x-auto pb-1 no-scrollbar select-none" id="category-filters">
+<button class="category-btn px-4 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all duration-200 border border-slate-200 bg-white text-slate-600 hover:text-brand-darkBlue hover:border-brand-darkBlue/40 flex items-center gap-1.5 whitespace-nowrap" data-cat-idx="0">
+<span class="material-symbols-outlined text-[16px]">child_care</span>
+<span class="">Maternal</span>
+</button>
+<button class="category-btn px-4 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all duration-200 border border-slate-200 bg-white text-slate-600 hover:text-brand-darkBlue hover:border-brand-darkBlue/40 flex items-center gap-1.5 whitespace-nowrap" data-cat-idx="1">
+<span class="material-symbols-outlined text-[16px]">toys</span>
+<span class="">Preescolar</span>
+</button>
+<button class="category-btn px-4 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all duration-200 border border-slate-200 bg-white text-slate-600 hover:text-brand-darkBlue hover:border-brand-darkBlue/40 flex items-center gap-1.5 whitespace-nowrap" data-cat-idx="2">
+<span class="material-symbols-outlined text-[16px]">school</span>
+<span class="">Primaria</span>
+</button>
+<button class="category-btn px-4 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all duration-200 shadow-md flex items-center gap-1.5 whitespace-nowrap bg-brand-darkBlue text-white shadow-brand-darkBlue/25" data-cat-idx="3">
+<span class="material-symbols-outlined text-[16px]">sports_martial_arts</span>
+<span class="">Academias</span>
+</button>
+</div>
+</div>
+<!-- Collage de Galería: Cada ranura es su propio carrusel multi-direccional independiente -->
+<div class="relative w-full rounded-2xl bg-slate-100/70 border border-slate-200/80 shadow-sm p-1">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-1 sm:gap-1.5">
+<!-- Slot 1: Superior Izquierda Grande (Col-8) — Desplazamiento Horizontal (Izquierda <-> Derecha) -->
+<div class="slot-container md:col-span-8 h-64 sm:h-[300px] md:h-[330px] rounded-xl overflow-hidden relative group bg-slate-900 shadow-sm" data-axis="x" data-dir="1" id="slot-0">
+<div class="slot-item" data-index="0" style="transition: none; transform: translate(0%, 0%); z-index: 2;">
+<img alt="Ensamble Musical y Actividades" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" src="https://lh3.googleusercontent.com/aida/AEtjO1Urn-CEP0EfE82HddbtWq4UO3L6nHR_NqsG0P7Uax8E4tygoncTxpscuB00L3Ih4S4LD-7Q2SnFHCUVswELndFqm_1brX8f_HPRWC_gzSWkeVBFZupJs-RU63gEhI_adHOmwb3XiEW1OB8tk0q0IN04TdRBwn7-_z-Umq_-Q-gsecWK7s9zUW-ppWQXyRKazwzbsuFzBpPEDas2DuAGWzFbhjUEa8YIsBd4TwXmPIKvPty9w8I0ODUGl64">
+<div class="absolute inset-0 bg-gradient-to-t from-black/75 via-black/15 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-5">
+<div>
+<span class="inline-block px-2.5 py-0.5 mb-1 text-[11px] font-bold uppercase tracking-wider text-white bg-brand-darkBlue/80 rounded-md">Maternal</span>
+<p class="text-white font-medium text-sm sm:text-base tracking-tight">Estimulación Sensorial &amp; Aulas Acogedoras</p>
+</div>
+</div>
+</div>
+<div class="slot-item" data-index="1" style="transition: none; transform: translate(100%, 0%); z-index: 1;">
+<img alt="Inmersión Bilingüe AMCO" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" src="https://lh3.googleusercontent.com/aida/AEtjO1Wx4A_yiAni49w4yrMD7HtmbewT4IAYEHJhsJ_yDymo9Nben7jEabxD0KpPaqQRaszzXAr8OEq-zywrJ1xTIKXOTjgJiOPauZfi87kelg4_bRxypaQmApv_pmZ-C9g8FvBXRX1Gzx0nxyGzmwmGcQZyjDpz2Y5H57U8OkYh7IpwI4sN8PNjjbluiPNIRLEC0APNMlA4n1eN3tNyJp23YL8JMxlXKDhj9-8V_IbmW3Zwci2ibQJw2dVk-6s">
+<div class="absolute inset-0 bg-gradient-to-t from-black/75 via-black/15 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-5">
+<div>
+<span class="inline-block px-2.5 py-0.5 mb-1 text-[11px] font-bold uppercase tracking-wider text-white bg-brand-blue rounded-md">Preescolar</span>
+<p class="text-white font-medium text-sm sm:text-base tracking-tight">Inmersión Bilingüe Dinámica AMCO</p>
+</div>
+</div>
+</div>
+<div class="slot-item" data-index="2" style="transition: none; transform: translate(100%, 0%); z-index: 1;">
+<img alt="Laboratorio STEAM" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" src="https://lh3.googleusercontent.com/aida/AEtjO1W6rZb1Pl4OT83miM2x9WqY2F2c-1KwY4hYY7CSS_uKgmBVu32-3QWWJs0LnT315sOa1MhYf1Up4niz-xW4LJEwjKf7CNEz9TCzqpgZ_zv_zTHL4Uv7KtuPHSuXRnAf3vlNlzK2xi8_En1-ri-13KrMgPiOfbfQZs9n9TrWbmJ6yEgyKoj8_aEmvbaQfau8IDWsDMOJD3jWqFL9SCkQxbvYGWQuNuY9zGtpt2B9dIbG3oi-HgHWTaDwN9I">
+<div class="absolute inset-0 bg-gradient-to-t from-black/75 via-black/15 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-5">
+<div>
+<span class="inline-block px-2.5 py-0.5 mb-1 text-[11px] font-bold uppercase tracking-wider text-white bg-brand-red rounded-md">Primaria</span>
+<p class="text-white font-medium text-sm sm:text-base tracking-tight">Laboratorio STEAM y Programación con Tablets</p>
+</div>
+</div>
+</div>
+<div class="slot-item" data-index="3" style="transition: none; transform: translate(100%, 0%); z-index: 1;">
+<img alt="Dojang Profesional" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" src="https://lh3.googleusercontent.com/aida/AEtjO1Vegy8i6vuay10D7wMMWM0js_NUz8mCTf5S71aPI7ZeZenL7SwcXrOkUNbFxylalfdXEAhtP5_qOgFcMMBBE-xXYy3mNk93H2ZKr7O61RPcafXN_JK4X_70IU5cdPTidxsoQLFp23JJbyJkVOLUfA_FRb-TNULarJ4fQRdm4Noytv9ciL8ezOTvq1ZfnbsO8zSye6jb-IlSFndiruWXc4CYQXnEIqjPoxmi-DodkRA6TkyJu6OCpIY_3no">
+<div class="absolute inset-0 bg-gradient-to-t from-black/75 via-black/15 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-5">
+<div>
+<span class="inline-block px-2.5 py-0.5 mb-1 text-[11px] font-bold uppercase tracking-wider text-white bg-brand-darkBlue/80 rounded-md">Academias</span>
+<p class="text-white font-medium text-sm sm:text-base tracking-tight">Dojang Profesional de Tae Kwon Do</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Slot 2: Superior Derecha (Col-4) — Desplazamiento Horizontal Inverso (Derecha <-> Izquierda) -->
+<div class="slot-container md:col-span-4 h-64 sm:h-[300px] md:h-[330px] rounded-xl overflow-hidden relative group bg-slate-900 shadow-sm" data-axis="x" data-dir="-1" id="slot-1">
+<div class="slot-item" data-index="0" style="transition: none; transform: translate(0%, 0%); z-index: 2;">
+<img alt="Desarrollo integral" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" src="https://lh3.googleusercontent.com/aida/AEtjO1Vg96NgEwDzyFjum7DIsMUKcDTRK9Ioz0RzIHxY2B5Sis5PLvd6chw1WX9FoLG3__Nm9Ko_dO1OvQpvHsX1e8sHQQfUlqzHSp9Xhg3eX-fZAJ2bYxbxcwKHw7MS9aujATiey9cUXILZe3qU0ruYu_JMyTM9iKfToPVbj6jOSMTerKSanxUg6Lys_7jw2nLVdoBSRu93bjvK0fclKH1NR6tVvchPpXrVmFfQ1D32cJUmzs1wo8l2Db8CTg">
+<div class="absolute inset-0 bg-gradient-to-t from-black/75 via-black/15 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+<div>
+<span class="inline-block px-2.5 py-0.5 mb-1 text-[11px] font-bold uppercase tracking-wider text-white bg-brand-darkBlue/80 rounded-md">Maternal</span>
+<p class="text-white font-medium text-sm">Juego Guiado y Socialización Temprana</p>
+</div>
+</div>
+</div>
+<div class="slot-item" data-index="1" style="transition: none; transform: translate(-100%, 0%); z-index: 1;">
+<img alt="Lectoescritura Inicial" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" src="https://lh3.googleusercontent.com/aida/AEtjO1Wx4A_yiAni49w4yrMD7HtmbewT4IAYEHJhsJ_yDymo9Nben7jEabxD0KpPaqQRaszzXAr8OEq-zywrJ1xTIKXOTjgJiOPauZfi87kelg4_bRxypaQmApv_pmZ-C9g8FvBXRX1Gzx0nxyGzmwmGcQZyjDpz2Y5H57U8OkYh7IpwI4sN8PNjjbluiPNIRLEC0APNMlA4n1eN3tNyJp23YL8JMxlXKDhj9-8V_IbmW3Zwci2ibQJw2dVk-6s">
+<div class="absolute inset-0 bg-gradient-to-t from-black/75 via-black/15 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+<div>
+<span class="inline-block px-2.5 py-0.5 mb-1 text-[11px] font-bold uppercase tracking-wider text-white bg-brand-blue rounded-md">Preescolar</span>
+<p class="text-white font-medium text-sm">Lectoescritura Inicial Divertida</p>
+</div>
+</div>
+</div>
+<div class="slot-item" data-index="2" style="transition: none; transform: translate(-100%, 0%); z-index: 1;">
+<img alt="Campus Digital" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" src="https://lh3.googleusercontent.com/aida/AEtjO1WCcDiezrR-5URfEUBYR2yVqsuRLZSoq1PoXTH52Ib3aJjPxT3wbTPQ9xfFE8jk7rAjtsXohODvMnJ7TlVT7l1i5DMhGFPpwD5Q_VSNb2VuS8CJMxlaAR-KU6Zn-5jSrG3lw698u0niRdEwc-hFYjOzCi7PzgygmdQIQRjaHQTpCVAQ_krm6i5Zq0QsX7M5UyQDLD8pUCpZTDj7Mnqt-zGcRKbFNRgQqr4pU40LZL5lF3i5z5ulQpzowQ4">
+<div class="absolute inset-0 bg-gradient-to-t from-black/75 via-black/15 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+<div>
+<span class="inline-block px-2.5 py-0.5 mb-1 text-[11px] font-bold uppercase tracking-wider text-white bg-brand-red rounded-md">Primaria</span>
+<p class="text-white font-medium text-sm">Campus Digital y Aulas Interactivas</p>
+</div>
+</div>
+</div>
+<div class="slot-item" data-index="3" style="transition: none; transform: translate(-100%, 0%); z-index: 1;">
+<img alt="Academia de Violín" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" src="https://lh3.googleusercontent.com/aida/AEtjO1V1UiwLO8PFuE-fMENr1TQNz08UMeB7yUEhxNGyA2eZ4axpe6wPPW8SI0YjbTktRspwAMH7weCtfsF0S0RdIxcl6YQSTPUPXN2Usu8vCdjLkEzp7zzEh53GhW59LR6RLx4GlfFFCqhD7Cu2xrn0sSt--MOkY8v0K1sR2Ug2bnjMemb56EDis4LN-bxzBLGULI4QyhhZZrW3BSVuztMcCDuvAb_YI-ZE2YufL-_1EGOVOXT6UnuvTXmO1A">
+<div class="absolute inset-0 bg-gradient-to-t from-black/75 via-black/15 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+<div>
+<span class="inline-block px-2.5 py-0.5 mb-1 text-[11px] font-bold uppercase tracking-wider text-white bg-brand-darkBlue/80 rounded-md">Academias</span>
+<p class="text-white font-medium text-sm">Academia de Violín y Formación Musical</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Slot 3: Inferior Izquierda (Col-4) — Desplazamiento Vertical (Abajo -> Arriba) -->
+<div class="slot-container md:col-span-4 h-80 sm:h-[350px] md:h-[380px] rounded-xl overflow-hidden relative group bg-slate-900 shadow-sm" data-axis="y" data-dir="1" id="slot-2">
+<div class="slot-item" data-index="0" style="transition: none; transform: translate(0%, 0%); z-index: 2;">
+<img alt="Expresión artística" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" src="https://lh3.googleusercontent.com/aida/AEtjO1WcxChqsdHHGmXHi83hOJvI-sZbK8DmPOJwNTekxglQSX_ePDyrYjgQdPdvg5hb3k84pj-pl9D_IFnjIfwiRINg0Ah892FM8R_T0_vXMoQzo2aCO32_ElUjL4kO9Jt5pNPEOrnu_-WekCmW3SPtas_3IJpPaIQfsxkv1_UTCmTOmeNKtRUAEAxupVapwCHeHHiGUNWu0AL4DvoaODjw5yfeGRnSy-I0FDnSLraih5oS1kyEZWuC3BdoMRg">
+<div class="absolute inset-0 bg-gradient-to-t from-black/75 via-black/15 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+<div>
+<span class="inline-block px-2.5 py-0.5 mb-1 text-[11px] font-bold uppercase tracking-wider text-white bg-brand-darkBlue/80 rounded-md">Maternal</span>
+<p class="text-white font-medium text-sm">Exploración Creativa y Motricidad</p>
+</div>
+</div>
+</div>
+<div class="slot-item" data-index="1" style="transition: none; transform: translate(0%, 100%); z-index: 1;">
+<img alt="Iniciación STEAM" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" src="https://lh3.googleusercontent.com/aida/AEtjO1W6rZb1Pl4OT83miM2x9WqY2F2c-1KwY4hYY7CSS_uKgmBVu32-3QWWJs0LnT315sOa1MhYf1Up4niz-xW4LJEwjKf7CNEz9TCzqpgZ_zv_zTHL4Uv7KtuPHSuXRnAf3vlNlzK2xi8_En1-ri-13KrMgPiOfbfQZs9n9TrWbmJ6yEgyKoj8_aEmvbaQfau8IDWsDMOJD3jWqFL9SCkQxbvYGWQuNuY9zGtpt2B9dIbG3oi-HgHWTaDwN9I">
+<div class="absolute inset-0 bg-gradient-to-t from-black/75 via-black/15 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+<div>
+<span class="inline-block px-2.5 py-0.5 mb-1 text-[11px] font-bold uppercase tracking-wider text-white bg-brand-blue rounded-md">Preescolar</span>
+<p class="text-white font-medium text-sm">Iniciación a las Ciencias y STEAM</p>
+</div>
+</div>
+</div>
+<div class="slot-item" data-index="2" style="transition: none; transform: translate(0%, 100%); z-index: 1;">
+<img alt="Certificaciones AMCO" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" src="https://lh3.googleusercontent.com/aida/AEtjO1WCcDiezrR-5URfEUBYR2yVqsuRLZSoq1PoXTH52Ib3aJjPxT3wbTPQ9xfFE8jk7rAjtsXohODvMnJ7TlVT7l1i5DMhGFPpwD5Q_VSNb2VuS8CJMxlaAR-KU6Zn-5jSrG3lw698u0niRdEwc-hFYjOzCi7PzgygmdQIQRjaHQTpCVAQ_krm6i5Zq0QsX7M5UyQDLD8pUCpZTDj7Mnqt-zGcRKbFNRgQqr4pU40LZL5lF3i5z5ulQpzowQ4">
+<div class="absolute inset-0 bg-gradient-to-t from-black/75 via-black/15 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+<div>
+<span class="inline-block px-2.5 py-0.5 mb-1 text-[11px] font-bold uppercase tracking-wider text-white bg-brand-red rounded-md">Primaria</span>
+<p class="text-white font-medium text-sm">Certificaciones Internacionales en Inglés</p>
+</div>
+</div>
+</div>
+<div class="slot-item" data-index="3" style="transition: none; transform: translate(0%, 100%); z-index: 1;">
+<img alt="Entrenamiento Deportivo" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" src="https://lh3.googleusercontent.com/aida/AEtjO1V1UiwLO8PFuE-fMENr1TQNz08UMeB7yUEhxNGyA2eZ4axpe6wPPW8SI0YjbTktRspwAMH7weCtfsF0S0RdIxcl6YQSTPUPXN2Usu8vCdjLkEzp7zzEh53GhW59LR6RLx4GlfFFCqhD7Cu2xrn0sSt--MOkY8v0K1sR2Ug2bnjMemb56EDis4LN-bxzBLGULI4QyhhZZrW3BSVuztMcCDuvAb_YI-ZE2YufL-_1EGOVOXT6UnuvTXmO1A">
+<div class="absolute inset-0 bg-gradient-to-t from-black/75 via-black/15 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+<div>
+<span class="inline-block px-2.5 py-0.5 mb-1 text-[11px] font-bold uppercase tracking-wider text-white bg-brand-darkBlue/80 rounded-md">Academias</span>
+<p class="text-white font-medium text-sm">Entrenamiento Deportivo y Competencias</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Col-5 con dos slots apilados verticalmente -->
+<div class="md:col-span-5 flex flex-col gap-1 sm:gap-1.5 h-80 sm:h-[350px] md:h-[380px]">
+<!-- Slot 4: Centro Superior — Desplazamiento Vertical Inverso (Arriba -> Abajo) -->
+<div class="slot-container h-1/2 w-full rounded-xl overflow-hidden relative group bg-slate-900 shadow-sm" data-axis="y" data-dir="-1" id="slot-3">
+<div class="slot-item" data-index="0" style="transition: none; transform: translate(0%, 0%); z-index: 2;">
+<img alt="Ensamble y Música" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" src="https://lh3.googleusercontent.com/aida/AEtjO1V1UiwLO8PFuE-fMENr1TQNz08UMeB7yUEhxNGyA2eZ4axpe6wPPW8SI0YjbTktRspwAMH7weCtfsF0S0RdIxcl6YQSTPUPXN2Usu8vCdjLkEzp7zzEh53GhW59LR6RLx4GlfFFCqhD7Cu2xrn0sSt--MOkY8v0K1sR2Ug2bnjMemb56EDis4LN-bxzBLGULI4QyhhZZrW3BSVuztMcCDuvAb_YI-ZE2YufL-_1EGOVOXT6UnuvTXmO1A">
+<div class="absolute inset-0 bg-gradient-to-t from-black/75 via-black/15 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-3">
+<div>
+<span class="inline-block px-2 py-0.2 mb-0.5 text-[10px] font-bold uppercase tracking-wider text-white bg-brand-darkBlue/80 rounded">Maternal</span>
+<p class="text-white font-medium text-xs sm:text-sm">Estimulación Rítmica y Auditiva</p>
+</div>
+</div>
+</div>
+<div class="slot-item" data-index="1" style="transition: none; transform: translate(0%, -100%); z-index: 1;">
+<img alt="Atelier Artístico" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" src="https://lh3.googleusercontent.com/aida/AEtjO1Urn-CEP0EfE82HddbtWq4UO3L6nHR_NqsG0P7Uax8E4tygoncTxpscuB00L3Ih4S4LD-7Q2SnFHCUVswELndFqm_1brX8f_HPRWC_gzSWkeVBFZupJs-RU63gEhI_adHOmwb3XiEW1OB8tk0q0IN04TdRBwn7-_z-Umq_-Q-gsecWK7s9zUW-ppWQXyRKazwzbsuFzBpPEDas2DuAGWzFbhjUEa8YIsBd4TwXmPIKvPty9w8I0ODUGl64">
+<div class="absolute inset-0 bg-gradient-to-t from-black/75 via-black/15 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-3">
+<div>
+<span class="inline-block px-2 py-0.2 mb-0.5 text-[10px] font-bold uppercase tracking-wider text-white bg-brand-blue rounded">Preescolar</span>
+<p class="text-white font-medium text-xs sm:text-sm">Atelier Artístico Infantil</p>
+</div>
+</div>
+</div>
+<div class="slot-item" data-index="2" style="transition: none; transform: translate(0%, -100%); z-index: 1;">
+<img alt="Orquesta Escolar" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" src="https://lh3.googleusercontent.com/aida/AEtjO1V1UiwLO8PFuE-fMENr1TQNz08UMeB7yUEhxNGyA2eZ4axpe6wPPW8SI0YjbTktRspwAMH7weCtfsF0S0RdIxcl6YQSTPUPXN2Usu8vCdjLkEzp7zzEh53GhW59LR6RLx4GlfFFCqhD7Cu2xrn0sSt--MOkY8v0K1sR2Ug2bnjMemb56EDis4LN-bxzBLGULI4QyhhZZrW3BSVuztMcCDuvAb_YI-ZE2YufL-_1EGOVOXT6UnuvTXmO1A">
+<div class="absolute inset-0 bg-gradient-to-t from-black/75 via-black/15 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-3">
+<div>
+<span class="inline-block px-2 py-0.2 mb-0.5 text-[10px] font-bold uppercase tracking-wider text-white bg-brand-red rounded">Primaria</span>
+<p class="text-white font-medium text-xs sm:text-sm">Orquesta Escolar y Ensambles</p>
+</div>
+</div>
+</div>
+<div class="slot-item" data-index="3" style="transition: none; transform: translate(0%, -100%); z-index: 1;">
+<img alt="Robótica y Torneos" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" src="https://lh3.googleusercontent.com/aida/AEtjO1Urn-CEP0EfE82HddbtWq4UO3L6nHR_NqsG0P7Uax8E4tygoncTxpscuB00L3Ih4S4LD-7Q2SnFHCUVswELndFqm_1brX8f_HPRWC_gzSWkeVBFZupJs-RU63gEhI_adHOmwb3XiEW1OB8tk0q0IN04TdRBwn7-_z-Umq_-Q-gsecWK7s9zUW-ppWQXyRKazwzbsuFzBpPEDas2DuAGWzFbhjUEa8YIsBd4TwXmPIKvPty9w8I0ODUGl64">
+<div class="absolute inset-0 bg-gradient-to-t from-black/75 via-black/15 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-3">
+<div>
+<span class="inline-block px-2 py-0.2 mb-0.5 text-[10px] font-bold uppercase tracking-wider text-white bg-brand-darkBlue/80 rounded">Academias</span>
+<p class="text-white font-medium text-xs sm:text-sm">Club de Robótica y Torneos</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Slot 5: Centro Inferior — Desplazamiento Horizontal (Inverso a Slot 1) -->
+<div class="slot-container h-1/2 w-full rounded-xl overflow-hidden relative group bg-slate-900 shadow-sm" data-axis="x" data-dir="-1" id="slot-4">
+<div class="slot-item" data-index="0" style="transition: none; transform: translate(0%, 0%); z-index: 2;">
+<img alt="Robótica y Ciencia" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" src="https://lh3.googleusercontent.com/aida/AEtjO1W6rZb1Pl4OT83miM2x9WqY2F2c-1KwY4hYY7CSS_uKgmBVu32-3QWWJs0LnT315sOa1MhYf1Up4niz-xW4LJEwjKf7CNEz9TCzqpgZ_zv_zTHL4Uv7KtuPHSuXRnAf3vlNlzK2xi8_En1-ri-13KrMgPiOfbfQZs9n9TrWbmJ6yEgyKoj8_aEmvbaQfau8IDWsDMOJD3jWqFL9SCkQxbvYGWQuNuY9zGtpt2B9dIbG3oi-HgHWTaDwN9I">
+<div class="absolute inset-0 bg-gradient-to-t from-black/75 via-black/15 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-3">
+<div>
+<span class="inline-block px-2 py-0.2 mb-0.5 text-[10px] font-bold uppercase tracking-wider text-white bg-brand-darkBlue/80 rounded">Maternal</span>
+<p class="text-white font-medium text-xs sm:text-sm">Construcción con Bloques y Encastres</p>
+</div>
+</div>
+</div>
+<div class="slot-item" data-index="1" style="transition: none; transform: translate(-100%, 0%); z-index: 1;">
+<img alt="Recreo Inteligente" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" src="https://lh3.googleusercontent.com/aida/AEtjO1WcxChqsdHHGmXHi83hOJvI-sZbK8DmPOJwNTekxglQSX_ePDyrYjgQdPdvg5hb3k84pj-pl9D_IFnjIfwiRINg0Ah892FM8R_T0_vXMoQzo2aCO32_ElUjL4kO9Jt5pNPEOrnu_-WekCmW3SPtas_3IJpPaIQfsxkv1_UTCmTOmeNKtRUAEAxupVapwCHeHHiGUNWu0AL4DvoaODjw5yfeGRnSy-I0FDnSLraih5oS1kyEZWuC3BdoMRg">
+<div class="absolute inset-0 bg-gradient-to-t from-black/75 via-black/15 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-3">
+<div>
+<span class="inline-block px-2 py-0.2 mb-0.5 text-[10px] font-bold uppercase tracking-wider text-white bg-brand-blue rounded">Preescolar</span>
+<p class="text-white font-medium text-xs sm:text-sm">Recreo Inteligente y Parques</p>
+</div>
+</div>
+</div>
+<div class="slot-item" data-index="2" style="transition: none; transform: translate(-100%, 0%); z-index: 1;">
+<img alt="Tae Kwon Do" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" src="https://lh3.googleusercontent.com/aida/AEtjO1Vegy8i6vuay10D7wMMWM0js_NUz8mCTf5S71aPI7ZeZenL7SwcXrOkUNbFxylalfdXEAhtP5_qOgFcMMBBE-xXYy3mNk93H2ZKr7O61RPcafXN_JK4X_70IU5cdPTidxsoQLFp23JJbyJkVOLUfA_FRb-TNULarJ4fQRdm4Noytv9ciL8ezOTvq1ZfnbsO8zSye6jb-IlSFndiruWXc4CYQXnEIqjPoxmi-DodkRA6TkyJu6OCpIY_3no">
+<div class="absolute inset-0 bg-gradient-to-t from-black/75 via-black/15 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-3">
+<div>
+<span class="inline-block px-2 py-0.2 mb-0.5 text-[10px] font-bold uppercase tracking-wider text-white bg-brand-red rounded">Primaria</span>
+<p class="text-white font-medium text-xs sm:text-sm">Tae Kwon Do y Desarrollo Físico</p>
+</div>
+</div>
+</div>
+<div class="slot-item" data-index="3" style="transition: none; transform: translate(-100%, 0%); z-index: 1;">
+<img alt="Talleres de Oratoria" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" src="https://lh3.googleusercontent.com/aida/AEtjO1Wx4A_yiAni49w4yrMD7HtmbewT4IAYEHJhsJ_yDymo9Nben7jEabxD0KpPaqQRaszzXAr8OEq-zywrJ1xTIKXOTjgJiOPauZfi87kelg4_bRxypaQmApv_pmZ-C9g8FvBXRX1Gzx0nxyGzmwmGcQZyjDpz2Y5H57U8OkYh7IpwI4sN8PNjjbluiPNIRLEC0APNMlA4n1eN3tNyJp23YL8JMxlXKDhj9-8V_IbmW3Zwci2ibQJw2dVk-6s">
+<div class="absolute inset-0 bg-gradient-to-t from-black/75 via-black/15 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-3">
+<div>
+<span class="inline-block px-2 py-0.2 mb-0.5 text-[10px] font-bold uppercase tracking-wider text-white bg-brand-darkBlue/80 rounded">Academias</span>
+<p class="text-white font-medium text-xs sm:text-sm">Talleres de Oratoria y Expresión</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Slot 6: Inferior Derecha (Col-3) — Desplazamiento Vertical (Abajo -> Arriba) -->
+<div class="slot-container md:col-span-3 h-80 sm:h-[350px] md:h-[380px] rounded-xl overflow-hidden relative group bg-slate-900 shadow-sm" data-axis="y" data-dir="1" id="slot-5">
+<div class="slot-item" data-index="0" style="transition: none; transform: translate(0%, 0%); z-index: 2;">
+<img alt="Lectura Temprana" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" src="https://lh3.googleusercontent.com/aida/AEtjO1Wx4A_yiAni49w4yrMD7HtmbewT4IAYEHJhsJ_yDymo9Nben7jEabxD0KpPaqQRaszzXAr8OEq-zywrJ1xTIKXOTjgJiOPauZfi87kelg4_bRxypaQmApv_pmZ-C9g8FvBXRX1Gzx0nxyGzmwmGcQZyjDpz2Y5H57U8OkYh7IpwI4sN8PNjjbluiPNIRLEC0APNMlA4n1eN3tNyJp23YL8JMxlXKDhj9-8V_IbmW3Zwci2ibQJw2dVk-6s">
+<div class="absolute inset-0 bg-gradient-to-t from-black/75 via-black/15 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+<div>
+<span class="inline-block px-2.5 py-0.5 mb-1 text-[11px] font-bold uppercase tracking-wider text-white bg-brand-darkBlue/80 rounded-md">Maternal</span>
+<p class="text-white font-medium text-sm">Rincón de Lectura Afectiva</p>
+</div>
+</div>
+</div>
+<div class="slot-item" data-index="1" style="transition: none; transform: translate(0%, 100%); z-index: 1;">
+<img alt="Iniciación al Violín" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" src="https://lh3.googleusercontent.com/aida/AEtjO1V1UiwLO8PFuE-fMENr1TQNz08UMeB7yUEhxNGyA2eZ4axpe6wPPW8SI0YjbTktRspwAMH7weCtfsF0S0RdIxcl6YQSTPUPXN2Usu8vCdjLkEzp7zzEh53GhW59LR6RLx4GlfFFCqhD7Cu2xrn0sSt--MOkY8v0K1sR2Ug2bnjMemb56EDis4LN-bxzBLGULI4QyhhZZrW3BSVuztMcCDuvAb_YI-ZE2YufL-_1EGOVOXT6UnuvTXmO1A">
+<div class="absolute inset-0 bg-gradient-to-t from-black/75 via-black/15 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+<div>
+<span class="inline-block px-2.5 py-0.5 mb-1 text-[11px] font-bold uppercase tracking-wider text-white bg-brand-blue rounded-md">Preescolar</span>
+<p class="text-white font-medium text-sm">Iniciación al Violín y Percusiones</p>
+</div>
+</div>
+</div>
+<div class="slot-item" data-index="2" style="transition: none; transform: translate(0%, 100%); z-index: 1;">
+<img alt="Club de Debate" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" src="https://lh3.googleusercontent.com/aida/AEtjO1WCcDiezrR-5URfEUBYR2yVqsuRLZSoq1PoXTH52Ib3aJjPxT3wbTPQ9xfFE8jk7rAjtsXohODvMnJ7TlVT7l1i5DMhGFPpwD5Q_VSNb2VuS8CJMxlaAR-KU6Zn-5jSrG3lw698u0niRdEwc-hFYjOzCi7PzgygmdQIQRjaHQTpCVAQ_krm6i5Zq0QsX7M5UyQDLD8pUCpZTDj7Mnqt-zGcRKbFNRgQqr4pU40LZL5lF3i5z5ulQpzowQ4">
+<div class="absolute inset-0 bg-gradient-to-t from-black/75 via-black/15 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+<div>
+<span class="inline-block px-2.5 py-0.5 mb-1 text-[11px] font-bold uppercase tracking-wider text-white bg-brand-red rounded-md">Primaria</span>
+<p class="text-white font-medium text-sm">Club de Debate y Liderazgo</p>
+</div>
+</div>
+</div>
+<div class="slot-item" data-index="3" style="transition: none; transform: translate(0%, 100%); z-index: 1;">
+<img alt="Ajedrez y Estrategia" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" src="https://lh3.googleusercontent.com/aida/AEtjO1Wx4A_yiAni49w4yrMD7HtmbewT4IAYEHJhsJ_yDymo9Nben7jEabxD0KpPaqQRaszzXAr8OEq-zywrJ1xTIKXOTjgJiOPauZfi87kelg4_bRxypaQmApv_pmZ-C9g8FvBXRX1Gzx0nxyGzmwmGcQZyjDpz2Y5H57U8OkYh7IpwI4sN8PNjjbluiPNIRLEC0APNMlA4n1eN3tNyJp23YL8JMxlXKDhj9-8V_IbmW3Zwci2ibQJw2dVk-6s">
+<div class="absolute inset-0 bg-gradient-to-t from-black/75 via-black/15 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+<div>
+<span class="inline-block px-2.5 py-0.5 mb-1 text-[11px] font-bold uppercase tracking-wider text-white bg-brand-darkBlue/80 rounded-md">Academias</span>
+<p class="text-white font-medium text-sm">Ajedrez y Estrategia Cognitiva</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Carrusel Nav & Controles Horizontales Deslizantes -->
+<div class="mt-6 flex flex-col sm:flex-row items-center justify-between gap-4 px-2 py-3 bg-white/70 backdrop-blur-md rounded-2xl border border-slate-200/80 shadow-sm">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-xl bg-brand-darkBlue/10 text-brand-darkBlue flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]">auto_awesome_motion</span>
+</div>
+<div>
+<span class="text-xs uppercase font-bold tracking-widest text-slate-400 block">Galería Dinámica</span>
+<span class="text-sm font-bold text-slate-800" id="current-category-name">Maternal — Cuidado con Amor, Estimulación y Primeros Pasos</span>
+</div>
+</div>
+<!-- Controles de navegación: Flechas y Contador de Página -->
+<div class="flex items-center gap-3 sm:gap-4">
+<!-- Contador estilizado -->
+<div class="flex items-center font-mono text-sm px-3.5 py-1.5 rounded-full bg-slate-100 border border-slate-200 text-slate-700 font-semibold tracking-wider">
+<span class="text-brand-darkBlue font-bold" id="current-slide-num">01</span>
+<span class="mx-1.5 text-slate-400">/</span>
+<span class="text-slate-500" id="total-slide-num">04</span>
+</div>
+<!-- Indicador de puntos (dots) -->
+<div class="flex items-center gap-1.5" id="dots-container">
+<button aria-label="Nivel 1" class="dot-btn w-6 h-2 rounded-full bg-brand-darkBlue transition-all duration-300" data-index="0"></button>
+<button aria-label="Nivel 2" class="dot-btn w-2 h-2 rounded-full bg-slate-300 hover:bg-slate-400 transition-all duration-300" data-index="1"></button>
+<button aria-label="Nivel 3" class="dot-btn w-2 h-2 rounded-full bg-slate-300 hover:bg-slate-400 transition-all duration-300" data-index="2"></button>
+<button aria-label="Nivel 4" class="dot-btn w-2 h-2 rounded-full bg-slate-300 hover:bg-slate-400 transition-all duration-300" data-index="3"></button>
+</div>
+<!-- Botones de flechas circulares prominentes -->
+<div class="flex items-center gap-2">
+<button aria-label="Galería anterior" class="w-11 h-11 rounded-full bg-white border border-slate-200 shadow-sm hover:border-brand-darkBlue hover:text-brand-darkBlue hover:shadow-md active:scale-90 transition-all duration-200 flex items-center justify-center text-slate-700" id="prev-btn">
+<span class="material-symbols-outlined text-[22px]">arrow_back</span>
+</button>
+<button aria-label="Siguiente galería" class="w-11 h-11 rounded-full bg-brand-darkBlue text-white shadow-md hover:bg-slate-900 hover:shadow-lg active:scale-90 transition-all duration-200 flex items-center justify-center" id="next-btn">
+<span class="material-symbols-outlined text-[22px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- ================= FOOTER ESTILO SUBIRÉ CON DATOS Y WHATSAPP ================= -->
+<footer class="w-full text-white pt-16 pb-10 relative overflow-hidden" id="footer-everest" style="background-color: #0A1128;">
+<div class="max-w-[1280px] mx-auto px-6 sm:px-8">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-8 pb-14 border-b border-white/10">
+<!-- Columna 1: Identidad y Contacto -->
+<div class="lg:col-span-4 flex flex-col space-y-5">
+<div class="flex items-center gap-3">
+<div class="p-2.5 rounded-xl bg-white shadow-md inline-flex items-center justify-center">
+<img alt="Instituto Everest León" class="h-9 w-auto object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQbhXz3IW5O8A45ZNls5IZ1bwybEBXaHWMArWt1j1Ve1b4mrM8HYevACSiUqapspf76IalGkmc3jpfVFt2l3kCAiTKUlumhlYvTCMMtYsdWyO13ZtVqsL9aCI_RMX9M2WIeJqHEj7iIHPIbrb4f28m0AXb8lZg2u9Wle3GUOR71FI5ip3t-gHUmvC23KUfuKNiyKoNxAJJX3DZI5yIZJXFb2lRAQESQ2IrIfds0zEFNLHolLmayCkg">
+</div>
+<div class="flex flex-col">
+<span class="font-display text-[20px] font-bold tracking-tight text-white leading-tight">Instituto Everest</span>
+<span class="text-xs text-white/70">Aquí crecemos juntos</span>
+</div>
+</div>
+<div class="space-y-1.5 pt-1">
+<h4 class="font-bold text-[16px] text-brand-yellow">Campus León</h4>
+<p class="text-sm text-slate-300 leading-relaxed max-w-sm">
+              Av. Paseo de Alfaro 1425 Colonia Providencia / Alfaro, Zona Este Elite, León, Guanajuato, CP 37233.
+            </p>
+</div>
+<div class="space-y-2.5 pt-1">
+<div class="flex items-center gap-2.5 text-sm text-slate-200">
+<span class="material-symbols-outlined text-[19px] shrink-0 text-brand-yellow">headset_mic</span>
+<span class="">Conmutador: <strong>(477) 949 6200</strong></span>
+</div>
+<a class="flex items-center gap-2.5 text-sm text-slate-200 hover:text-white transition-colors" href="https://wa.me/524772728702" target="_blank">
+<svg class="w-[18px] h-[18px] shrink-0 fill-[#25D366]" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.007c.106.005.249-.04.39.299.144.347.491 1.2.534 1.287.043.087.072.188.014.303-.058.116-.087.188-.173.289l-.26.303c-.087.086-.177.181-.076.355.101.173.449.741.963 1.2.662.591 1.221.774 1.394.86.173.086.275.072.376-.044.101-.116.433-.506.549-.68.116-.173.231-.144.39-.086s1.011.477 1.184.564.289.13.332.202c.044.073.044.42-.1.825zM12.012 2c-5.508 0-9.985 4.477-9.985 9.985 0 1.988.583 3.844 1.593 5.409L2 22l4.757-1.564c1.513.918 3.28 1.448 5.255 1.448 5.508 0 9.985-4.477 9.985-9.985 0-5.508-4.477-9.985-9.985-9.985z"></path></svg>
+<span class="">Admisiones (WhatsApp): <strong>477 272 8702</strong></span>
+</a>
+</div>
+<div class="pt-2">
+<span class="block text-xs uppercase font-bold tracking-widest mb-2.5 text-brand-yellow">Síguenos</span>
+<div class="flex items-center gap-3">
+<a aria-label="Facebook Everest" class="w-8 h-8 rounded-full bg-white/10 hover:bg-brand-yellow hover:text-[#0A1128] text-white flex items-center justify-center transition-all duration-300" href="#">
+<svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M9 8H6v4h3v12h5V12h3.642L18 8h-4V6.333C14 5.374 14.5 5 15.75 5H18V0h-3.808C10.597 0 9 1.583 9 4.615V8z"></path></svg>
+</a>
+<a aria-label="Instagram Everest" class="w-8 h-8 rounded-full bg-white/10 hover:bg-brand-yellow hover:text-[#0A1128] text-white flex items-center justify-center transition-all duration-300" href="#">
+<svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"></path></svg>
+</a>
+</div>
+</div>
+</div>
+<!-- Columna 2: Menú Instituto -->
+<div class="lg:col-span-3 flex flex-col space-y-4">
+<h3 class="font-display text-[18px] font-bold text-brand-yellow">Instituto Everest</h3>
+<ul class="space-y-2.5 text-sm text-slate-300 font-medium">
+<li class=""><a class="hover:text-white transition-colors" href="/#hero">Nuestro Colegio</a></li>
+<li class=""><a class="hover:text-white transition-colors" href="/galeria">Galería</a></li>
+<li class=""><a class="hover:text-white transition-colors" href="/contacto">Admisiones 2025</a></li>
+<li class=""><a class="hover:text-white transition-colors" href="https://wa.me/524772728702">Contacto Directo</a></li>
+</ul>
+</div>
+<!-- Columna 3: Innovación y Programas -->
+<div class="lg:col-span-3 flex flex-col space-y-4">
+<h3 class="font-display text-[18px] font-bold text-brand-yellow">Innovación &amp; Programas</h3>
+<ul class="space-y-2.5 text-sm text-slate-300 font-medium">
+<li class=""><a class="hover:text-white transition-colors" href="/preescolar">Metodología AMCO</a></li>
+<li class=""><a class="hover:text-white transition-colors" href="/primaria">Pensamiento STEAM</a></li>
+<li class=""><a class="hover:text-white transition-colors" href="/primaria">Programa IMPACT IA</a></li>
+</ul>
+</div>
+<!-- Columna 4: Niveles Educativos -->
+<div class="lg:col-span-2 flex flex-col space-y-4">
+<h3 class="font-display text-[18px] font-bold text-brand-yellow">Niveles Educativos</h3>
+<ul class="space-y-2.5 text-sm text-slate-300 font-medium">
+<li class=""><a class="hover:text-white transition-colors" href="/maternal">Maternal</a></li>
+<li class=""><a class="hover:text-white transition-colors" href="/preescolar">Preescolar</a></li>
+<li class=""><a class="hover:text-white transition-colors" href="/primaria">Primaria</a></li>
+<li class=""><a class="hover:text-white transition-colors" href="/#niveles-educativos">Horario Extendido</a></li>
+</ul>
+<div class="pt-4 border-t border-white/10">
+<h5 class="text-xs uppercase font-bold text-brand-yellow mb-1">Legal</h5>
+<a class="text-xs text-slate-400 hover:text-white transition-colors block" href="#">Aviso de Privacidad</a>
+<a class="text-xs text-slate-400 hover:text-white transition-colors block mt-1" href="#">Derechos ARCO</a>
+</div>
+</div>
+</div>
+<!-- Pie legal inferior -->
+<div class="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-400 gap-3">
+<p class="">© 2025 Instituto Everest León. Todos los derechos reservados.</p>
+<p class="text-slate-400/80">Donde tus sueños alcanzan la cima · Aquí crecemos juntos</p>
+</div>
+</div>
+<!-- Botón flotante de WhatsApp -->
+<a aria-label="Contactar por WhatsApp" class="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-[#25D366] text-white shadow-2xl flex items-center justify-center hover:scale-110 active:scale-95 transition-all duration-300 group" href="https://wa.me/524772728702" style="box-shadow: rgba(37, 211, 102, 0.45) 0px 10px 25px;" target="_blank">
+<svg class="w-8 h-8 fill-current" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.007c.106.005.249-.04.39.299.144.347.491 1.2.534 1.287.043.087.072.188.014.303-.058.116-.087.188-.173.289l-.26.303c-.087.086-.177.181-.076.355.101.173.449.741.963 1.2.662.591 1.221.774 1.394.86.173.086.275.072.376-.044.101-.116.433-.506.549-.68.116-.173.231-.144.39-.086s1.011.477 1.184.564.289.13.332.202c.044.073.044.42-.1.825zM12.012 2c-5.508 0-9.985 4.477-9.985 9.985 0 1.988.583 3.844 1.593 5.409L2 22l4.757-1.564c1.513.918 3.28 1.448 5.255 1.448 5.508 0 9.985-4.477 9.985-9.985 0-5.508-4.477-9.985-9.985-9.985z"></path></svg>
+<span class="sr-only">Contactar por WhatsApp</span>
+</a>
+</footer>
+<!-- ================= JAVASCRIPT: CARRUSELES MULTIDIRECCIONALES INDEPENDIENTES ================= -->
+<script>
+  const subtitles = [
+    "Maternal — Cuidado con Amor, Estimulación y Primeros Pasos",
+    "Preescolar — Bilingüismo Natural AMCO & Curiosidad Activa",
+    "Primaria — Pensamiento Crítico STEAM, Bilingüismo y Liderazgo",
+    "Academias — Deporte Formativo, Artes, Música y Disciplina"
+  ];
+
+  let currentCategoryIndex = 0;
+  const totalSlides = 4;
+  let isAnimating = false;
+
+  const slotContainers = document.querySelectorAll('.slot-container');
+  const categoryButtons = document.querySelectorAll('.category-btn');
+  const dotButtons = document.querySelectorAll('.dot-btn');
+  const prevBtn = document.getElementById('prev-btn');
+  const nextBtn = document.getElementById('next-btn');
+  const currentCategoryNameEl = document.getElementById('current-category-name');
+  const currentSlideNumEl = document.getElementById('current-slide-num');
+
+  // Inicializar cada slot con la primera imagen visible y el resto desplazadas
+  function initSlots() {
+    slotContainers.forEach(container => {
+      const axis = container.getAttribute('data-axis'); // 'x' o 'y'
+      const baseDir = parseInt(container.getAttribute('data-dir')) || 1;
+      const items = container.querySelectorAll('.slot-item');
+
+      items.forEach(item => {
+        const itemIdx = parseInt(item.getAttribute('data-index'));
+        item.style.transition = 'none';
+        if (itemIdx === 0) {
+          item.style.transform = 'translate(0%, 0%)';
+          item.style.zIndex = '2';
+        } else {
+          const sign = baseDir > 0 ? 100 : -100;
+          item.style.transform = axis === 'x' ? `translate(${sign}%, 0%)` : `translate(0%, ${sign}%)`;
+          item.style.zIndex = '1';
+        }
+      });
+    });
+  }
+
+  // Desplazar individualmente cada una de las 6 celdas
+  function goToSlide(targetIdx, navigationStepDirection = null) {
+    if (targetIdx === currentCategoryIndex && navigationStepDirection === null) return;
+    if (isAnimating) return;
+    isAnimating = true;
+
+    // Calcular dirección global (1 para avance hacia adelante, -1 hacia atrás)
+    let globalDir = navigationStepDirection;
+    if (globalDir === null) {
+      globalDir = targetIdx > currentCategoryIndex ? 1 : -1;
+    }
+
+    const prevIdx = currentCategoryIndex;
+    let nextIdx = targetIdx;
+    if (nextIdx < 0) nextIdx = totalSlides - 1;
+    if (nextIdx >= totalSlides) nextIdx = 0;
+    currentCategoryIndex = nextIdx;
+
+    // Animar cada celda con su propio eje y trayectoria
+    slotContainers.forEach(container => {
+      const axis = container.getAttribute('data-axis'); // 'x' o 'y'
+      const baseDir = parseInt(container.getAttribute('data-dir')) || 1;
+      const effectiveDir = baseDir * globalDir;
+
+      const items = container.querySelectorAll('.slot-item');
+      let outgoingItem = null;
+      let incomingItem = null;
+
+      items.forEach(item => {
+        const idx = parseInt(item.getAttribute('data-index'));
+        if (idx === prevIdx) outgoingItem = item;
+        if (idx === nextIdx) incomingItem = item;
+      });
+
+      if (outgoingItem && incomingItem) {
+        incomingItem.style.transition = 'none';
+        const startTranslate = effectiveDir > 0 ? 100 : -100;
+        incomingItem.style.transform = axis === 'x' ? `translate(${startTranslate}%, 0%)` : `translate(0%, ${startTranslate}%)`;
+        incomingItem.style.zIndex = '3';
+        outgoingItem.style.zIndex = '2';
+
+        void incomingItem.offsetWidth;
+
+        const transitionStyle = 'transform 550ms cubic-bezier(0.25, 1, 0.5, 1)';
+        incomingItem.style.transition = transitionStyle;
+        outgoingItem.style.transition = transitionStyle;
+
+        incomingItem.style.transform = 'translate(0%, 0%)';
+        const exitTranslate = effectiveDir > 0 ? -100 : 100;
+        outgoingItem.style.transform = axis === 'x' ? `translate(${exitTranslate}%, 0%)` : `translate(0%, ${exitTranslate}%)`;
+      }
+    });
+
+    // Actualizar botones de categorías
+    categoryButtons.forEach((btn, idx) => {
+      if (idx === currentCategoryIndex) {
+        btn.className = "category-btn px-4 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all duration-200 shadow-md flex items-center gap-1.5 whitespace-nowrap bg-brand-darkBlue text-white shadow-brand-darkBlue/25";
+      } else {
+        btn.className = "category-btn px-4 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all duration-200 border border-slate-200 bg-white text-slate-600 hover:text-brand-darkBlue hover:border-brand-darkBlue/40 flex items-center gap-1.5 whitespace-nowrap";
+      }
+    });
+
+    // Actualizar dots
+    dotButtons.forEach((dot, idx) => {
+      if (idx === currentCategoryIndex) {
+        dot.className = "dot-btn w-6 h-2 rounded-full bg-brand-darkBlue transition-all duration-300";
+      } else {
+        dot.className = "dot-btn w-2 h-2 rounded-full bg-slate-300 hover:bg-slate-400 transition-all duration-300";
+      }
+    });
+
+    // Actualizar textos informativos
+    currentSlideNumEl.textContent = `0${currentCategoryIndex + 1}`;
+    currentCategoryNameEl.textContent = subtitles[currentCategoryIndex];
+
+    setTimeout(() => {
+      isAnimating = false;
+    }, 560);
+  }
+
+  initSlots();
+
+  categoryButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const idx = parseInt(btn.getAttribute('data-cat-idx'));
+      goToSlide(idx);
+    });
+  });
+
+  dotButtons.forEach(dot => {
+    dot.addEventListener('click', () => {
+      const idx = parseInt(dot.getAttribute('data-index'));
+      goToSlide(idx);
+    });
+  });
+
+  nextBtn.addEventListener('click', () => {
+    goToSlide((currentCategoryIndex + 1) % totalSlides, 1);
+  });
+
+  prevBtn.addEventListener('click', () => {
+    goToSlide((currentCategoryIndex - 1 + totalSlides) % totalSlides, -1);
+  });
+</script>
+</body></html>
