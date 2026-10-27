@@ -104,48 +104,6 @@ export function Navbar() {
                   <span className="w-2.5 h-2.5 rounded-full bg-[#8EB674]" />
                   <span>Primaria (1° a 6° Grado)</span>
                 </Link>
-                <Link
-                  className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-sm font-semibold text-slate-700 hover:text-primary hover:bg-slate-100/80 transition-colors"
-                  href="/#niveles-educativos"
-                >
-                  <span className="w-2.5 h-2.5 rounded-full bg-[#546FAC]" />
-                  <span>Horario Extendido (6 PM)</span>
-                </Link>
-              </div>
-            </div>
-          </div>
-
-          {/* Dropdown Nuestro Colegio */}
-          <div className="relative group py-2">
-            <button
-              className="flex items-center gap-1 text-sm font-semibold text-white/90 group-hover:text-white transition-colors drop-shadow-sm focus:outline-none"
-              aria-haspopup="true"
-            >
-              <span>Nuestro colegio</span>
-              <span className="material-symbols-outlined text-[18px] transition-transform duration-200 group-hover:rotate-180">
-                expand_more
-              </span>
-            </button>
-            <div className="absolute left-0 top-full pt-2 w-48 opacity-0 translate-y-2 pointer-events-none group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto transition-all duration-200 z-50">
-              <div className="bg-white/95 backdrop-blur-md rounded-2xl p-2 shadow-2xl border border-white/40 flex flex-col gap-1 text-slate-800">
-                <Link
-                  className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-sm font-semibold text-slate-700 hover:text-primary hover:bg-slate-100/80 transition-colors"
-                  href="/#footer-everest"
-                >
-                  <span className="material-symbols-outlined text-[18px] text-primary">
-                    school
-                  </span>
-                  <span>Campus León</span>
-                </Link>
-                <Link
-                  className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-sm font-semibold text-slate-700 hover:text-primary hover:bg-slate-100/80 transition-colors"
-                  href="/#testimonios"
-                >
-                  <span className="material-symbols-outlined text-[18px] text-primary">
-                    diversity_3
-                  </span>
-                  <span>Comunidad de Familias</span>
-                </Link>
               </div>
             </div>
           </div>
@@ -245,13 +203,7 @@ export function Navbar() {
               <span>Primaria Bilingüe (1° a 6° Grado)</span>
               <span className="text-xs px-2.5 py-0.5 rounded-full bg-[#8EB674] text-white font-bold">IMPACT IA</span>
             </Link>
-            <Link
-              href="/#niveles-educativos"
-              onClick={() => setMobileMenuOpen(false)}
-              className="py-2 text-base font-semibold border-b border-white/10"
-            >
-              Horario Extendido (6 PM)
-            </Link>
+
             <Link
               href="/#testimonios"
               onClick={() => setMobileMenuOpen(false)}

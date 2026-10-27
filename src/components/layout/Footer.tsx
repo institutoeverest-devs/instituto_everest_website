@@ -208,17 +208,12 @@ export function Footer() {
               </div>
 
               <div>
-                <h4 className="font-bold text-[16px] mb-2 text-[#E5A93C]">Aviso de Privacidad</h4>
+                <h4 className="font-bold text-[16px] mb-2 text-[#E5A93C]">Legal</h4>
                 <ul className="space-y-2 text-xs text-slate-300 leading-relaxed">
                   <li>
-                    <a href="#aviso" className="hover:text-white transition-colors">
-                      Consulte aquí nuestro Aviso de Privacidad
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#arco" className="hover:text-white transition-colors">
-                      Consulte sus derechos ARCO
-                    </a>
+                    <Link href="/terminos-y-condiciones" className="hover:text-white transition-colors">
+                      Términos y Condiciones
+                    </Link>
                   </li>
                 </ul>
               </div>
