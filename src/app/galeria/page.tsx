@@ -5,7 +5,7 @@ import { GaleriaCollage } from "@/components/galeria/GaleriaCollage";
 export const metadata: Metadata = {
   title: "Galería de Momentos & Vida Escolar | Instituto Everest León",
   description:
-    "Explora momentos significativos de nuestra comunidad escolar y actividades en Campus León: Maternal, Preescolar, Primaria y Academias formativas.",
+    "Explora momentos significativos de nuestra comunidad escolar y actividades en Campus León: Maternal, Preescolar, Primaria, Taekwondo, Arte y Teatro.",
   alternates: {
     canonical: "/galeria",
   },

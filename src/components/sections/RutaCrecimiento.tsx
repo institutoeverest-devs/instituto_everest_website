@@ -5,7 +5,7 @@ import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { GROWTH_STAGES } from "@/lib/constants";
 
-const DURATION_MS = 4500;
+const DURATION_MS = 20000;
 
 export function RutaCrecimiento() {
   const [currentStage, setCurrentStage] = useState(0);

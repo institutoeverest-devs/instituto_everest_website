@@ -1,14 +1,13 @@
 "use client";
 
 import { motion } from "framer-motion";
-import Link from "next/link";
 import { SITE_CONFIG } from "@/lib/constants";
 
 export function HeroSection() {
   return (
     <section
       id="hero"
-      className="relative w-full min-h-[640px] lg:min-h-[720px] overflow-hidden flex items-center justify-center pt-28 pb-20 lg:pt-36 lg:pb-28"
+      className="relative w-full min-h-[580px] lg:min-h-[660px] overflow-hidden flex items-center justify-center pt-24 pb-14 lg:pt-28 lg:pb-16"
     >
       {/* Background Video with Poster Fallback */}
       <video
@@ -48,16 +47,16 @@ export function HeroSection() {
       />
 
       {/* Hero Content Container */}
-      <div className="max-w-[1280px] w-full mx-auto px-4 sm:px-6 relative z-10 flex flex-col items-start justify-center text-left my-auto py-8">
+      <div className="max-w-[1280px] w-full mx-auto px-4 sm:px-6 relative z-10 flex flex-col items-start justify-center text-left py-2 sm:py-4">
         <motion.div
-          initial={{ opacity: 0, y: 25 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, ease: "easeOut" }}
-          className="max-w-2xl flex flex-col items-start text-left space-y-6"
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="max-w-2xl flex flex-col items-start text-left space-y-4 sm:space-y-5"
         >
           {/* Badge Inscripciones */}
           <div
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full shadow-lg backdrop-blur-md"
+            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full shadow-lg backdrop-blur-md"
             style={{
               background: "rgba(255, 255, 255, 0.15)",
               border: "1px solid rgba(255, 255, 255, 0.3)",
@@ -68,7 +67,7 @@ export function HeroSection() {
               style={{ backgroundColor: "#F6D448" }}
             />
             <span className="text-xs sm:text-sm text-white font-bold tracking-wide">
-              Ciclo Escolar 2025 · Inscripciones Abiertas León, Gto.
+              Ciclo Escolar 2027 · Inscripciones Abiertas León, Gto.
             </span>
           </div>
 
@@ -95,7 +94,7 @@ export function HeroSection() {
           </div>
 
           {/* Editorial Headline */}
-          <h1 className="font-headline text-[42px] sm:text-[54px] lg:text-[62px] text-white tracking-tight leading-[1.12] drop-shadow-md">
+          <h1 className="font-headline text-[38px] sm:text-[48px] lg:text-[56px] text-white tracking-tight leading-[1.12] drop-shadow-md">
             Donde tus sueños <br />
             <span className="italic" style={{ color: "#F6D448" }}>
               alcanzan la cima.
@@ -103,17 +102,17 @@ export function HeroSection() {
           </h1>
 
           {/* Supporting Copy */}
-          <p className="text-base sm:text-lg text-white/95 max-w-xl leading-relaxed drop-shadow-sm font-normal">
+          <p className="text-sm sm:text-base text-white/95 max-w-xl leading-relaxed drop-shadow-sm font-normal">
             En Instituto Everest formamos líderes compasivos, seguros y bilingües. Aquí crecemos juntos con calidez humana, bilingüismo real AMCO e innovación STEAM.
           </p>
 
           {/* Action CTAs */}
-          <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-start gap-3 sm:gap-4 pt-2 w-full">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-start gap-3 sm:gap-4 pt-1 w-full">
             <a
               href={`https://wa.me/${SITE_CONFIG.whatsapp}?text=Hola,%20deseo%20agendar%20una%20visita%20personalizada%20en%20Instituto%20Everest%20León`}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 px-6 py-4 rounded-2xl text-white font-bold text-sm sm:text-base shadow-xl transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer text-center"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl text-white font-bold text-sm sm:text-base shadow-xl transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer text-center"
               style={{
                 backgroundColor: "rgb(218, 71, 74)",
                 boxShadow: "rgba(218, 71, 74, 0.45) 0px 10px 28px",
@@ -122,19 +121,6 @@ export function HeroSection() {
               <span className="material-symbols-outlined text-[20px]">calendar_month</span>
               Agendar Visita Personalizada
             </a>
-
-            <Link
-              href="#niveles-educativos"
-              className="inline-flex items-center justify-center gap-2 px-6 py-4 rounded-2xl text-white font-bold text-sm sm:text-base transition-all duration-300 hover:bg-white/25 backdrop-blur-md cursor-pointer text-center"
-              style={{
-                background: "rgba(255, 255, 255, 0.15)",
-                border: "1.5px solid rgba(255, 255, 255, 0.4)",
-                textShadow: "rgba(0, 0, 0, 0.25) 0px 1px 2px",
-              }}
-            >
-              <span className="material-symbols-outlined text-[20px]">explore</span>
-              Conocer Modelo Educativo
-            </Link>
           </div>
         </motion.div>
       </div>

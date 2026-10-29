@@ -3,11 +3,22 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const pathname = usePathname();
+
+  const isInicio = pathname === "/";
+  const isColegio = pathname === "/galeria";
+  const isNiveles =
+    pathname === "/maternal" ||
+    pathname === "/preescolar" ||
+    pathname === "/primaria";
+  const isContacto = pathname === "/contacto";
+  const isGaleria = pathname === "/galeria";
 
   useEffect(() => {
     const handleScroll = () => {
@@ -21,11 +32,13 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const isBlueNavbar = isGaleria || scrolled;
+
   return (
     <header
       className={`fixed top-4 left-0 right-0 mx-auto w-[94%] max-w-[1280px] z-50 transition-all duration-300 backdrop-blur-md rounded-2xl ${
-        scrolled
-          ? "bg-[#0A1128]/85 border border-white/20 shadow-2xl"
+        isBlueNavbar
+          ? "bg-[#0A1128]/90 border border-white/20 shadow-2xl"
           : "bg-white/15 border border-white/30 shadow-[0_10px_30px_rgba(0,0,0,0.25)]"
       }`}
     >
@@ -47,12 +60,9 @@ export function Navbar() {
               priority
             />
           </div>
-          <div className="flex flex-col">
+          <div className="flex items-center">
             <span className="font-headline text-[19px] sm:text-[21px] font-bold text-white tracking-tight drop-shadow-sm leading-tight">
               Instituto Everest
-            </span>
-            <span className="text-[11px] text-white/90 hidden sm:inline-block font-medium tracking-wide">
-              León · Guanajuato
             </span>
           </div>
         </Link>
@@ -62,18 +72,81 @@ export function Navbar() {
           className="hidden xl:flex items-center gap-6"
           aria-label="Navegación principal"
         >
-          <Link
-            aria-current="page"
-            className="transition-colors text-white font-bold drop-shadow-sm pb-1 border-b-2 border-[#F6D448] text-sm"
-            href="#hero"
-          >
-            Inicio
-          </Link>
+          {/* Inicio */}
+          <div className="relative py-2 flex items-center">
+            <Link
+              className={`text-sm transition-colors drop-shadow-sm ${
+                isInicio
+                  ? "text-white font-bold"
+                  : "text-white/90 hover:text-white font-semibold"
+              }`}
+              href="/"
+            >
+              Inicio
+            </Link>
+            {isInicio && (
+              <motion.span
+                layoutId="active-nav-indicator"
+                className="absolute bottom-0 left-0 right-0 h-[2.5px] bg-[#F6D448] rounded-full pointer-events-none"
+                transition={{ type: "spring", stiffness: 380, damping: 30 }}
+              />
+            )}
+          </div>
+
+          {/* Dropdown Nuestro Colegio */}
+          <div className="relative group py-2 flex items-center">
+            <button
+              className={`flex items-center gap-1 text-sm transition-colors drop-shadow-sm focus:outline-none cursor-pointer ${
+                isColegio
+                  ? "text-white font-bold"
+                  : "text-white/90 group-hover:text-white font-semibold"
+              }`}
+              aria-haspopup="true"
+            >
+              <span>Nuestro Colegio</span>
+              <span className="material-symbols-outlined text-[18px] transition-transform duration-200 group-hover:rotate-180">
+                expand_more
+              </span>
+            </button>
+            {isColegio && (
+              <motion.span
+                layoutId="active-nav-indicator"
+                className="absolute bottom-0 left-0 right-0 h-[2.5px] bg-[#F6D448] rounded-full pointer-events-none"
+                transition={{ type: "spring", stiffness: 380, damping: 30 }}
+              />
+            )}
+            <div className="absolute left-0 top-full pt-2 w-48 opacity-0 translate-y-2 pointer-events-none group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto transition-all duration-200 z-50">
+              <div className="bg-white/95 backdrop-blur-md rounded-2xl p-2 shadow-2xl border border-white/40 flex flex-col gap-1 text-slate-800">
+                <Link
+                  className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-sm font-semibold text-slate-700 hover:text-primary hover:bg-slate-100/80 transition-colors"
+                  href="/#nosotros"
+                >
+                  <span className="w-2.5 h-2.5 min-w-[10px] min-h-[10px] shrink-0 rounded-full aspect-square inline-block bg-[#546FAC]" />
+                  <span>Nosotros</span>
+                </Link>
+                <Link
+                  className={`flex items-center gap-2.5 px-3 py-2 rounded-xl text-sm transition-colors ${
+                    pathname === "/galeria"
+                      ? "bg-slate-100 text-primary font-bold"
+                      : "text-slate-700 font-semibold hover:text-primary hover:bg-slate-100/80"
+                  }`}
+                  href="/galeria"
+                >
+                  <span className="w-2.5 h-2.5 min-w-[10px] min-h-[10px] shrink-0 rounded-full aspect-square inline-block bg-[#F6D448]" />
+                  <span>Galería</span>
+                </Link>
+              </div>
+            </div>
+          </div>
 
           {/* Dropdown Niveles Educativos */}
-          <div className="relative group py-2">
+          <div className="relative group py-2 flex items-center">
             <button
-              className="flex items-center gap-1 text-sm font-semibold text-white/90 group-hover:text-white transition-colors drop-shadow-sm focus:outline-none"
+              className={`flex items-center gap-1 text-sm transition-colors drop-shadow-sm focus:outline-none cursor-pointer ${
+                isNiveles
+                  ? "text-white font-bold"
+                  : "text-white/90 group-hover:text-white font-semibold"
+              }`}
               aria-haspopup="true"
             >
               <span>Niveles Educativos</span>
@@ -81,46 +154,72 @@ export function Navbar() {
                 expand_more
               </span>
             </button>
-            <div className="absolute left-0 top-full pt-2 w-52 opacity-0 translate-y-2 pointer-events-none group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto transition-all duration-200 z-50">
+            {isNiveles && (
+              <motion.span
+                layoutId="active-nav-indicator"
+                className="absolute bottom-0 left-0 right-0 h-[2.5px] bg-[#F6D448] rounded-full pointer-events-none"
+                transition={{ type: "spring", stiffness: 380, damping: 30 }}
+              />
+            )}
+            <div className="absolute left-0 top-full pt-2 w-44 opacity-0 translate-y-2 pointer-events-none group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto transition-all duration-200 z-50">
               <div className="bg-white/95 backdrop-blur-md rounded-2xl p-2 shadow-2xl border border-white/40 flex flex-col gap-1 text-slate-800">
                 <Link
-                  className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-sm font-semibold text-slate-700 hover:text-primary hover:bg-slate-100/80 transition-colors"
+                  className={`flex items-center gap-2.5 px-3 py-2 rounded-xl text-sm transition-colors ${
+                    pathname === "/maternal"
+                      ? "bg-slate-100 text-primary font-bold"
+                      : "text-slate-700 font-semibold hover:text-primary hover:bg-slate-100/80"
+                  }`}
                   href="/maternal"
                 >
-                  <span className="w-2.5 h-2.5 rounded-full bg-[#F6D448]" />
-                  <span>Maternal (1 a 3 años)</span>
+                  <span className="w-2.5 h-2.5 min-w-[10px] min-h-[10px] shrink-0 rounded-full aspect-square inline-block bg-[#F6D448]" />
+                  <span>Maternal</span>
                 </Link>
                 <Link
-                  className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-sm font-semibold text-slate-700 hover:text-primary hover:bg-slate-100/80 transition-colors"
+                  className={`flex items-center gap-2.5 px-3 py-2 rounded-xl text-sm transition-colors ${
+                    pathname === "/preescolar"
+                      ? "bg-slate-100 text-primary font-bold"
+                      : "text-slate-700 font-semibold hover:text-primary hover:bg-slate-100/80"
+                  }`}
                   href="/preescolar"
                 >
-                  <span className="w-2.5 h-2.5 rounded-full bg-[#557EBD]" />
-                  <span>Preescolar Bilingüe (3 a 6 años)</span>
+                  <span className="w-2.5 h-2.5 min-w-[10px] min-h-[10px] shrink-0 rounded-full aspect-square inline-block bg-[#557EBD]" />
+                  <span>Preescolar</span>
                 </Link>
                 <Link
-                  className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-sm font-semibold text-slate-700 hover:text-primary hover:bg-slate-100/80 transition-colors"
+                  className={`flex items-center gap-2.5 px-3 py-2 rounded-xl text-sm transition-colors ${
+                    pathname === "/primaria"
+                      ? "bg-slate-100 text-primary font-bold"
+                      : "text-slate-700 font-semibold hover:text-primary hover:bg-slate-100/80"
+                  }`}
                   href="/primaria"
                 >
-                  <span className="w-2.5 h-2.5 rounded-full bg-[#8EB674]" />
-                  <span>Primaria (1° a 6° Grado)</span>
+                  <span className="w-2.5 h-2.5 min-w-[10px] min-h-[10px] shrink-0 rounded-full aspect-square inline-block bg-[#8EB674]" />
+                  <span>Primaria</span>
                 </Link>
               </div>
             </div>
           </div>
 
-          <Link
-            className="text-sm font-semibold text-white/90 hover:text-white transition-colors drop-shadow-sm"
-            href="/galeria"
-          >
-            Galería
-          </Link>
-
-          <Link
-            className="text-sm font-semibold text-white/90 hover:text-white transition-colors drop-shadow-sm"
-            href="/contacto"
-          >
-            Contacto
-          </Link>
+          {/* Contacto */}
+          <div className="relative py-2 flex items-center">
+            <Link
+              className={`text-sm transition-colors drop-shadow-sm ${
+                isContacto
+                  ? "text-white font-bold"
+                  : "text-white/90 hover:text-white font-semibold"
+              }`}
+              href="/contacto"
+            >
+              Contacto
+            </Link>
+            {isContacto && (
+              <motion.span
+                layoutId="active-nav-indicator"
+                className="absolute bottom-0 left-0 right-0 h-[2.5px] bg-[#F6D448] rounded-full pointer-events-none"
+                transition={{ type: "spring", stiffness: 380, damping: 30 }}
+              />
+            )}
+          </div>
         </nav>
 
         {/* Action Button & Mobile toggle */}
@@ -133,7 +232,7 @@ export function Navbar() {
               boxShadow: "rgba(218, 71, 74, 0.4) 0px 4px 14px",
             }}
           >
-            Admisiones 2025
+            Admisiones 2027
           </Link>
 
           <button
@@ -165,44 +264,58 @@ export function Navbar() {
             >
               Inicio
             </Link>
-            <Link
-              href="/#embajadores"
-              onClick={() => setMobileMenuOpen(false)}
-              className="py-2 text-base font-semibold border-b border-white/10"
-            >
-              5 Embajadores del Aprendizaje
-            </Link>
-            <Link
-              href="/#ruta-crecimiento"
-              onClick={() => setMobileMenuOpen(false)}
-              className="py-2 text-base font-semibold border-b border-white/10"
-            >
-              Ruta Integral de Crecimiento
-            </Link>
-            <Link
-              href="/maternal"
-              onClick={() => setMobileMenuOpen(false)}
-              className="py-2 text-base font-semibold border-b border-white/10 flex items-center justify-between"
-            >
-              <span>Maternal (1 a 3 años)</span>
-              <span className="text-xs px-2.5 py-0.5 rounded-full bg-[#F6D448] text-slate-900 font-bold">Nuevo</span>
-            </Link>
-            <Link
-              href="/preescolar"
-              onClick={() => setMobileMenuOpen(false)}
-              className="py-2 text-base font-semibold border-b border-white/10 flex items-center justify-between"
-            >
-              <span>Preescolar Bilingüe (3 a 6 años)</span>
-              <span className="text-xs px-2.5 py-0.5 rounded-full bg-[#557EBD] text-white font-bold">AMCO</span>
-            </Link>
-            <Link
-              href="/primaria"
-              onClick={() => setMobileMenuOpen(false)}
-              className="py-2 text-base font-semibold border-b border-white/10 flex items-center justify-between"
-            >
-              <span>Primaria Bilingüe (1° a 6° Grado)</span>
-              <span className="text-xs px-2.5 py-0.5 rounded-full bg-[#8EB674] text-white font-bold">IMPACT IA</span>
-            </Link>
+            
+            {/* Nuestro Colegio */}
+            <div className="py-2 border-b border-white/10 flex flex-col gap-2">
+              <span className="text-xs font-bold uppercase tracking-wider text-[#F6D448]">Nuestro Colegio</span>
+              <div className="pl-3 flex flex-col gap-2">
+                <Link
+                  href="/#nosotros"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="text-sm font-medium hover:text-[#F6D448] transition-colors"
+                >
+                  Nosotros
+                </Link>
+                <Link
+                  href="/galeria"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="text-sm font-medium hover:text-[#F6D448] transition-colors"
+                >
+                  Galería
+                </Link>
+              </div>
+            </div>
+
+            {/* Niveles Educativos */}
+            <div className="py-2 border-b border-white/10 flex flex-col gap-2">
+              <span className="text-xs font-bold uppercase tracking-wider text-[#F6D448]">Niveles Educativos</span>
+              <div className="pl-3 flex flex-col gap-2.5">
+                <Link
+                  href="/maternal"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="text-sm font-medium flex items-center justify-between"
+                >
+                  <span>Maternal</span>
+                  <span className="text-xs px-2.5 py-0.5 rounded-full bg-[#F6D448] text-slate-900 font-bold">1 a 3 años</span>
+                </Link>
+                <Link
+                  href="/preescolar"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="text-sm font-medium flex items-center justify-between"
+                >
+                  <span>Preescolar</span>
+                  <span className="text-xs px-2.5 py-0.5 rounded-full bg-[#557EBD] text-white font-bold">3 a 6 años</span>
+                </Link>
+                <Link
+                  href="/primaria"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="text-sm font-medium flex items-center justify-between"
+                >
+                  <span>Primaria</span>
+                  <span className="text-xs px-2.5 py-0.5 rounded-full bg-[#8EB674] text-white font-bold">STEAM</span>
+                </Link>
+              </div>
+            </div>
 
             <Link
               href="/#testimonios"
@@ -212,18 +325,11 @@ export function Navbar() {
               La Voz de Nuestra Comunidad
             </Link>
             <Link
-              href="/galeria"
-              onClick={() => setMobileMenuOpen(false)}
-              className="py-2 text-base font-semibold border-b border-white/10"
-            >
-              Galería
-            </Link>
-            <Link
               href="/contacto"
               onClick={() => setMobileMenuOpen(false)}
               className="py-2 text-base font-semibold text-[#F6D448]"
             >
-              Agendar Visita Personalizada (Contacto)
+              Contacto
             </Link>
           </motion.div>
         )}

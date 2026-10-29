@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { SITE_CONFIG } from "@/lib/constants";
+import { FloatingActions } from "@/components/layout/FloatingActions";
 
 export function Footer() {
   return (
@@ -15,8 +16,12 @@ export function Footer() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-8 pb-14 border-b border-white/10">
             {/* Column 1: Brand & Contact */}
             <div className="lg:col-span-4 flex flex-col space-y-5">
-              <div className="flex items-center gap-3">
-                <div className="p-2.5 rounded-xl bg-white shadow-md inline-flex items-center justify-center">
+              <Link
+                href="/"
+                className="flex items-center gap-3 group focus:outline-none focus:ring-2 focus:ring-[#F6D448] rounded-xl w-fit"
+                aria-label="Ir al inicio de Instituto Everest"
+              >
+                <div className="p-2.5 rounded-xl bg-white shadow-md inline-flex items-center justify-center group-hover:scale-105 transition-transform">
                   <Image
                     alt="Instituto Everest León"
                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuCJFPWqYrvEUNm2zzcnwoSHbMtbpR5mhW7eP3WxKw44OSJAP9xVdZHn15EppSEgTX5yzkDEfxzqQWPGbEi1jsf5-ZLAc5BsEwKCrIRvJKJSpjd-mWgUqS5K6yRI-mh-4TQLQh6-xkXZJIAF8novmOKWD5foBIjRf3QvxhsUIjItPlQPzRy7penO3atyFfEZwUl0vkPkK67eaja94AKH0dpAEdK-l1uXvCeg2F6fsE_obp8o_bxuOebzWrKhWfXU1PwuTA"
@@ -27,43 +32,61 @@ export function Footer() {
                   />
                 </div>
                 <div className="flex flex-col">
-                  <span className="font-headline text-[20px] font-bold tracking-tight text-white leading-tight">
-                    {SITE_CONFIG.name}
+                  <span className="font-headline text-[20px] font-bold tracking-tight text-white leading-tight group-hover:text-[#F6D448] transition-colors">
+                    Instituto Everest
                   </span>
-                  <span className="text-xs text-white/70">{SITE_CONFIG.subtagline}</span>
                 </div>
-              </div>
+              </Link>
 
               <div className="space-y-1.5 pt-1">
-                <h4 className="font-bold text-[16px] text-[#E5A93C] tracking-wide">
-                  {SITE_CONFIG.campus}
-                </h4>
                 <p className="text-sm text-slate-300 leading-relaxed max-w-sm">
-                  {SITE_CONFIG.address.street} {SITE_CONFIG.address.neighborhood}, {SITE_CONFIG.address.city}, {SITE_CONFIG.address.state}, CP {SITE_CONFIG.address.postalCode}.
+                  Calle Luis Cabrera no.104. Fraccionamiento La Alameda, León, México, CP 37204.
                 </p>
               </div>
 
               <div className="space-y-2.5 pt-1">
-                <div className="flex items-center gap-2.5 text-sm text-slate-200">
+                <a
+                  href={`tel:${SITE_CONFIG.phone.replace(/\s+/g, "")}`}
+                  className="flex items-center gap-2.5 text-sm text-slate-200 hover:text-white transition-colors"
+                >
                   <span className="material-symbols-outlined text-[19px] shrink-0 text-[#E5A93C]">
-                    headset_mic
+                    call
                   </span>
                   <span>
-                    Conmutador: <strong>{SITE_CONFIG.phone}</strong>
+                    Teléfono: <strong>{SITE_CONFIG.phone}</strong>
                   </span>
-                </div>
+                </a>
 
                 <a
-                  href={`https://wa.me/${SITE_CONFIG.whatsapp}`}
+                  href={`https://wa.me/${SITE_CONFIG.whatsapp}?text=Hola,%20los%20contacto%20a%20trav%C3%A9s%20del%20sitio%20web%20y%20deseo%20recibir%20informaci%C3%B3n`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-2.5 text-sm text-slate-200 hover:text-white transition-colors"
                 >
-                  <svg className="w-[18px] h-[18px] shrink-0 fill-[#25D366]" viewBox="0 0 24 24">
-                    <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.007c.106.005.249-.04.39.299.144.347.491 1.2.534 1.287.043.087.072.188.014.303-.058.116-.087.188-.173.289l-.26.303c-.087.086-.177.181-.076.355.101.173.449.741.963 1.2.662.591 1.221.774 1.394.86.173.086.275.072.376-.044.101-.116.433-.506.549-.68.116-.173.231-.144.39-.086s1.011.477 1.184.564.289.13.332.202c.044.073.044.42-.1.825zM12.012 2c-5.508 0-9.985 4.477-9.985 9.985 0 1.988.583 3.844 1.593 5.409L2 22l4.757-1.564c1.513.918 3.28 1.448 5.255 1.448 5.508 0 9.985-4.477 9.985-9.985 0-5.508-4.477-9.985-9.985-9.985z" />
+                  <svg className="w-[19px] h-[19px] shrink-0" viewBox="0 0 24 24" fill="none">
+                    <path
+                      d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.63C8.75 21.41 10.37 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2Z"
+                      fill="#25D366"
+                    />
+                    <path
+                      d="M17.52 14.33C17.22 14.18 15.75 13.45 15.48 13.35C15.21 13.25 15.01 13.2 14.81 13.5C14.61 13.79 14.04 14.46 13.87 14.66C13.7 14.86 13.53 14.88 13.23 14.73C12.93 14.58 11.97 14.27 10.84 13.26C9.96 12.47 9.36 11.5 9.19 11.2C9.02 10.9 9.17 10.74 9.32 10.59C9.45 10.46 9.61 10.25 9.76 10.08C9.91 9.9 9.96 9.78 10.06 9.58C10.16 9.38 10.11 9.21 10.04 9.06C9.96 8.91 9.37 7.46 9.12 6.86C8.88 6.28 8.64 6.36 8.46 6.35H7.9C7.7 6.35 7.37 6.42 7.1 6.72C6.83 7.02 6.06 7.74 6.06 9.2C6.06 10.66 7.12 12.07 7.27 12.27C7.42 12.47 9.36 15.47 12.33 16.75C13.04 17.06 13.59 17.24 14.02 17.38C14.73 17.61 15.38 17.57 15.9 17.49C16.47 17.41 17.66 16.77 17.91 16.07C18.16 15.37 18.16 14.78 18.08 14.66C18 14.53 17.82 14.48 17.52 14.33Z"
+                      fill="white"
+                    />
                   </svg>
                   <span>
-                    Admisiones (WhatsApp): <strong>{SITE_CONFIG.whatsappDisplay}</strong>
+                    WhatsApp: <strong>{SITE_CONFIG.whatsappDisplay}</strong>
+                  </span>
+                </a>
+
+                <a
+                  href={`mailto:${SITE_CONFIG.email}?subject=Contacto%20desde%20el%20sitio%20web&body=Hola,%20los%20contacto%20a%20trav%C3%A9s%20del%20sitio%20web%20y%20deseo%20recibir%20informaci%C3%B3n`}
+                  className="flex items-center gap-2.5 text-sm text-slate-200 hover:text-white transition-colors"
+                >
+                  <span className="material-symbols-outlined text-[19px] shrink-0 text-[#E5A93C]">
+                    mail
+                  </span>
+                  <span>
+                    Correo: <strong>{SITE_CONFIG.email}</strong>
                   </span>
                 </a>
               </div>
@@ -107,23 +130,18 @@ export function Footer() {
                 </h3>
                 <ul className="space-y-2.5 text-sm text-slate-300 font-medium">
                   <li>
-                    <Link href="#hero" className="hover:text-white transition-colors">
+                    <Link href="/#nosotros" className="hover:text-white transition-colors">
                       Nuestro Colegio
                     </Link>
                   </li>
                   <li>
-                    <Link href="#ruta-crecimiento" className="hover:text-white transition-colors">
-                      Modelo Educativo
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="#pilares-showcase" className="hover:text-white transition-colors">
-                      Deporte y Cultura
+                    <Link href="/galeria" className="hover:text-white transition-colors">
+                      Galería
                     </Link>
                   </li>
                   <li>
                     <Link href="/contacto" className="hover:text-white transition-colors">
-                      Contacto y Citas
+                      Contacto
                     </Link>
                   </li>
                 </ul>
@@ -137,26 +155,10 @@ export function Footer() {
                   Innovación & Programas
                 </h3>
                 <ul className="space-y-2.5 text-sm text-slate-300 font-medium">
-                  <li>
-                    <Link href="#pilares-showcase" className="hover:text-white transition-colors">
-                      Metodología AMCO
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="#pilares-showcase" className="hover:text-white transition-colors">
-                      Inteligencia Artificial & Robótica
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="#pilares-showcase" className="hover:text-white transition-colors">
-                      Orquesta Infantil & Música
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="#niveles-educativos" className="hover:text-white transition-colors">
-                      Taekwondo & Talleres
-                    </Link>
-                  </li>
+                  <li>Inteligencia Artificial</li>
+                  <li>Teatro</li>
+                  <li>Arte</li>
+                  <li>Taekwondo</li>
                 </ul>
               </div>
 
@@ -168,11 +170,7 @@ export function Footer() {
                       Directorio Institucional
                     </Link>
                   </li>
-                  <li>
-                    <Link href="#niveles-educativos" className="hover:text-white transition-colors">
-                      Horario Extendido (Hasta 6:00 PM)
-                    </Link>
-                  </li>
+                  <li>Horario Extendido (Hasta 6:00 PM)</li>
                 </ul>
               </div>
             </div>
@@ -199,11 +197,6 @@ export function Footer() {
                       Primaria (1° a 6° Grado)
                     </Link>
                   </li>
-                  <li>
-                    <Link href="#niveles-educativos" className="hover:text-white transition-colors">
-                      Horario Extendido
-                    </Link>
-                  </li>
                 </ul>
               </div>
 
@@ -221,27 +214,25 @@ export function Footer() {
           </div>
 
           {/* Bottom Bar */}
-          <div className="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-400 gap-3">
-            <p>© {new Date().getFullYear()} Instituto Everest León. Todos los derechos reservados.</p>
-            <p className="text-slate-400/80">Donde tus sueños alcanzan la cima · Aquí crecemos juntos</p>
+          <div className="pt-8 flex flex-col items-center justify-center text-center text-xs text-slate-400 gap-2 border-t border-white/5 pb-4">
+            <p>© {new Date().getFullYear()} Instituto Everest. Todos los derechos reservados.</p>
+            <p className="text-slate-400/90 text-center">
+              Desarrollado por{" "}
+              <a
+                href="https://www.blackcherryitconsulting.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#E5A93C] hover:underline font-semibold transition-colors"
+              >
+                BlackCherry IT Consulting
+              </a>
+            </p>
           </div>
         </div>
       </footer>
 
-      {/* Floating WhatsApp Action Button */}
-      <a
-        aria-label="Contactar por WhatsApp"
-        href={`https://wa.me/${SITE_CONFIG.whatsapp}?text=Hola,%20quisiera%20recibir%20información%20de%20admisiones%20en%20Instituto%20Everest%20León`}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="fixed bottom-6 right-6 z-40 w-14 h-14 rounded-full bg-[#25D366] text-white shadow-2xl flex items-center justify-center hover:scale-110 active:scale-95 transition-all duration-300 group"
-        style={{ boxShadow: "rgba(37, 211, 102, 0.45) 0px 10px 25px" }}
-      >
-        <svg className="w-8 h-8 fill-current" viewBox="0 0 24 24">
-          <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.007c.106.005.249-.04.39.299.144.347.491 1.2.534 1.287.043.087.072.188.014.303-.058.116-.087.188-.173.289l-.26.303c-.087.086-.177.181-.076.355.101.173.449.741.963 1.2.662.591 1.221.774 1.394.86.173.086.275.072.376-.044.101-.116.433-.506.549-.68.116-.173.231-.144.39-.086s1.011.477 1.184.564.289.13.332.202c.044.073.044.42-.1.825zM12.012 2c-5.508 0-9.985 4.477-9.985 9.985 0 1.988.583 3.844 1.593 5.409L2 22l4.757-1.564c1.513.918 3.28 1.448 5.255 1.448 5.508 0 9.985-4.477 9.985-9.985 0-5.508-4.477-9.985-9.985-9.985z" />
-        </svg>
-        <span className="sr-only">Contactar por WhatsApp con Admisiones</span>
-      </a>
+      {/* Floating Actions (WhatsApp + Scroll To Top) */}
+      <FloatingActions />
     </>
   );
 }

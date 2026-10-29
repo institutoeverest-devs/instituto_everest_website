@@ -7,3 +7,8 @@ This version has breaking changes — APIs, conventions, and file structure may 
 This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
 
 <!-- END:nextjs-agent-rules -->
+
+## Directrices de Desarrollo y Preferencias de Rendimiento
+
+- **No abrir Google Chrome ni herramientas de navegación/browser**: No usar automatización de navegador (Chrome DevTools, Puppeteer, etc.) para inspeccionar, navegar o comprobar sitios web.
+- **Respuestas rápidas y directas**: Proporcionar soluciones, código y correcciones de forma directa, ágil y concisa sin pausas para verificaciones visuales en navegador.

@@ -2,26 +2,36 @@
 
 import { useState, useRef, useEffect, useCallback } from "react";
 import Image from "next/image";
+import { motion, AnimatePresence } from "framer-motion";
 import { PILLARS } from "@/lib/constants";
 
 export function PilaresSection() {
   const [activeIdx, setActiveIdx] = useState(0);
   const scrollerRef = useRef<HTMLDivElement>(null);
+  const isProgrammaticRef = useRef(false);
+  const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const activePillar = PILLARS[activeIdx];
 
   const scrollToPillar = useCallback((idx: number) => {
     if (!scrollerRef.current) return;
     const cardHeight = 375 + 24; // height + gap
+    isProgrammaticRef.current = true;
+    setActiveIdx(idx);
+
     scrollerRef.current.scrollTo({
       top: idx * cardHeight,
       behavior: "smooth",
     });
-    setActiveIdx(idx);
+
+    if (scrollTimeoutRef.current) clearTimeout(scrollTimeoutRef.current);
+    scrollTimeoutRef.current = setTimeout(() => {
+      isProgrammaticRef.current = false;
+    }, 600);
   }, []);
 
   const handleScroll = () => {
-    if (!scrollerRef.current) return;
+    if (isProgrammaticRef.current || !scrollerRef.current) return;
     const scrollTop = scrollerRef.current.scrollTop;
     const cardHeight = 375 + 24;
     const current = Math.round(scrollTop / cardHeight);
@@ -29,6 +39,12 @@ export function PilaresSection() {
       setActiveIdx(current);
     }
   };
+
+  useEffect(() => {
+    return () => {
+      if (scrollTimeoutRef.current) clearTimeout(scrollTimeoutRef.current);
+    };
+  }, []);
 
   return (
     <section
@@ -42,25 +58,49 @@ export function PilaresSection() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
           {/* LADO IZQUIERDO: Títulos sincronizados e indicadores */}
           <div className="lg:col-span-5 flex flex-col justify-between space-y-6 pt-2">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#546fac]/10 border border-[#546fac]/20 w-fit backdrop-blur-md">
-              <span className="w-2.5 h-2.5 rounded-full bg-[#3b5692] animate-pulse" />
-              <span className="text-xs font-bold uppercase tracking-wider text-[#3b5692]">
-                {activePillar.badge}
-              </span>
-            </div>
+            {/* Panel de texto dinámico con transición suave sin saltos */}
+            <div className="relative min-h-[300px]">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeIdx}
+                  initial={{ opacity: 0, y: 6 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -6 }}
+                  transition={{ duration: 0.22, ease: "easeOut" }}
+                  className="space-y-5"
+                >
+                  <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#546fac]/10 border border-[#546fac]/20 w-fit backdrop-blur-md">
+                    <span className="w-2.5 h-2.5 rounded-full bg-[#3b5692] animate-pulse" />
+                    <span className="text-xs font-bold uppercase tracking-wider text-[#3b5692]">
+                      {activePillar.badge}
+                    </span>
+                  </div>
 
-            <div className="space-y-3">
-              <span className="text-xs uppercase font-bold text-[#345f9c] tracking-widest block transition-colors duration-300">
-                {activePillar.category}
-              </span>
-              <h2 className="font-headline text-3xl sm:text-4xl lg:text-[40px] text-slate-900 font-bold leading-tight transition-all duration-300">
-                {activePillar.title}
-              </h2>
-            </div>
+                  <div className="space-y-2">
+                    <span className="text-xs uppercase font-bold text-[#345f9c] tracking-widest block">
+                      {activePillar.category}
+                    </span>
+                    <h2 className="font-headline text-3xl sm:text-4xl lg:text-[40px] text-slate-900 font-bold leading-tight">
+                      {activePillar.title}
+                    </h2>
+                  </div>
 
-            <p className="text-sm sm:text-base text-slate-600 leading-relaxed transition-all duration-300 min-h-[96px]">
-              {activePillar.desc}
-            </p>
+                  <p className="text-sm sm:text-base text-slate-600 leading-relaxed min-h-[80px]">
+                    {activePillar.desc}
+                  </p>
+
+                  {/* Quote badge box */}
+                  <div className="p-4 rounded-2xl bg-[#f2f4f6] border border-slate-200/80 space-y-1.5">
+                    <span className="font-headline text-[15px] text-[#3b5692] font-bold block">
+                      «{activePillar.quote}»
+                    </span>
+                    <p className="text-xs text-slate-600 italic leading-snug">
+                      {activePillar.subquote}
+                    </p>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+            </div>
 
             {/* Stepper Tabs */}
             <div className="pt-4 space-y-4 border-t border-slate-200">
@@ -99,16 +139,6 @@ export function PilaresSection() {
                   </button>
                 ))}
               </div>
-            </div>
-
-            {/* Quote badge box */}
-            <div className="p-4 rounded-2xl bg-[#f2f4f6] border border-slate-200/80 space-y-1.5">
-              <span className="font-headline text-[15px] text-[#3b5692] font-bold block">
-                «{activePillar.quote}»
-              </span>
-              <p className="text-xs text-slate-600 italic leading-snug">
-                {activePillar.subquote}
-              </p>
             </div>
           </div>
 

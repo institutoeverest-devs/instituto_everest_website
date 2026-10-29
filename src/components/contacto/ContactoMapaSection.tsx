@@ -22,7 +22,7 @@ export function ContactoMapaSection() {
           {/* Botón de apertura en Google Maps */}
           <a
             className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold text-white bg-[#546FAC] hover:bg-[#465f94] transition-colors shadow-xs shrink-0 cursor-pointer"
-            href="https://maps.google.com/?q=Av.+Paseo+de+Alfaro+1425+Colonia+Providencia+Leon+Guanajuato"
+            href="https://maps.google.com/?q=Calle+Luis+Cabrera+104+La+Alameda+Leon+Guanajuato+37204"
             rel="noopener noreferrer"
             target="_blank"
           >
