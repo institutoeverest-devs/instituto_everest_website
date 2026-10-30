@@ -130,7 +130,7 @@ export function Footer() {
                 </h3>
                 <ul className="space-y-2.5 text-sm text-slate-300 font-medium">
                   <li>
-                    <Link href="/#nosotros" className="hover:text-white transition-colors">
+                    <Link href="/nosotros" className="hover:text-white transition-colors">
                       Nuestro Colegio
                     </Link>
                   </li>

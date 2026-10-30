@@ -12,13 +12,14 @@ export function Navbar() {
   const pathname = usePathname();
 
   const isInicio = pathname === "/";
-  const isColegio = pathname === "/galeria";
+  const isColegio = pathname === "/galeria" || pathname === "/nosotros";
   const isNiveles =
     pathname === "/maternal" ||
     pathname === "/preescolar" ||
     pathname === "/primaria";
   const isContacto = pathname === "/contacto";
   const isGaleria = pathname === "/galeria";
+  const isNosotros = pathname === "/nosotros";
 
   useEffect(() => {
     const handleScroll = () => {
@@ -32,27 +33,41 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const isBlueNavbar = isGaleria || isContacto || scrolled;
+  const isBlueNavbar = isGaleria || isContacto || isNosotros || scrolled;
 
   return (
     <header
-      className={`fixed top-4 left-0 right-0 mx-auto w-[94%] max-w-[1280px] z-50 transition-all duration-300 backdrop-blur-md rounded-2xl ${
+      className={`fixed left-0 right-0 mx-auto w-[94%] max-w-[1280px] z-50 transition-all duration-300 backdrop-blur-md rounded-2xl ${
+        scrolled
+          ? "top-2 sm:top-2.5 shadow-2xl"
+          : "top-4 shadow-[0_10px_30px_rgba(0,0,0,0.25)]"
+      } ${
         isBlueNavbar
-          ? "bg-[#0A1128]/90 border border-white/20 shadow-2xl"
-          : "bg-white/15 border border-white/30 shadow-[0_10px_30px_rgba(0,0,0,0.25)]"
+          ? "bg-[#0A1128]/92 border border-white/20"
+          : "bg-white/15 border border-white/30"
       }`}
     >
-      <div className="h-20 max-w-[1280px] mx-auto px-4 sm:px-6 flex items-center justify-between gap-4">
+      <div
+        className={`max-w-[1280px] mx-auto px-4 sm:px-6 flex items-center justify-between gap-4 transition-all duration-300 ${
+          scrolled ? "h-14 sm:h-15" : "h-20"
+        }`}
+      >
         {/* Brand / Logo */}
         <Link
           href="/"
-          className="flex items-center gap-3 focus:outline-none focus:ring-2 focus:ring-[#F6D448] rounded-xl p-1"
+          className="flex items-center gap-2.5 sm:gap-3 focus:outline-none focus:ring-2 focus:ring-[#F6D448] rounded-xl p-1"
           aria-label="Ir a inicio de Instituto Everest León"
         >
-          <div className="p-1.5 rounded-xl bg-white/95 shadow-sm flex items-center justify-center">
+          <div
+            className={`bg-white/95 shadow-sm flex items-center justify-center transition-all duration-300 ${
+              scrolled ? "p-1 rounded-lg" : "p-1.5 rounded-xl"
+            }`}
+          >
             <Image
               alt="Instituto Everest León Logo"
-              className="h-8 w-auto object-contain"
+              className={`w-auto object-contain transition-all duration-300 ${
+                scrolled ? "h-6 sm:h-7" : "h-8"
+              }`}
               src="https://lh3.googleusercontent.com/aida-public/AB6AXuDE6pr2NCPvAinEcdFjDryfeAMXxrSKLzRXl3mKqIJFDH6_yK3KQVnn9wyAamh63Yjjvec0siQbaevmxrQbaIdGIU0AnrFCdf7yac9f_PubscNv99V32dGYttOvSNREjgNAuqrGs_AfT8gjT3cIqMXGQwDwHWLnlJdKFhPfK-8lK6TXwKZ2BuX6IfM0sBq2Xwu1aeOQhLNO37k0Krow0sh32oBLX72sAmhZiTKzCo5MkkBHOiRdSXato60kfGUeXdVDgg"
               width={36}
               height={32}
@@ -61,7 +76,13 @@ export function Navbar() {
             />
           </div>
           <div className="flex items-center">
-            <span className="font-headline text-[19px] sm:text-[21px] font-bold text-white tracking-tight drop-shadow-sm leading-tight">
+            <span
+              className={`font-headline font-bold text-white tracking-tight drop-shadow-sm leading-tight transition-all duration-300 ${
+                scrolled
+                  ? "text-[16px] sm:text-[18px]"
+                  : "text-[19px] sm:text-[21px]"
+              }`}
+            >
               Instituto Everest
             </span>
           </div>
@@ -118,8 +139,12 @@ export function Navbar() {
             <div className="absolute left-0 top-full pt-2 w-48 opacity-0 translate-y-2 pointer-events-none group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto transition-all duration-200 z-50">
               <div className="bg-white/95 backdrop-blur-md rounded-2xl p-2 shadow-2xl border border-white/40 flex flex-col gap-1 text-slate-800">
                 <Link
-                  className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-sm font-semibold text-slate-700 hover:text-primary hover:bg-slate-100/80 transition-colors"
-                  href="/#nosotros"
+                  className={`flex items-center gap-2.5 px-3 py-2 rounded-xl text-sm transition-colors ${
+                    pathname === "/nosotros"
+                      ? "bg-slate-100 text-primary font-bold"
+                      : "text-slate-700 font-semibold hover:text-primary hover:bg-slate-100/80"
+                  }`}
+                  href="/nosotros"
                 >
                   <span className="w-2.5 h-2.5 min-w-[10px] min-h-[10px] shrink-0 rounded-full aspect-square inline-block bg-[#546FAC]" />
                   <span>Nosotros</span>
@@ -225,7 +250,11 @@ export function Navbar() {
         {/* Action Button & Mobile toggle */}
         <div className="flex items-center gap-3">
           <Link
-            className="inline-flex items-center justify-center px-5 py-2.5 rounded-xl text-white text-xs sm:text-sm font-bold transition-all duration-300 shadow-md hover:scale-105 active:scale-95 cursor-pointer"
+            className={`inline-flex items-center justify-center rounded-xl text-white font-bold transition-all duration-300 shadow-md hover:scale-105 active:scale-95 cursor-pointer shrink-0 ${
+              scrolled
+                ? "px-4 py-1.5 sm:py-2 text-xs sm:text-[13px]"
+                : "px-5 py-2.5 text-xs sm:text-sm"
+            }`}
             href="/contacto"
             style={{
               backgroundColor: "rgb(218, 71, 74)",
@@ -237,11 +266,17 @@ export function Navbar() {
 
           <button
             type="button"
-            className="xl:hidden p-2 rounded-xl bg-white/20 text-white hover:bg-white/30 transition-colors focus:outline-none focus:ring-2 focus:ring-[#F6D448]"
+            className={`xl:hidden rounded-xl bg-white/20 text-white hover:bg-white/30 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#F6D448] ${
+              scrolled ? "p-1.5" : "p-2"
+            }`}
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label={mobileMenuOpen ? "Cerrar menú" : "Abrir menú de navegación"}
           >
-            <span className="material-symbols-outlined text-[24px]">
+            <span
+              className={`material-symbols-outlined transition-all duration-300 ${
+                scrolled ? "text-[22px]" : "text-[24px]"
+              }`}
+            >
               {mobileMenuOpen ? "close" : "menu"}
             </span>
           </button>
@@ -270,9 +305,13 @@ export function Navbar() {
               <span className="text-xs font-bold uppercase tracking-wider text-[#F6D448]">Nuestro Colegio</span>
               <div className="pl-3 flex flex-col gap-2">
                 <Link
-                  href="/#nosotros"
+                  href="/nosotros"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="text-sm font-medium hover:text-[#F6D448] transition-colors"
+                  className={`text-sm font-medium transition-colors ${
+                    pathname === "/nosotros"
+                      ? "text-[#F6D448] font-bold"
+                      : "hover:text-[#F6D448]"
+                  }`}
                 >
                   Nosotros
                 </Link>

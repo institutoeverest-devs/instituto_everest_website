@@ -51,15 +51,14 @@ export function PreescolarAmcoBanner() {
         </div>
 
         <div className="lg:col-span-4 flex flex-col items-center justify-center">
-          <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-2xl border border-white/40 w-full flex flex-col items-center justify-center transition-all duration-300 hover:scale-[1.02] gap-3">
+          <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-2xl border border-white/40 w-full max-w-sm flex flex-col items-center justify-center transition-all duration-300 hover:scale-[1.02] gap-4">
             <Image
               alt="AMCO - Bright Ideas. Brilliant Future. Metodología Oficial"
               src="/images/amco-logo.png"
-              width={340}
-              height={96}
+              width={300}
+              height={232}
               priority
-              style={{ width: "auto", height: "auto" }}
-              className="w-full max-w-[260px] sm:max-w-[300px] object-contain"
+              className="w-full max-w-[220px] sm:max-w-[250px] h-auto object-contain"
             />
             <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-100/90 text-slate-700 text-xs font-semibold">
               <span className="material-symbols-outlined text-[15px] text-[#2E9F6E]">verified</span>

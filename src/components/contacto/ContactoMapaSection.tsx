@@ -12,7 +12,7 @@ export function ContactoMapaSection() {
               Ubicación Estratégica
             </span>
             <h2 className="font-headline text-3xl sm:text-4xl font-bold text-slate-900">
-              Conoce el Campus León
+              Conoce el Campus
             </h2>
             <p className="text-slate-600 text-sm mt-2 font-body">
               Ubicado en una zona residencial tranquila y segura de León, Guanajuato, con fácil acceso vial desde Blvd. Aeropuerto y Vía de los Mártires.
