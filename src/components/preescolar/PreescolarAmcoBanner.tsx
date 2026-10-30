@@ -51,15 +51,20 @@ export function PreescolarAmcoBanner() {
         </div>
 
         <div className="lg:col-span-4 flex flex-col items-center justify-center">
-          <div className="bg-white rounded-3xl p-8 sm:p-10 shadow-2xl border border-white/40 w-full flex items-center justify-center transition-all duration-300 hover:scale-[1.02]">
+          <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-2xl border border-white/40 w-full flex flex-col items-center justify-center transition-all duration-300 hover:scale-[1.02] gap-3">
             <Image
-              alt="AMCO - Bright Ideas. Brilliant Future."
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuAqpW_cpRFDdVwYseRDeS6w2-s7lpe1Bpnm5yLKg7RaUMvtK-QIinWOiMs__kIXDKdC63RJF48Svfi1tdE0fB1iQ0NL3E3Dr1-hXVnxGlGMmESYo1ZSr00sasutS2enpna-bWSBoTgMJXUzTV8YpL_coICRoNhvziCj6yDow1bVa5NCHaBuQoyQ97KAJySpb6_HAnvkZpLYSPfZpFKJlTufutq5Aq_yN4mB6nuyt4cjv44NXdxkT_DNWo7_70FDIe2KcQ"
-              width={280}
-              height={140}
+              alt="AMCO - Bright Ideas. Brilliant Future. Metodología Oficial"
+              src="/images/amco-logo.png"
+              width={340}
+              height={96}
+              priority
               style={{ width: "auto", height: "auto" }}
-              className="w-full max-w-[280px] sm:max-w-[320px] object-contain drop-shadow-sm"
+              className="w-full max-w-[260px] sm:max-w-[300px] object-contain"
             />
+            <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-100/90 text-slate-700 text-xs font-semibold">
+              <span className="material-symbols-outlined text-[15px] text-[#2E9F6E]">verified</span>
+              <span>Alianza Metodológica Oficial</span>
+            </div>
           </div>
         </div>
       </div>

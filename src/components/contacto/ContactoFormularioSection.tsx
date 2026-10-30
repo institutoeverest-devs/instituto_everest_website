@@ -31,21 +31,22 @@ export function ContactoFormularioSection() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          name: formData.nombrePadre,
+          parentName: formData.nombrePadre,
           email: formData.correoTutor,
           phone: formData.telefonoTutor,
-          level: formData.nivelInteres,
+          gradeInterest: formData.nivelInteres,
           preferredDate: formData.fechaVisita,
           preferredTime: formData.horarioVisita,
           message: formData.mensajePadre,
         }),
       });
 
+      const data = await res.json().catch(() => null);
+
       if (!res.ok) {
-        throw new Error("No se pudo enviar la solicitud. Por favor intenta de nuevo.");
+        throw new Error(data?.error || "No se pudo enviar la solicitud. Por favor intenta de nuevo.");
       }
 
-      setSubmitted(true);
       // Trigger GTM lead event
       if (typeof window !== "undefined" && (window as unknown as { dataLayer?: unknown[] }).dataLayer) {
         (window as unknown as { dataLayer: unknown[] }).dataLayer.push({
@@ -54,9 +55,23 @@ export function ContactoFormularioSection() {
           grade_level: formData.nivelInteres,
         });
       }
-    } catch {
-      // Fallback graceful success so parents are never blocked
+
+      // Limpiar los campos del formulario tras el envío exitoso
+      setFormData({
+        nombrePadre: "",
+        telefonoTutor: "",
+        correoTutor: "",
+        nivelInteres: "",
+        fechaVisita: "",
+        horarioVisita: "manana",
+        mensajePadre: "",
+        avisoPrivacidad: false,
+      });
+
       setSubmitted(true);
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : "Ocurrió un error al procesar tu solicitud.";
+      setErrorMessage(msg);
     } finally {
       setIsSubmitting(false);
     }
@@ -97,14 +112,14 @@ export function ContactoFormularioSection() {
                 </div>
               </div>
 
-              {/* Conmutador Escolar */}
+              {/* Teléfono Escolar */}
               <div className="flex items-start gap-4 pt-3 border-t border-slate-100">
                 <div className="w-10 h-10 rounded-xl bg-[#E5A93C]/15 text-[#E5A93C] flex items-center justify-center shrink-0 mt-0.5">
                   <span className="material-symbols-outlined text-[20px]">call</span>
                 </div>
                 <div className="space-y-0.5">
                   <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400">
-                    Conmutador Escolar
+                    Teléfono Escolar
                   </h4>
                   <a
                     className="text-sm font-bold text-[#546FAC] hover:underline"
@@ -113,7 +128,7 @@ export function ContactoFormularioSection() {
                     {SITE_CONFIG.phone}
                   </a>
                   <p className="text-xs text-slate-500 font-body">
-                    Atención en conmutador y recepción
+                    Atención telefónica y recepción
                   </p>
                 </div>
               </div>
@@ -138,7 +153,7 @@ export function ContactoFormularioSection() {
                   </h4>
                   <a
                     className="text-sm font-bold text-[#25D366] hover:underline flex items-center gap-1"
-                    href={`https://wa.me/${SITE_CONFIG.whatsapp}`}
+                    href={`https://wa.me/${SITE_CONFIG.whatsapp}?text=Hola,%20los%20contacto%20a%20trav%C3%A9s%20del%20sitio%20web%20y%20deseo%20recibir%20informaci%C3%B3n`}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
@@ -160,7 +175,7 @@ export function ContactoFormularioSection() {
                   </h4>
                   <a
                     className="text-sm font-semibold text-slate-800 hover:text-[#546FAC] transition-colors font-body"
-                    href={`mailto:${SITE_CONFIG.email}`}
+                    href={`mailto:${SITE_CONFIG.email}?subject=Contacto%20desde%20el%20sitio%20web&body=Hola,%20los%20contacto%20a%20trav%C3%A9s%20del%20sitio%20web%20y%20deseo%20recibir%20informaci%C3%B3n`}
                   >
                     {SITE_CONFIG.email}
                   </a>
@@ -197,35 +212,42 @@ export function ContactoFormularioSection() {
               <div className="flex items-center gap-3">
                 <a
                   aria-label="Facebook Everest"
-                  className="w-10 h-10 rounded-xl bg-slate-100 hover:bg-[#557EBD] hover:text-white text-slate-600 flex items-center justify-center transition-all duration-200 shadow-xs"
+                  className="w-10 h-10 rounded-xl bg-[#1877F2]/10 text-[#1877F2] hover:bg-[#1877F2] hover:text-white flex items-center justify-center transition-all duration-200 shadow-xs"
                   href={SITE_CONFIG.social.facebook}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
-                    <path d="M9 8H6v4h3v12h5V12h3.642L18 8h-4V6.333C14 5.374 14.5 5 15.75 5H18V0h-3.808C10.597 0 9 1.583 9 4.615V8z" />
+                  <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
                   </svg>
                 </a>
                 <a
                   aria-label="Instagram Everest"
-                  className="w-10 h-10 rounded-xl bg-slate-100 hover:bg-[#E1306C] hover:text-white text-slate-600 flex items-center justify-center transition-all duration-200 shadow-xs"
+                  className="w-10 h-10 rounded-xl bg-[#E1306C]/10 text-[#E1306C] hover:bg-[#E1306C] hover:text-white flex items-center justify-center transition-all duration-200 shadow-xs"
                   href={SITE_CONFIG.social.instagram}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
-                    <path d="M12.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                  <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
                   </svg>
                 </a>
                 <a
                   aria-label="WhatsApp Everest"
-                  className="w-10 h-10 rounded-xl bg-slate-100 hover:bg-[#25D366] hover:text-white text-slate-600 flex items-center justify-center transition-all duration-200 shadow-xs"
-                  href={`https://wa.me/${SITE_CONFIG.whatsapp}`}
+                  className="w-10 h-10 rounded-xl bg-[#25D366]/10 text-[#25D366] hover:bg-[#25D366] hover:text-white flex items-center justify-center transition-all duration-200 shadow-xs"
+                  href={`https://wa.me/${SITE_CONFIG.whatsapp}?text=Hola,%20los%20contacto%20a%20trav%C3%A9s%20del%20sitio%20web%20y%20deseo%20recibir%20informaci%C3%B3n`}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
-                    <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.007c.106.005.249-.04.39.299.144.347.491 1.2.534 1.287.043.087.072.188.014.303-.058.116-.087.188-.173.289l-.26.303c-.087.086-.177.181-.076.355.101.173.449.741.963 1.2.662.591 1.221.774 1.394.86.173.086.275.072.376-.044.101-.116.433-.506.549-.68.116-.173.231-.144.39-.086s1.011.477 1.184.564.289.13.332.202c.044.073.044.42-.1.825zM12.012 2c-5.508 0-9.985 4.477-9.985 9.985 0 1.988.583 3.844 1.593 5.409L2 22l4.757-1.564c1.513.918 3.28 1.448 5.255 1.448 5.508 0 9.985-4.477 9.985-9.985 0-5.508-4.477-9.985-9.985-9.985z" />
+                  <svg className="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="none">
+                    <path
+                      d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.63C8.75 21.41 10.37 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2Z"
+                      fill="#25D366"
+                    />
+                    <path
+                      d="M17.52 14.33C17.22 14.18 15.75 13.45 15.48 13.35C15.21 13.25 15.01 13.2 14.81 13.5C14.61 13.79 14.04 14.46 13.87 14.66C13.7 14.86 13.53 14.88 13.23 14.73C12.93 14.58 11.97 14.27 10.84 13.26C9.96 12.47 9.36 11.5 9.19 11.2C9.02 10.9 9.17 10.74 9.32 10.59C9.45 10.46 9.61 10.25 9.76 10.08C9.91 9.9 9.96 9.78 10.06 9.58C10.16 9.38 10.11 9.21 10.04 9.06C9.96 8.91 9.37 7.46 9.12 6.86C8.88 6.28 8.64 6.36 8.46 6.35H7.9C7.7 6.35 7.37 6.42 7.1 6.72C6.83 7.02 6.06 7.74 6.06 9.2C6.06 10.66 7.12 12.07 7.27 12.27C7.42 12.47 9.36 15.47 12.33 16.75C13.04 17.06 13.59 17.24 14.02 17.38C14.73 17.61 15.38 17.57 15.9 17.49C16.47 17.41 17.66 16.77 17.91 16.07C18.16 15.37 18.16 14.78 18.08 14.66C18 14.53 17.82 14.48 17.52 14.33Z"
+                      fill="white"
+                    />
                   </svg>
                 </a>
               </div>
@@ -241,7 +263,7 @@ export function ContactoFormularioSection() {
                     Inicia tu Proceso
                   </span>
                   <span className="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-white/10 text-white border border-white/20">
-                    Ciclo 2025-2026
+                    Ciclo 2027 - 2028
                   </span>
                 </div>
                 <h3 className="font-headline text-2xl sm:text-3xl font-bold text-white leading-tight">
@@ -271,23 +293,51 @@ export function ContactoFormularioSection() {
             </div>
 
             {submitted ? (
-              <div className="p-8 rounded-2xl bg-white/20 border border-white/30 text-white flex flex-col items-center text-center space-y-4">
-                <div className="w-16 h-16 rounded-full bg-emerald-400 text-slate-900 flex items-center justify-center shadow-lg">
-                  <span className="material-symbols-outlined text-[36px]">task_alt</span>
+              <div className="p-8 sm:p-10 rounded-2xl bg-white/20 border border-white/30 text-white flex flex-col items-center text-center space-y-5 animate-in fade-in duration-300">
+                <div className="w-16 h-16 rounded-full bg-[#25D366] text-white flex items-center justify-center shadow-lg">
+                  <span className="material-symbols-outlined text-[36px]">check_circle</span>
                 </div>
-                <div>
-                  <h4 className="font-headline text-2xl font-bold">¡Solicitud recibida con éxito!</h4>
-                  <p className="text-sm text-slate-100 mt-2 max-w-md font-body">
-                    Muchas gracias por tu interés en Instituto Everest. Nos comunicaremos a tu teléfono o WhatsApp a la brevedad para confirmar los detalles de tu visita personalizada.
+                <div className="space-y-2">
+                  <h4 className="font-headline text-2xl sm:text-3xl font-bold tracking-tight">
+                    Solicitud de información enviada con éxito
+                  </h4>
+                  <p className="text-sm sm:text-base text-white/95 max-w-lg mx-auto font-body leading-relaxed">
+                    Muchas gracias por comunicarse con Instituto Everest. Nuestro personal se contactará con usted a la brevedad para brindarle atención personalizada y resolver todas sus dudas.
                   </p>
                 </div>
-                <button
-                  type="button"
-                  onClick={() => setSubmitted(false)}
-                  className="px-6 py-2.5 rounded-xl bg-white text-slate-900 font-bold text-xs uppercase tracking-wider hover:bg-slate-100 transition-colors cursor-pointer"
-                >
-                  Enviar otra solicitud
-                </button>
+                <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3 w-full">
+                  <a
+                    href={`https://wa.me/${SITE_CONFIG.whatsapp}?text=Hola,%20acabo%20de%20enviar%20mi%20solicitud%20en%20el%20sitio%20web%20y%20deseo%20atención%20inmediata`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-[#25D366] text-white font-bold text-xs uppercase tracking-wider hover:bg-[#20ba59] transition-all shadow-md hover:scale-105 active:scale-95"
+                  >
+                    <svg className="w-4 h-4 fill-white shrink-0" viewBox="0 0 24 24">
+                      <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.63C8.75 21.41 10.37 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2Z" fill="#25D366" />
+                      <path d="M17.52 14.33C17.22 14.18 15.75 13.45 15.48 13.35C15.21 13.25 15.01 13.2 14.81 13.5C14.61 13.79 14.04 14.46 13.87 14.66C13.7 14.86 13.53 14.88 13.23 14.73C12.93 14.58 11.97 14.27 10.84 13.26C9.96 12.47 9.36 11.5 9.19 11.2C9.02 10.9 9.17 10.74 9.32 10.59C9.45 10.46 9.61 10.25 9.76 10.08C9.91 9.9 9.96 9.78 10.06 9.58C10.16 9.38 10.11 9.21 10.04 9.06C9.96 8.91 9.37 7.46 9.12 6.86C8.88 6.28 8.64 6.36 8.46 6.35H7.9C7.7 6.35 7.37 6.42 7.1 6.72C6.83 7.02 6.06 7.74 6.06 9.2C6.06 10.66 7.12 12.07 7.27 12.27C7.42 12.47 9.36 15.47 12.33 16.75C13.04 17.06 13.59 17.24 14.02 17.38C14.73 17.61 15.38 17.57 15.9 17.49C16.47 17.41 17.66 16.77 17.91 16.07C18.16 15.37 18.16 14.78 18.08 14.66C18 14.53 17.82 14.48 17.52 14.33Z" fill="white" />
+                    </svg>
+                    <span>Atención inmediata WhatsApp</span>
+                  </a>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setSubmitted(false);
+                      setFormData({
+                        nombrePadre: "",
+                        telefonoTutor: "",
+                        correoTutor: "",
+                        nivelInteres: "",
+                        fechaVisita: "",
+                        horarioVisita: "manana",
+                        mensajePadre: "",
+                        avisoPrivacidad: false,
+                      });
+                    }}
+                    className="px-5 py-3 rounded-xl bg-white/20 border border-white/40 text-white font-bold text-xs uppercase tracking-wider hover:bg-white/30 transition-colors cursor-pointer"
+                  >
+                    Enviar otra solicitud
+                  </button>
+                </div>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-5">
@@ -376,7 +426,6 @@ export function ContactoFormularioSection() {
                       <option value="maternal">Maternal (1 a 3 Años)</option>
                       <option value="preescolar">Preescolar Bilingüe (Kínder 1 a 3)</option>
                       <option value="primaria">Primaria (1° a 6° Grado)</option>
-                      <option value="horario-extendido">Horario Extendido (Hasta las 6:00 PM)</option>
                     </select>
                   </div>
                 </div>
@@ -456,12 +505,14 @@ export function ContactoFormularioSection() {
                     className="text-xs text-slate-200 leading-snug font-body"
                     htmlFor="aviso-privacidad"
                   >
-                    He leído y acepto el{" "}
+                    He leído y acepto los{" "}
                     <Link
-                      className="text-[#E5A93C] underline hover:text-white"
-                      href="#footer-everest"
+                      className="text-[#E5A93C] underline hover:text-white font-medium"
+                      href="/terminos-y-condiciones"
+                      target="_blank"
+                      rel="noopener noreferrer"
                     >
-                      Aviso de Privacidad
+                      Términos y Condiciones
                     </Link>{" "}
                     de Instituto Everest León para el tratamiento de mis datos de contacto escolar.
                   </label>

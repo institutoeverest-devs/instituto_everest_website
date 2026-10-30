@@ -67,20 +67,22 @@ const ROUTE_STEPS: RouteStep[] = [
   },
 ];
 
-export function PreescolarRutaPedagogica() {
-  const [currentStep, setCurrentStep] = useState(2); // Starts on step 3 (Crea)
-  const isPausedRef = useRef(false);
+const DURATION_MS = 20000;
 
-  const nextStep = useCallback(() => {
-    if (!isPausedRef.current) {
-      setCurrentStep((prev) => (prev + 1) % ROUTE_STEPS.length);
-    }
+export function PreescolarRutaPedagogica() {
+  const [currentStep, setCurrentStep] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  const [cycleKey, setCycleKey] = useState(0);
+
+  const goToStep = useCallback((idx: number) => {
+    setCurrentStep(idx);
+    setCycleKey((k) => k + 1);
   }, []);
 
-  useEffect(() => {
-    const timer = setInterval(nextStep, 6000);
-    return () => clearInterval(timer);
-  }, [nextStep]);
+  const handleNext = useCallback(() => {
+    setCurrentStep((prev) => (prev + 1) % ROUTE_STEPS.length);
+    setCycleKey((k) => k + 1);
+  }, []);
 
   const stepData = ROUTE_STEPS[currentStep];
 
@@ -108,21 +110,36 @@ export function PreescolarRutaPedagogica() {
             {/* Barras de progreso segmentadas interactivas */}
             <div className="pt-4 space-y-4">
               <div className="grid grid-cols-4 gap-2.5 w-full">
-                {ROUTE_STEPS.map((_, i) => (
-                  <button
-                    key={i}
-                    type="button"
-                    onClick={() => setCurrentStep(i)}
-                    className="h-2.5 rounded-full bg-slate-200 overflow-hidden cursor-pointer relative focus:outline-none focus:ring-2 focus:ring-[#345f9c]"
-                    aria-label={`Ir a la etapa ${i + 1}`}
-                  >
-                    <div
-                      className={`h-full bg-[#345f9c] transition-all duration-300 ${
-                        i <= currentStep ? "w-full" : "w-0"
-                      }`}
-                    />
-                  </button>
-                ))}
+                {ROUTE_STEPS.map((_, i) => {
+                  const isPast = i < currentStep;
+                  const isCurrent = i === currentStep;
+
+                  return (
+                    <button
+                      key={i}
+                      type="button"
+                      onClick={() => goToStep(i)}
+                      className="h-2.5 rounded-full bg-slate-200 overflow-hidden cursor-pointer relative focus:outline-none focus:ring-2 focus:ring-[#345f9c]"
+                      aria-label={`Ir a la etapa ${i + 1}`}
+                    >
+                      {isPast && (
+                        <div className="w-full h-full bg-[#345f9c] rounded-full" />
+                      )}
+                      {isCurrent && (
+                        <div
+                          key={`prp-bar-${currentStep}-${cycleKey}`}
+                          onAnimationEnd={handleNext}
+                          className="w-full h-full bg-[#345f9c] rounded-full origin-left"
+                          style={{
+                            animation: `fillProgressLinear ${DURATION_MS}ms linear forwards`,
+                            animationPlayState: isPaused ? "paused" : "running",
+                            transformOrigin: "left",
+                          }}
+                        />
+                      )}
+                    </button>
+                  );
+                })}
               </div>
 
               {/* Botones de las 4 etapas */}
@@ -135,7 +152,7 @@ export function PreescolarRutaPedagogica() {
                     <button
                       key={step.badge}
                       type="button"
-                      onClick={() => setCurrentStep(i)}
+                      onClick={() => goToStep(i)}
                       className={`flex items-center gap-1.5 transition-colors text-left cursor-pointer focus:outline-none ${
                         isActive
                           ? "font-bold text-[#345f9c]"
@@ -160,12 +177,8 @@ export function PreescolarRutaPedagogica() {
           {/* Lado Derecho: Tarjeta flotante interactiva */}
           <div
             className="lg:col-span-6"
-            onMouseEnter={() => {
-              isPausedRef.current = true;
-            }}
-            onMouseLeave={() => {
-              isPausedRef.current = false;
-            }}
+            onMouseEnter={() => setIsPaused(true)}
+            onMouseLeave={() => setIsPaused(false)}
           >
             <div className="relative rounded-3xl overflow-hidden shadow-2xl border border-slate-200/80 h-[520px] max-h-[520px] flex flex-col justify-between p-8 sm:p-10 transition-all duration-500 text-white">
               {/* Imagen de fondo */}
@@ -213,7 +226,7 @@ export function PreescolarRutaPedagogica() {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
-                  transition={{ duration: 0.25 }}
+                  transition={{ duration: 0.35, ease: "easeOut" }}
                   className="relative z-20 py-6 space-y-3.5"
                 >
                   <h3 className="font-headline italic text-[24px] sm:text-[28px] font-bold text-white leading-snug drop-shadow-md">

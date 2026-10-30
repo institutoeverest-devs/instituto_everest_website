@@ -2,23 +2,49 @@ import { NextResponse } from "next/server";
 import { Resend } from "resend";
 
 interface ContactRequestBody {
-  parentName: string;
+  parentName?: string;
+  name?: string;
+  nombrePadre?: string;
   studentName?: string;
-  email: string;
-  phone: string;
-  gradeInterest: string;
+  email?: string;
+  correoTutor?: string;
+  phone?: string;
+  telefonoTutor?: string;
+  gradeInterest?: string;
+  level?: string;
+  nivelInteres?: string;
+  preferredDate?: string;
+  fechaVisita?: string;
+  preferredTime?: string;
+  horarioVisita?: string;
   message?: string;
+  mensajePadre?: string;
 }
 
 export async function POST(req: Request) {
   try {
     const body: ContactRequestBody = await req.json();
-    const { parentName, studentName, email, phone, gradeInterest, message } = body;
+
+    const parentName = (body.parentName || body.name || body.nombrePadre || "").trim();
+    const studentName = (body.studentName || "").trim();
+    const email = (body.email || body.correoTutor || "").trim();
+    const phone = (body.phone || body.telefonoTutor || "").trim();
+    const gradeInterest = (body.gradeInterest || body.level || body.nivelInteres || "Preescolar Bilingüe").trim();
+    const message = (body.message || body.mensajePadre || "").trim();
+    const preferredDate = (body.preferredDate || body.fechaVisita || "").trim();
+    const preferredTime = (body.preferredTime || body.horarioVisita || "").trim();
 
     // Strict validation
-    if (!parentName || !email || !phone || !gradeInterest) {
+    if (!parentName) {
       return NextResponse.json(
-        { error: "Por favor completa todos los campos obligatorios." },
+        { error: "Por favor introduce el nombre del padre o tutor." },
+        { status: 400 }
+      );
+    }
+
+    if (!email) {
+      return NextResponse.json(
+        { error: "Por favor introduce un correo electrónico." },
         { status: 400 }
       );
     }
@@ -31,10 +57,17 @@ export async function POST(req: Request) {
       );
     }
 
+    if (!phone) {
+      return NextResponse.json(
+        { error: "Por favor introduce un número de teléfono o WhatsApp." },
+        { status: 400 }
+      );
+    }
+
     const phoneClean = phone.replace(/\D/g, "");
     if (phoneClean.length < 10) {
       return NextResponse.json(
-        { error: "Por favor introduce un teléfono de 10 dígitos válido." },
+        { error: "Por favor introduce un teléfono válido de al menos 10 dígitos." },
         { status: 400 }
       );
     }
@@ -44,55 +77,95 @@ export async function POST(req: Request) {
     if (apiKey) {
       const resend = new Resend(apiKey);
       const toEmail = process.env.LEADS_RECEIVER_EMAIL || "admisiones@institutoeverestleon.edu.mx";
+      const fromEmail = process.env.RESEND_FROM_EMAIL || "Instituto Everest <onboarding@resend.dev>";
 
-      const data = await resend.emails.send({
-        from: "Instituto Everest <onboarding@resend.dev>",
+      const { data, error } = await resend.emails.send({
+        from: fromEmail,
         to: [toEmail],
         replyTo: email,
-        subject: `Nuevo Prospecto de Admisiones: ${parentName} (${gradeInterest})`,
+        subject: `Solicitud de Información: ${parentName} (${gradeInterest})`,
         html: `
-          <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 24px; border: 1px solid #e2e8f0; border-radius: 16px;">
-            <h2 style="color: #3b5692; margin-top: 0;">Nuevo Registro de Admisiones - Instituto Everest León</h2>
-            <p style="color: #475569; font-size: 15px;">Se ha recibido una nueva solicitud de información personalizada a través del sitio web:</p>
-            <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
-              <tr>
-                <td style="padding: 10px; border-bottom: 1px solid #f1f5f9; font-weight: bold; color: #1e293b;">Nombre del Tutor:</td>
-                <td style="padding: 10px; border-bottom: 1px solid #f1f5f9; color: #334155;">${parentName}</td>
-              </tr>
-              ${studentName ? `
-              <tr>
-                <td style="padding: 10px; border-bottom: 1px solid #f1f5f9; font-weight: bold; color: #1e293b;">Nombre del Alumno(a):</td>
-                <td style="padding: 10px; border-bottom: 1px solid #f1f5f9; color: #334155;">${studentName}</td>
-              </tr>
-              ` : ""}
-              <tr>
-                <td style="padding: 10px; border-bottom: 1px solid #f1f5f9; font-weight: bold; color: #1e293b;">Nivel de Interés:</td>
-                <td style="padding: 10px; border-bottom: 1px solid #f1f5f9; color: #334155;"><strong>${gradeInterest}</strong></td>
-              </tr>
-              <tr>
-                <td style="padding: 10px; border-bottom: 1px solid #f1f5f9; font-weight: bold; color: #1e293b;">Teléfono / WhatsApp:</td>
-                <td style="padding: 10px; border-bottom: 1px solid #f1f5f9; color: #334155;"><a href="tel:${phone}">${phone}</a></td>
-              </tr>
-              <tr>
-                <td style="padding: 10px; border-bottom: 1px solid #f1f5f9; font-weight: bold; color: #1e293b;">Correo Electrónico:</td>
-                <td style="padding: 10px; border-bottom: 1px solid #f1f5f9; color: #334155;"><a href="mailto:${email}">${email}</a></td>
-              </tr>
-              ${message ? `
-              <tr>
-                <td style="padding: 10px; border-bottom: 1px solid #f1f5f9; font-weight: bold; color: #1e293b;">Mensaje / Dudas:</td>
-                <td style="padding: 10px; border-bottom: 1px solid #f1f5f9; color: #334155;">${message}</td>
-              </tr>
-              ` : ""}
+          <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; max-width: 620px; margin: 0 auto; padding: 32px 24px; border: 1px solid #e2e8f0; border-radius: 16px; background-color: #ffffff;">
+            <div style="border-bottom: 2px solid #24467d; padding-bottom: 16px; margin-bottom: 24px;">
+              <h2 style="color: #24467d; margin: 0 0 6px 0; font-size: 22px;">Solicitud de información</h2>
+              <p style="color: #64748b; font-size: 14px; margin: 0;">Instituto Everest Campus León · Notificación Automática</p>
+            </div>
+
+            <p style="color: #334155; font-size: 15px; line-height: 1.5; margin-bottom: 20px;">
+              Se ha recibido un nuevo registro de contacto de una familia interesada a través del sitio web oficial:
+            </p>
+
+            <table style="width: 100%; border-collapse: collapse; margin-bottom: 24px; background-color: #f8fafc; border-radius: 12px; overflow: hidden; border: 1px solid #f1f5f9;">
+              <tbody>
+                <tr>
+                  <td style="padding: 12px 16px; border-bottom: 1px solid #e2e8f0; font-weight: 600; color: #1e293b; width: 38%;">Nombre del Tutor:</td>
+                  <td style="padding: 12px 16px; border-bottom: 1px solid #e2e8f0; color: #334155; font-size: 15px;"><strong>${parentName}</strong></td>
+                </tr>
+                ${studentName ? `
+                <tr>
+                  <td style="padding: 12px 16px; border-bottom: 1px solid #e2e8f0; font-weight: 600; color: #1e293b;">Nombre del Alumno(a):</td>
+                  <td style="padding: 12px 16px; border-bottom: 1px solid #e2e8f0; color: #334155;">${studentName}</td>
+                </tr>
+                ` : ""}
+                <tr>
+                  <td style="padding: 12px 16px; border-bottom: 1px solid #e2e8f0; font-weight: 600; color: #1e293b;">Nivel de Interés:</td>
+                  <td style="padding: 12px 16px; border-bottom: 1px solid #e2e8f0; color: #24467d; font-size: 15px;"><strong>${gradeInterest}</strong></td>
+                </tr>
+                <tr>
+                  <td style="padding: 12px 16px; border-bottom: 1px solid #e2e8f0; font-weight: 600; color: #1e293b;">Teléfono / WhatsApp:</td>
+                  <td style="padding: 12px 16px; border-bottom: 1px solid #e2e8f0; color: #334155;">
+                    <a href="https://wa.me/52${phoneClean}" style="color: #059669; font-weight: 600; text-decoration: none;">${phone}</a>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding: 12px 16px; border-bottom: 1px solid #e2e8f0; font-weight: 600; color: #1e293b;">Correo Electrónico:</td>
+                  <td style="padding: 12px 16px; border-bottom: 1px solid #e2e8f0; color: #334155;">
+                    <a href="mailto:${email}" style="color: #2563eb; text-decoration: none;">${email}</a>
+                  </td>
+                </tr>
+                ${preferredDate ? `
+                <tr>
+                  <td style="padding: 12px 16px; border-bottom: 1px solid #e2e8f0; font-weight: 600; color: #1e293b;">Fecha sugerida para recorrido:</td>
+                  <td style="padding: 12px 16px; border-bottom: 1px solid #e2e8f0; color: #334155;">
+                    ${preferredDate} ${preferredTime ? `(${preferredTime === "manana" ? "Turno Matutino: 9:00 - 12:00" : "Turno Vespertino: 13:00 - 16:00"})` : ""}
+                  </td>
+                </tr>
+                ` : ""}
+                ${message ? `
+                <tr>
+                  <td style="padding: 12px 16px; font-weight: 600; color: #1e293b; vertical-align: top;">Comentarios o preguntas:</td>
+                  <td style="padding: 12px 16px; color: #334155; line-height: 1.5;">${message}</td>
+                </tr>
+                ` : ""}
+              </tbody>
             </table>
-            <p style="color: #64748b; font-size: 12px; margin-top: 24px;">Instituto Everest León · Donde tus sueños alcanzan la cima.</p>
+
+            <div style="background-color: #eff6ff; border-left: 4px solid #3b82f6; padding: 12px 16px; border-radius: 6px; margin-bottom: 24px;">
+              <p style="margin: 0; font-size: 13px; color: #1e40af;">
+                💡 <strong>Acción rápida:</strong> Puedes responder directamente a este correo para escribirle a <strong>${email}</strong> o hacer clic en el teléfono para iniciar una conversación por WhatsApp.
+              </p>
+            </div>
+
+            <div style="border-top: 1px solid #e2e8f0; padding-top: 16px; text-align: center; color: #94a3b8; font-size: 12px;">
+              <p style="margin: 0 0 4px 0;">Instituto Everest Campus León · Donde tus sueños alcanzan la cima.</p>
+              <p style="margin: 0;">Calle Luis Cabrera 104, La Alameda, León, Gto. · Tel: (477) 949 6200</p>
+            </div>
           </div>
         `,
       });
 
+      if (error) {
+        console.error("Resend API returned an error:", error);
+        return NextResponse.json(
+          { error: `Error de Resend: ${error.message}` },
+          { status: 400 }
+        );
+      }
+
       return NextResponse.json({
         success: true,
-        message: "¡Solicitud enviada con éxito! Nuestro equipo de admisiones te contactará a la brevedad.",
-        id: data.data?.id,
+        message: "Solicitud de información enviada con éxito. Nuestro personal se contactará con usted a la brevedad.",
+        id: data?.id,
       });
     } else {
       // Graceful fallback for local development / testing without API key
@@ -102,13 +175,15 @@ export async function POST(req: Request) {
         email,
         phone,
         gradeInterest,
+        preferredDate,
+        preferredTime,
         message,
         receivedAt: new Date().toISOString(),
       });
 
       return NextResponse.json({
         success: true,
-        message: "¡Solicitud registrada correctamente! Nuestro equipo de admisiones se comunicará contigo.",
+        message: "Solicitud de información enviada con éxito. Nuestro personal se contactará con usted a la brevedad.",
         mock: true,
       });
     }

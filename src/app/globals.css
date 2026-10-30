@@ -74,6 +74,15 @@
   animation: gentle-float 3s ease-in-out infinite;
 }
 
+@keyframes fillProgressLinear {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
 /* Custom scrollbars */
 .no-scrollbar::-webkit-scrollbar {
   display: none;

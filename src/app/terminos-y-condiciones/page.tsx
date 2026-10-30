@@ -82,7 +82,7 @@ export default function TerminosYCondicionesPage() {
             <div className="flex items-center gap-4 text-xs text-slate-400">
               <span className="flex items-center gap-1.5">
                 <span className="material-symbols-outlined text-[16px] text-[#F6D448]">calendar_today</span>
-                Última actualización: Ciclo Escolar 2025 - 2026
+                Última actualización: Ciclo Escolar 2027 - 2028
               </span>
               <span>·</span>
               <span>Vigencia permanente</span>
@@ -282,7 +282,7 @@ export default function TerminosYCondicionesPage() {
                   <div className="p-4 rounded-xl bg-slate-50 border border-slate-200/80 space-y-1 text-xs sm:text-sm">
                     <p className="font-bold text-slate-900 flex items-center gap-1.5">
                       <span className="material-symbols-outlined text-[18px] text-[#3b5692]">call</span>
-                      Conmutador Escolar
+                      Teléfono Escolar
                     </p>
                     <p className="text-slate-600">{SITE_CONFIG.phone}</p>
                     <p className="text-[11px] text-slate-500">Horario: {SITE_CONFIG.schedule}</p>

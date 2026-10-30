@@ -22,7 +22,7 @@ export function PrimariaCta() {
             <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white shadow-xs">
               <span className="w-2.5 h-2.5 rounded-full bg-[#E5A93C] animate-pulse" />
               <span className="text-xs sm:text-sm font-bold tracking-wide">
-                Inscripciones Abiertas Primaria 2025 - 2026 · Cupo Limitado
+                Inscripciones Abiertas Primaria 2027 - 2028 · Cupo Limitado
               </span>
             </div>
 
@@ -60,22 +60,22 @@ export function PrimariaCta() {
                 href={`https://wa.me/${SITE_CONFIG.whatsapp}?text=Hola,%20deseo%20agendar%20un%20recorrido%20personalizado%20para%20Primaria%20en%20Instituto%20Everest%20León`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2.5 px-7 py-4 rounded-2xl text-white font-bold text-sm sm:text-base transition-all duration-300 shadow-xl hover:scale-105 active:scale-95"
+                className="inline-flex items-center justify-center gap-2.5 px-7 py-4 rounded-2xl text-white font-bold text-sm sm:text-base whitespace-nowrap shrink-0 transition-all duration-300 shadow-xl hover:scale-105 active:scale-95"
                 style={{
                   backgroundColor: "#DA474A",
                   boxShadow: "0 10px 24px rgba(218, 71, 74, 0.45)",
                 }}
               >
-                <span className="material-symbols-outlined text-[20px]">calendar_today</span>
-                <span>Agendar Recorrido Personalizado</span>
+                <span className="material-symbols-outlined text-[20px] shrink-0">calendar_today</span>
+                <span className="whitespace-nowrap">Agendar Recorrido Personalizado</span>
               </a>
 
               <a
                 href={`tel:${SITE_CONFIG.phone.replace(/\D/g, "")}`}
-                className="inline-flex items-center justify-center gap-2 px-6 py-4 rounded-2xl text-white font-semibold text-sm sm:text-base transition-all duration-300 hover:bg-white/20 bg-white/10 border border-white/25 backdrop-blur-sm hover:scale-105 active:scale-95"
+                className="inline-flex items-center justify-center gap-2 px-6 py-4 rounded-2xl text-white font-semibold text-sm sm:text-base whitespace-nowrap shrink-0 transition-all duration-300 hover:bg-white/20 bg-white/10 border border-white/25 backdrop-blur-sm hover:scale-105 active:scale-95"
               >
-                <span className="material-symbols-outlined text-[20px]">call</span>
-                <span>Llamar al Conmutador {SITE_CONFIG.phone}</span>
+                <span className="material-symbols-outlined text-[20px] shrink-0">call</span>
+                <span className="whitespace-nowrap">Teléfono: {SITE_CONFIG.phone}</span>
               </a>
             </div>
           </div>

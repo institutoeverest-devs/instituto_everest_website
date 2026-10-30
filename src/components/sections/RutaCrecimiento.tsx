@@ -9,62 +9,18 @@ const DURATION_MS = 20000;
 
 export function RutaCrecimiento() {
   const [currentStage, setCurrentStage] = useState(0);
-  const [progress, setProgress] = useState(0);
-  const isPausedRef = useRef(false);
-  const startTimeRef = useRef<number | null>(null);
-  const elapsedBeforePauseRef = useRef(0);
-  const animFrameRef = useRef<number | null>(null);
+  const [isPaused, setIsPaused] = useState(false);
+  const [cycleKey, setCycleKey] = useState(0);
 
   const goToStage = useCallback((stageIdx: number) => {
-    if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current);
     setCurrentStage(stageIdx);
-    setProgress(0);
-    startTimeRef.current = null;
-    elapsedBeforePauseRef.current = 0;
+    setCycleKey((k) => k + 1);
   }, []);
 
-  useEffect(() => {
-    function step(timestamp: number) {
-      if (!startTimeRef.current) {
-        startTimeRef.current = timestamp - elapsedBeforePauseRef.current;
-      }
-
-      if (!isPausedRef.current) {
-        const elapsed = timestamp - startTimeRef.current;
-        const currentProgress = Math.min(elapsed / DURATION_MS, 1);
-        setProgress(currentProgress);
-
-        if (currentProgress >= 1) {
-          setCurrentStage((prev) => (prev + 1) % GROWTH_STAGES.length);
-          startTimeRef.current = null;
-          elapsedBeforePauseRef.current = 0;
-          setProgress(0);
-        }
-      }
-
-      animFrameRef.current = requestAnimationFrame(step);
-    }
-
-    animFrameRef.current = requestAnimationFrame(step);
-
-    return () => {
-      if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current);
-    };
-  }, [currentStage]);
-
-  const handleMouseEnter = () => {
-    isPausedRef.current = true;
-    if (startTimeRef.current) {
-      elapsedBeforePauseRef.current = performance.now() - startTimeRef.current;
-    }
-  };
-
-  const handleMouseLeave = () => {
-    if (isPausedRef.current) {
-      isPausedRef.current = false;
-      startTimeRef.current = performance.now() - elapsedBeforePauseRef.current;
-    }
-  };
+  const handleNext = useCallback(() => {
+    setCurrentStage((prev) => (prev + 1) % GROWTH_STAGES.length);
+    setCycleKey((k) => k + 1);
+  }, []);
 
   const stage = GROWTH_STAGES[currentStage];
   const isBlue = stage.theme === "blue";
@@ -92,9 +48,8 @@ export function RutaCrecimiento() {
             <div className="pt-2 space-y-4">
               <div className="grid grid-cols-4 gap-2.5 w-full">
                 {GROWTH_STAGES.map((s, idx) => {
-                  let barWidth = "0%";
-                  if (idx < currentStage) barWidth = "100%";
-                  else if (idx === currentStage) barWidth = `${progress * 100}%`;
+                  const isPast = idx < currentStage;
+                  const isCurrent = idx === currentStage;
 
                   return (
                     <button
@@ -104,11 +59,22 @@ export function RutaCrecimiento() {
                       className="group text-left cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#3b5692] rounded-full"
                       aria-label={`Ir a la etapa ${s.shortLabel}`}
                     >
-                      <div className="w-full h-2 rounded-full bg-[#E2E8F0] overflow-hidden">
-                        <div
-                          className="h-full bg-[#546FAC] transition-all duration-75"
-                          style={{ width: barWidth }}
-                        />
+                      <div className="w-full h-2 rounded-full bg-[#E2E8F0] overflow-hidden relative">
+                        {isPast && (
+                          <div className="w-full h-full bg-[#546FAC] rounded-full" />
+                        )}
+                        {isCurrent && (
+                          <div
+                            key={`rc-bar-${currentStage}-${cycleKey}`}
+                            onAnimationEnd={handleNext}
+                            className="w-full h-full bg-[#546FAC] rounded-full origin-left"
+                            style={{
+                              animation: `fillProgressLinear ${DURATION_MS}ms linear forwards`,
+                              animationPlayState: isPaused ? "paused" : "running",
+                              transformOrigin: "left",
+                            }}
+                          />
+                        )}
                       </div>
                     </button>
                   );
@@ -144,8 +110,8 @@ export function RutaCrecimiento() {
           {/* LADO DERECHO: Tarjeta dinámica que alterna color */}
           <div className="lg:col-span-7">
             <div
-              onMouseEnter={handleMouseEnter}
-              onMouseLeave={handleMouseLeave}
+              onMouseEnter={() => setIsPaused(true)}
+              onMouseLeave={() => setIsPaused(false)}
               className={`relative rounded-3xl p-8 sm:p-12 transition-all duration-500 h-[490px] sm:h-[460px] flex flex-col justify-between overflow-hidden shadow-2xl ${
                 isBlue
                   ? "bg-[#546FAC] text-white border border-white/20"
@@ -189,10 +155,10 @@ export function RutaCrecimiento() {
               <AnimatePresence mode="wait">
                 <motion.div
                   key={stage.id}
-                  initial={{ opacity: 0, y: 12 }}
+                  initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -12 }}
-                  transition={{ duration: 0.25 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.35, ease: "easeOut" }}
                   className="py-4 space-y-4 sm:space-y-5 flex-1 flex flex-col justify-center overflow-hidden"
                 >
                   <blockquote

@@ -79,7 +79,7 @@ export default function Error500Page() {
             info
           </span>
           <p className="leading-relaxed">
-            Si requieres atención urgente referente a inscripciones o pagos, por favor comunícate a nuestro conmutador <strong>{SITE_CONFIG.phone}</strong> o asiste directamente a nuestras instalaciones en {SITE_CONFIG.address.street}, {SITE_CONFIG.address.city}, Gto.
+            Si requieres atención urgente referente a inscripciones o pagos, por favor comunícate a nuestro teléfono <strong>{SITE_CONFIG.phone}</strong> o asiste directamente a nuestras instalaciones en {SITE_CONFIG.address.street}, {SITE_CONFIG.address.city}, Gto.
           </p>
         </div>
       </div>

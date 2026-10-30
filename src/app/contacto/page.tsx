@@ -6,7 +6,7 @@ import { ContactoFormularioSection } from "@/components/contacto/ContactoFormula
 import { ContactoMapaSection } from "@/components/contacto/ContactoMapaSection";
 
 export const metadata: Metadata = {
-  title: "Contacto & Admisiones 2025 - 2026 | Instituto Everest León",
+  title: "Contacto & Admisiones 2027 - 2028 | Instituto Everest León",
   description:
     "Comienza el futuro de tus hijos en Instituto Everest León. Agenda tu recorrido presencial para Maternal, Preescolar o Primaria. Consulta requisitos, costos y proceso de admisión.",
   alternates: {

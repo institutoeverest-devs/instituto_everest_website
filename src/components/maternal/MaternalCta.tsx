@@ -14,7 +14,7 @@ export function MaternalCta() {
         <div className="space-y-4 text-left z-10 max-w-xl">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/20 text-white text-xs font-bold backdrop-blur-sm">
             <span className="w-2 h-2 rounded-full bg-[#F6D448]" />
-            <span>Inscripciones Maternal 2025 · Cupo Limitado</span>
+            <span>Inscripciones Maternal 2027 - 2028 · Cupo Limitado</span>
           </div>
 
           <h2 className="font-headline text-[30px] sm:text-[38px] lg:text-[42px] font-bold text-white tracking-tight leading-tight">

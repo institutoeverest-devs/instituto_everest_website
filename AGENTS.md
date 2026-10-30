@@ -12,3 +12,4 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 - **No abrir Google Chrome ni herramientas de navegación/browser**: No usar automatización de navegador (Chrome DevTools, Puppeteer, etc.) para inspeccionar, navegar o comprobar sitios web.
 - **Respuestas rápidas y directas**: Proporcionar soluciones, código y correcciones de forma directa, ágil y concisa sin pausas para verificaciones visuales en navegador.
+- **Autonomía total sin pedir confirmación**: Ejecutar las modificaciones y soluciones directamente sin solicitar autorizaciones previas ni pausas intermedias.

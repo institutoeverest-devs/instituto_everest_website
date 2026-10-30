@@ -49,7 +49,7 @@ const STEPS: StepData[] = [
     subHeader: "PASO 04 · INSCRIPCIÓN FORMAL",
     icon: "celebration",
     title: "Inscripción y Entrega de Expediente",
-    desc: "Recepción de documentación oficial, pago de inscripción, entrega de kit de bienvenida y asignación formal de grupo para el ciclo escolar 2025-2026.",
+    desc: "Recepción de documentación oficial, pago de inscripción, entrega de kit de bienvenida y asignación formal de grupo para el ciclo escolar 2027 - 2028.",
   },
 ];
 
@@ -77,7 +77,7 @@ export function ContactoProcesoPasos() {
 
         {/* Horizontal Steps Accordion */}
         <div className="w-full max-w-6xl mx-auto py-4">
-          <div className="flex flex-col md:flex-row items-stretch gap-3 md:gap-4 h-auto md:h-[220px] w-full">
+          <div className="flex flex-col md:flex-row items-stretch gap-3.5 md:gap-4 w-full md:h-[240px]">
             {STEPS.map((step) => {
               const isActive = activeStep === step.number;
 
@@ -85,17 +85,17 @@ export function ContactoProcesoPasos() {
                 <div
                   key={step.number}
                   onClick={() => setActiveStep(step.number)}
-                  className={`p-5 sm:p-6 rounded-2xl flex flex-col justify-between cursor-pointer overflow-hidden transition-all duration-500 ease-in-out border border-slate-100 ${
+                  className={`p-5 sm:p-6 rounded-2xl flex flex-col justify-between cursor-pointer overflow-hidden transition-[flex,box-shadow,border-color] duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] border ${
                     isActive
-                      ? "md:flex-[2.8] bg-white shadow-xl"
-                      : "md:flex-[0.8] bg-slate-50/80 hover:bg-white shadow-xs"
+                      ? "md:flex-[3.5] bg-white shadow-[0_20px_45px_-10px_rgba(10,17,40,0.22)] border-slate-300 ring-1 ring-black/5"
+                      : "md:flex-[0.9] bg-white hover:bg-slate-50/90 shadow-md hover:shadow-xl border-slate-200/90"
                   }`}
                   style={{
-                    borderTop: `4px solid ${step.color}`,
+                    borderTop: `5px solid ${step.color}`,
                   }}
                 >
                   {/* Top Bar Indicator */}
-                  <div className="w-full flex items-center justify-between mb-2 h-2">
+                  <div className="w-full flex items-center justify-between mb-2 h-3">
                     <div
                       className={`h-1.5 rounded-full transition-all duration-300 ${
                         isActive ? "w-16" : "w-8"
@@ -104,7 +104,7 @@ export function ContactoProcesoPasos() {
                     />
                     {isActive && (
                       <span
-                        className="text-[10px] font-bold uppercase tracking-wider"
+                        className="text-[10px] sm:text-xs font-bold uppercase tracking-wider"
                         style={{ color: step.color }}
                       >
                         {step.badge}
@@ -113,43 +113,54 @@ export function ContactoProcesoPasos() {
                   </div>
 
                   {/* Number & Content Container */}
-                  <div className="flex items-center gap-4 sm:gap-6 w-full flex-1 overflow-hidden">
+                  <div
+                    className={`flex items-center gap-4 sm:gap-6 w-full flex-1 overflow-hidden ${
+                      !isActive ? "justify-center" : ""
+                    }`}
+                  >
                     <div className="shrink-0 flex items-center justify-center select-none">
                       <span
-                        className="text-6xl sm:text-7xl md:text-8xl font-bold font-headline transition-all duration-300 leading-none"
+                        className="text-6xl sm:text-7xl md:text-8xl font-bold font-headline leading-none"
                         style={{ color: step.color }}
                       >
                         {step.number}
                       </span>
                     </div>
 
-                    {/* Details: Only visible when active on Desktop, always visible on mobile */}
-                    <div
-                      className={`flex-1 max-w-xl transition-all duration-350 overflow-hidden ${
-                        isActive ? "opacity-100 translate-x-0" : "hidden md:hidden opacity-0 max-w-0"
-                      }`}
-                    >
-                      <div className="flex items-center gap-1.5 mb-1.5">
-                        <span
-                          className="material-symbols-outlined text-[18px]"
-                          style={{ color: step.color }}
+                    {/* Active Content: Opens horizontally with zero squishing or text wrapping jitter */}
+                    <AnimatePresence mode="wait">
+                      {isActive && (
+                        <motion.div
+                          key={`step-active-${step.number}`}
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          exit={{ opacity: 0 }}
+                          transition={{ duration: 0.25, delay: 0.12, ease: "easeOut" }}
+                          className="flex-1 min-w-[260px] sm:min-w-[300px] max-w-xl py-1 overflow-hidden"
                         >
-                          {step.icon}
-                        </span>
-                        <span
-                          className="text-[11px] font-bold uppercase tracking-wider"
-                          style={{ color: step.color }}
-                        >
-                          {step.subHeader}
-                        </span>
-                      </div>
-                      <h3 className="font-headline text-base sm:text-lg font-bold text-slate-900 leading-snug mb-1">
-                        {step.title}
-                      </h3>
-                      <p className="text-xs text-slate-600 leading-relaxed max-w-md font-body">
-                        {step.desc}
-                      </p>
-                    </div>
+                          <div className="flex items-center gap-1.5 mb-1.5">
+                            <span
+                              className="material-symbols-outlined text-[18px]"
+                              style={{ color: step.color }}
+                            >
+                              {step.icon}
+                            </span>
+                            <span
+                              className="text-[11px] font-bold uppercase tracking-wider"
+                              style={{ color: step.color }}
+                            >
+                              {step.subHeader}
+                            </span>
+                          </div>
+                          <h3 className="font-headline text-base sm:text-lg font-bold text-slate-900 leading-snug mb-1">
+                            {step.title}
+                          </h3>
+                          <p className="text-xs sm:text-[13px] text-slate-600 leading-relaxed font-body">
+                            {step.desc}
+                          </p>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
                   </div>
                 </div>
               );

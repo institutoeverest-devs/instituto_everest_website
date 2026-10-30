@@ -32,7 +32,7 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const isBlueNavbar = isGaleria || scrolled;
+  const isBlueNavbar = isGaleria || isContacto || scrolled;
 
   return (
     <header
@@ -232,7 +232,7 @@ export function Navbar() {
               boxShadow: "rgba(218, 71, 74, 0.4) 0px 4px 14px",
             }}
           >
-            Admisiones 2027
+            Admisiones 2027 
           </Link>
 
           <button

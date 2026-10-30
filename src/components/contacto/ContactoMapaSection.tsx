@@ -22,7 +22,7 @@ export function ContactoMapaSection() {
           {/* Botón de apertura en Google Maps */}
           <a
             className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold text-white bg-[#546FAC] hover:bg-[#465f94] transition-colors shadow-xs shrink-0 cursor-pointer"
-            href="https://maps.google.com/?q=Calle+Luis+Cabrera+104+La+Alameda+Leon+Guanajuato+37204"
+            href="https://www.google.com/maps/search/?api=1&query=Instituto+Everest+Calle+Luis+Cabrera+104+La+Alameda+Leon+Gto&query_place_id=ChIJAQAAENm-K4QRm1i_oNu6n8Y"
             rel="noopener noreferrer"
             target="_blank"
           >
@@ -39,7 +39,7 @@ export function ContactoMapaSection() {
             height="100%"
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3721.4390022359416!2d-101.637500!3d21.135000!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x842b73f8a48b59ad%3A0x6b77ddfdfa5ff6b2!2sLe%C3%B3n%2C%20Gto.!5e0!3m2!1ses!2smx!4v1700000000000!5m2!1ses!2smx"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3721.03711118485!2d-101.6581261!3d21.150917!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x842bbed910000001%3A0xc69fbadba0bf589b!2sInstituto%20Everest!5e0!3m2!1ses!2smx!4v1700000000000!5m2!1ses!2smx"
             style={{ border: 0, filter: "contrast(1.05) saturate(1.1)" }}
             title="Ubicación Instituto Everest León"
             width="100%"
@@ -62,21 +62,6 @@ export function ContactoMapaSection() {
             <p className="text-xs text-slate-600 leading-relaxed font-body">
               <strong>Dirección:</strong> {SITE_CONFIG.address.street}, {SITE_CONFIG.address.neighborhood}, C.P. {SITE_CONFIG.address.postalCode}, {SITE_CONFIG.address.city}, Gto.
             </p>
-
-            <div className="flex items-center gap-3 pt-2 border-t border-slate-100 text-xs">
-              <div className="flex items-center gap-1 text-slate-700">
-                <span className="material-symbols-outlined text-[16px] text-[#2E9F6E]">
-                  local_parking
-                </span>
-                <span>Estacionamiento seguro</span>
-              </div>
-              <div className="flex items-center gap-1 text-slate-700">
-                <span className="material-symbols-outlined text-[16px] text-[#557EBD]">
-                  security
-                </span>
-                <span>Circuito cerrado</span>
-              </div>
-            </div>
           </div>
         </div>
       </div>
