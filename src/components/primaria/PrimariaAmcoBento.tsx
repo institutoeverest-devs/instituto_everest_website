@@ -40,27 +40,13 @@ export function PrimariaAmcoBento() {
 
         {/* Bento Grid Minimalista de Valor */}
         <div className="space-y-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-end">
-            <div className="lg:col-span-7 space-y-4">
-              <h3 className="font-headline text-3xl sm:text-4xl font-bold text-slate-900 tracking-tight leading-tight">
-                Aprender con sentido es el pilar de la excelencia
-              </h3>
-              <p className="font-body text-slate-600 text-base sm:text-lg leading-relaxed max-w-xl">
-                Un ecosistema pedagógico bilingüe centrado en potenciar el pensamiento analítico, la autonomía y la creatividad de cada alumno en Primaria.
-              </p>
-            </div>
-
-            <div className="lg:col-span-5 flex lg:justify-end gap-3 pb-2">
-              <a
-                href={`https://wa.me/${SITE_CONFIG.whatsapp}?text=Hola,%20deseo%20conocer%20más%20sobre%20el%20modelo%20AMCO%20en%20Primaria%20Everest`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-slate-900 text-white font-semibold text-sm hover:bg-slate-800 transition-all hover:scale-105 active:scale-95 shadow-md"
-              >
-                <span>Explorar AMCO</span>
-                <span className="material-symbols-outlined text-[16px]">north_east</span>
-              </a>
-            </div>
+          <div className="max-w-3xl space-y-3 pb-2">
+            <h3 className="font-headline text-3xl sm:text-4xl font-bold text-slate-900 tracking-tight leading-tight">
+              Aprender con sentido es el pilar de la excelencia
+            </h3>
+            <p className="font-body text-slate-600 text-base sm:text-lg leading-relaxed max-w-2xl">
+              Un ecosistema pedagógico bilingüe centrado en potenciar el pensamiento analítico, la autonomía y la creatividad de cada alumno en Primaria.
+            </p>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
@@ -137,26 +123,13 @@ export function PrimariaAmcoBento() {
                 className="object-cover group-hover:scale-105 transition-transform duration-700"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/35 to-transparent" />
-              <div className="absolute bottom-8 left-8 right-8 z-10 space-y-3">
-                <div className="space-y-1.5">
-                  <h4 className="font-headline text-2xl sm:text-3xl font-bold text-white leading-tight">
-                    Fluidez Bilingüe & Debate
-                  </h4>
-                  <p className="font-body text-sm sm:text-base text-slate-200 leading-relaxed">
-                    Pensamiento ágil en inglés con fonética interactiva continua.
-                  </p>
-                </div>
-                <div className="pt-2">
-                  <a
-                    href={`https://wa.me/${SITE_CONFIG.whatsapp}?text=Hola,%20deseo%20conocer%20las%20certificaciones%20bilingües%20de%20Primaria%20Everest`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-white text-xs font-semibold hover:bg-white hover:text-slate-900 transition-all cursor-pointer"
-                  >
-                    <span>Ver certificaciones</span>
-                    <span className="material-symbols-outlined text-[14px]">north_east</span>
-                  </a>
-                </div>
+              <div className="absolute bottom-8 left-8 right-8 z-10 space-y-2">
+                <h4 className="font-headline text-2xl sm:text-3xl font-bold text-white leading-tight">
+                  Fluidez Bilingüe & Debate
+                </h4>
+                <p className="font-body text-sm sm:text-base text-slate-200 leading-relaxed">
+                  Pensamiento ágil en inglés con fonética interactiva continua.
+                </p>
               </div>
             </div>
           </div>

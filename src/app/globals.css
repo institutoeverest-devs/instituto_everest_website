@@ -83,6 +83,25 @@
   }
 }
 
+@keyframes whatsapp-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.65);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 0 16px rgba(37, 211, 102, 0);
+    transform: scale(1.06);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+    transform: scale(1);
+  }
+}
+
+.animate-whatsapp-pulse {
+  animation: whatsapp-pulse 2.2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
 /* Custom scrollbars */
 .no-scrollbar::-webkit-scrollbar {
   display: none;
@@ -154,3 +173,24 @@
   will-change: transform;
   transition: transform 550ms cubic-bezier(0.25, 1, 0.5, 1);
 }
+
+/* WhatsApp Floating Button Pulse Effect */
+@keyframes whatsapp-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 0 16px rgba(37, 211, 102, 0);
+    transform: scale(1.06);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+    transform: scale(1);
+  }
+}
+
+.animate-whatsapp-pulse {
+  animation: whatsapp-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+

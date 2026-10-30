@@ -43,7 +43,7 @@ export function PrimariaHero() {
 
   return (
     <section
-      className="relative w-full min-h-[92vh] lg:min-h-screen flex flex-col justify-between pt-28 pb-12 px-4 sm:px-6 lg:px-10 overflow-hidden text-white"
+      className="relative w-full min-h-[90vh] lg:min-h-screen flex flex-col justify-between pt-24 pb-8 sm:pt-24 lg:pt-24 sm:pb-10 px-4 sm:px-6 lg:px-10 overflow-hidden text-white"
       id="hero-primaria"
     >
       {/* Background Image with Dark Cinematic Gradient */}
@@ -64,7 +64,7 @@ export function PrimariaHero() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="relative z-10 w-full max-w-[1140px] mx-auto text-center mt-6 sm:mt-10 px-6 sm:px-12 py-10 sm:py-14 space-y-6 rounded-3xl backdrop-blur-md"
+        className="relative z-10 w-full max-w-[1140px] mx-auto text-center mt-2 sm:mt-4 px-6 sm:px-12 py-7 sm:py-9 space-y-4 sm:space-y-5 rounded-3xl backdrop-blur-md"
         style={{
           border: "1px solid rgba(255, 255, 255, 0.28)",
           background: "rgba(0, 0, 0, 0.22)",
@@ -80,12 +80,12 @@ export function PrimariaHero() {
         </div>
 
         {/* Main Title */}
-        <h1 className="font-headline text-4xl sm:text-6xl lg:text-[70px] font-bold text-white tracking-tight leading-[1.08] drop-shadow-xl max-w-4xl mx-auto">
+        <h1 className="font-headline text-4xl sm:text-6xl lg:text-[68px] font-bold text-white tracking-tight leading-[1.08] drop-shadow-xl max-w-4xl mx-auto">
           Primaria Instituto Everest
         </h1>
 
         {/* Subtitle & Note */}
-        <div className="max-w-3xl mx-auto space-y-3">
+        <div className="max-w-3xl mx-auto space-y-2.5">
           <p className="font-headline italic text-slate-100 text-lg sm:text-2xl font-normal leading-relaxed drop-shadow-md">
             Consolidación de aprendizajes académicos acompañados de inglés, tecnología, pensamiento crítico, creatividad, música y formación integral.
           </p>
@@ -94,22 +94,34 @@ export function PrimariaHero() {
           </p>
         </div>
 
-        {/* Action Button: Descargar Plan / WhatsApp */}
-        <div className="pt-2 flex justify-center items-center">
+        {/* Action Buttons: Agendar Visita & Conocer Plan */}
+        <div className="pt-2 flex flex-wrap justify-center items-center gap-3 sm:gap-4">
           <a
-            href={`https://wa.me/${SITE_CONFIG.whatsapp}?text=Hola,%20deseo%20descargar%20el%20plan%20de%20estudios%20de%20Primaria%20en%20Instituto%20Everest%20León`}
+            href={`https://wa.me/${SITE_CONFIG.whatsapp}?text=Hola,%20deseo%20agendar%20una%20visita%20guiada%20a%20Primaria%20en%20Instituto%20Everest%20León`}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-2xl bg-white/95 text-slate-900 font-bold text-sm sm:text-base shadow-2xl hover:bg-white hover:scale-105 active:scale-95 transition-all duration-300 border border-white/50"
+            className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl text-white text-xs sm:text-sm font-bold shadow-xl transition-all duration-300 hover:scale-105 active:scale-95 shrink-0 whitespace-nowrap cursor-pointer"
+            style={{
+              backgroundColor: "rgb(218, 71, 74)",
+              boxShadow: "rgba(218, 71, 74, 0.45) 0px 8px 24px",
+            }}
           >
-            <span className="material-symbols-outlined text-[22px] text-primary">download</span>
-            <span>Descargar Plan de Primaria</span>
+            <span className="material-symbols-outlined text-[20px]">calendar_month</span>
+            <span>Agendar Visita Primaria</span>
           </a>
+
+          <Link
+            href="#ia-impact"
+            className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl text-white text-xs sm:text-sm transition-all duration-300 hover:bg-white/30 bg-white/20 border border-white/40 shadow-md backdrop-blur-md font-bold shrink-0 whitespace-nowrap cursor-pointer"
+          >
+            <span className="material-symbols-outlined text-[20px] text-[#F6D448]">menu_book</span>
+            <span>Conocer Plan Primaria</span>
+          </Link>
         </div>
       </motion.div>
 
       {/* 4 Lower Feature Cards */}
-      <div className="relative z-10 w-full max-w-[1280px] mx-auto mt-12 lg:mt-16">
+      <div className="relative z-10 w-full max-w-[1280px] mx-auto mt-8 sm:mt-10 lg:mt-12">
         <div className="flex items-center justify-between mb-4 px-1">
           <div className="flex items-center gap-2">
             <span className="w-2.5 h-2.5 rounded-full bg-[#E5A93C]" />

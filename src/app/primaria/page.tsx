@@ -31,7 +31,7 @@ export const metadata: Metadata = {
 
 export default function PrimariaPage() {
   return (
-    <div className="flex flex-col w-full overflow-hidden">
+    <div className="flex flex-col w-full overflow-x-clip">
       <PrimariaHero />
       <PrimariaAmcoBento />
       <PrimariaImpactIa />
