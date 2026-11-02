@@ -80,7 +80,7 @@ export function PreescolarAreas() {
       subtitleClass: "text-white/80",
       title: "Sensibilidad Artística",
       titleClass: "text-white",
-      quote: "«Expresión libre, texturas y apreciación artística y orquestal.»",
+      quote: "«Expresión libre, texturas y apreciación artística y musical.»",
       quoteClass: "text-white/90",
       desc: "Clases formales de música curricular desde 1º de Preescolar (1 sesión semanal) mediante estimulación auditiva, rítmica y vocal, sin manejo de instrumentos musicales. Pintura de caballete y modelado con arcilla.",
       footerLeft: "Música: 1 día a la semana en Kínder 1, 2 y 3",

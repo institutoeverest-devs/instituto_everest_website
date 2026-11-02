@@ -22,6 +22,11 @@ export function RutaCrecimiento() {
     setCycleKey((k) => k + 1);
   }, []);
 
+  const handlePrev = useCallback(() => {
+    setCurrentStage((prev) => (prev - 1 + GROWTH_STAGES.length) % GROWTH_STAGES.length);
+    setCycleKey((k) => k + 1);
+  }, []);
+
   const stage = GROWTH_STAGES[currentStage];
   const isBlue = stage.theme === "blue";
 
@@ -44,8 +49,8 @@ export function RutaCrecimiento() {
               Un continuum educativo estructurado que acompaña la maduración neurológica y emocional en cada fase escolar, desde la estimulación temprana hasta la autonomía y el liderazgo global.
             </p>
 
-            {/* Segmented Loader Bars */}
-            <div className="pt-2 space-y-4">
+            {/* Segmented Loader Bars (Oculto en móvil y tablet, visible solo en desktop) */}
+            <div className="hidden lg:block pt-2 space-y-4">
               <div className="grid grid-cols-4 gap-2.5 w-full">
                 {GROWTH_STAGES.map((s, idx) => {
                   const isPast = idx < currentStage;
@@ -107,20 +112,47 @@ export function RutaCrecimiento() {
             </div>
           </div>
 
-          {/* LADO DERECHO: Tarjeta dinámica que alterna color */}
-          <div className="lg:col-span-7">
+          {/* LADO DERECHO: Tarjeta dinámica tipo carrusel con orillas laterales en móvil */}
+          <div className="lg:col-span-7 -mx-4 sm:-mx-6 lg:mx-0 w-[calc(100%+2rem)] sm:w-[calc(100%+3rem)] lg:w-full">
             <div
               onMouseEnter={() => setIsPaused(true)}
               onMouseLeave={() => setIsPaused(false)}
-              className={`relative rounded-3xl p-8 sm:p-12 transition-all duration-500 h-[490px] sm:h-[460px] flex flex-col justify-between overflow-hidden shadow-2xl ${
+              className={`relative rounded-none sm:rounded-3xl lg:rounded-3xl p-6 sm:p-10 lg:p-12 transition-all duration-500 min-h-[460px] sm:h-[460px] flex flex-col justify-between overflow-hidden shadow-2xl ${
                 isBlue
-                  ? "bg-[#546FAC] text-white border border-white/20"
-                  : "bg-white text-slate-900 border border-slate-200/80"
+                  ? "bg-[#546FAC] text-white border-y sm:border border-white/20"
+                  : "bg-white text-slate-900 border-y sm:border border-slate-200/80"
               }`}
             >
+              {/* Flechas de navegación carrusel (Izquierda y Derecha) */}
+              <button
+                type="button"
+                onClick={handlePrev}
+                aria-label="Etapa anterior"
+                className={`absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-30 w-10 h-10 sm:w-11 sm:h-11 rounded-full flex items-center justify-center backdrop-blur-md shadow-lg border transition-all duration-300 hover:scale-110 active:scale-95 cursor-pointer ${
+                  isBlue
+                    ? "bg-white/20 text-white border-white/30 hover:bg-white/30"
+                    : "bg-white/90 text-slate-800 border-slate-200 hover:bg-white shadow-md"
+                }`}
+              >
+                <span className="material-symbols-outlined text-[24px]">chevron_left</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={handleNext}
+                aria-label="Etapa siguiente"
+                className={`absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-30 w-10 h-10 sm:w-11 sm:h-11 rounded-full flex items-center justify-center backdrop-blur-md shadow-lg border transition-all duration-300 hover:scale-110 active:scale-95 cursor-pointer ${
+                  isBlue
+                    ? "bg-white/20 text-white border-white/30 hover:bg-white/30"
+                    : "bg-white/90 text-slate-800 border-slate-200 hover:bg-white shadow-md"
+                }`}
+              >
+                <span className="material-symbols-outlined text-[24px]">chevron_right</span>
+              </button>
+
               {/* Header de la tarjeta */}
               <div
-                className={`flex items-center justify-between pb-5 border-b transition-colors duration-300 shrink-0 ${
+                className={`flex items-center justify-between pb-5 border-b transition-colors duration-300 shrink-0 px-8 sm:px-10 lg:px-0 ${
                   isBlue ? "border-white/20" : "border-slate-200"
                 }`}
               >
@@ -227,6 +259,23 @@ export function RutaCrecimiento() {
                   </span>
                 </div>
               </div>
+            </div>
+
+            {/* Indicador de etapa interactivo en móvil y tablet */}
+            <div className="flex lg:hidden items-center justify-center gap-2 pt-1 pb-2">
+              {GROWTH_STAGES.map((s, idx) => (
+                <button
+                  key={s.id}
+                  type="button"
+                  onClick={() => goToStage(idx)}
+                  aria-label={`Ir a etapa ${s.shortLabel}`}
+                  className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
+                    idx === currentStage
+                      ? "w-7 bg-[#3b5692]"
+                      : "w-2 bg-slate-300 hover:bg-slate-400"
+                  }`}
+                />
+              ))}
             </div>
           </div>
         </div>

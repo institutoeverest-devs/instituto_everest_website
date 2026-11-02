@@ -43,7 +43,7 @@ export function NosotrosMascotasValores() {
       etapa: "Primaria Inicial & STEAM",
       virtudPrincipal: "Creatividad, Brillo Personal & Sensibilidad",
       enElAula:
-        "Estrella ilumina el talento único de cada alumno en la orquesta infantil, las artes visuales y el laboratorio STEAM. Enseña a colaborar en equipo respetando la luz y las ideas de los demás.",
+        "Estrella ilumina el talento único de cada alumno en la música curricular, las artes visuales y el laboratorio STEAM. Enseña a colaborar en equipo respetando la luz y las ideas de los demás.",
       frase: "«Todos los niños tienen un talento que merece brillar con luz propia.»",
     },
     buho: {

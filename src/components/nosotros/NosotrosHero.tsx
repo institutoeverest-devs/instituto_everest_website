@@ -8,7 +8,7 @@ import { SITE_CONFIG } from "@/lib/constants";
 export function NosotrosHero() {
   const trustPills = [
     { text: "Bilingüismo AMCO 100% Curricular", icon: "translate", color: "#557EBD" },
-    { text: "Música & Orquesta Escolar", icon: "music_note", color: "#8EB674" },
+    { text: "Música & Expresión Artística", icon: "music_note", color: "#8EB674" },
     { text: "Laboratorio STEAM & Robótica", icon: "smart_toy", color: "#DA474A" },
     { text: "Horario Extendido hasta 6:00 PM", icon: "schedule", color: "#E5A93C" },
   ];
@@ -79,7 +79,7 @@ export function NosotrosHero() {
 
             {/* Paragraph */}
             <p className="text-slate-600 text-xs sm:text-sm lg:text-base leading-relaxed font-body">
-              En <strong>Instituto Everest León</strong> formamos seres humanos íntegros, seguros de sí mismos y bilingües de forma natural bajo la metodología AMCO, impulsados por la innovación STEAM, música orquestal diaria y una formación socioemocional basada en virtudes.
+              En <strong>Instituto Everest León</strong> formamos seres humanos íntegros, seguros de sí mismos y bilingües de forma natural bajo la metodología AMCO, impulsados por la innovación STEAM, educación musical diaria y una formación socioemocional basada en virtudes.
             </p>
 
             {/* Trust Pills Grid */}
@@ -192,7 +192,7 @@ export function NosotrosHero() {
               <div className="hidden sm:flex absolute -bottom-7 left-4 p-2 rounded-2xl bg-white shadow-md border border-slate-200 z-10 items-center gap-2">
                 <div className="relative w-10 h-10 rounded-xl overflow-hidden shrink-0">
                   <Image
-                    alt="Música y orquesta escolar"
+                    alt="Música y formación artística"
                     src="https://lh3.googleusercontent.com/aida/AEtjO1V1UiwLO8PFuE-fMENr1TQNz08UMeB7yUEhxNGyA2eZ4axpe6wPPW8SI0YjbTktRspwAMH7weCtfsF0S0RdIxcl6YQSTPUPXN2Usu8vCdjLkEzp7zzEh53GhW59LR6RLx4GlfFFCqhD7Cu2xrn0sSt--MOkY8v0K1sR2Ug2bnjMemb56EDis4LN-bxzBLGULI4QyhhZZrW3BSVuztMcCDuvAb_YI-ZE2YufL-_1EGOVOXT6UnuvTXmO1A"
                     fill
                     className="object-cover"
@@ -203,7 +203,7 @@ export function NosotrosHero() {
                     Curricular
                   </span>
                   <span className="text-xs font-bold text-slate-800 block">
-                    Orquesta Escolar
+                    Música Curricular
                   </span>
                 </div>
               </div>

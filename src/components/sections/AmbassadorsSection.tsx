@@ -68,8 +68,8 @@ export function AmbassadorsSection() {
           </p>
         </div>
 
-        {/* 5 Cards Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
+        {/* 5 Cards Grid: Alineados uno al lado del otro */}
+        <div className="grid grid-cols-5 gap-1.5 sm:gap-3 lg:gap-6 w-full">
           {AMBASSADORS.map((ambassador, idx) => {
             const anim =
               AMBASSADOR_ANIMATIONS[ambassador.id] || {
@@ -85,7 +85,7 @@ export function AmbassadorsSection() {
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.4, delay: idx * 0.08 }}
                 whileHover={{ y: -6 }}
-                className="group flex flex-col items-center text-center p-6 rounded-3xl transition-all duration-300 shadow-sm hover:shadow-xl"
+                className="group flex flex-col items-center text-center p-1.5 sm:p-3 lg:p-6 rounded-xl sm:rounded-2xl lg:rounded-3xl transition-all duration-300 shadow-xs hover:shadow-xl overflow-hidden"
                 style={{
                   backgroundColor: ambassador.bgColor,
                   border: `1px solid ${ambassador.borderColor}`,
@@ -93,7 +93,7 @@ export function AmbassadorsSection() {
               >
                 {/* Contenedor del personaje con animación continua flotante */}
                 <motion.div
-                  className="w-28 h-28 mb-3 flex items-center justify-center relative cursor-pointer"
+                  className="w-10 h-10 sm:w-16 sm:h-16 lg:w-28 lg:h-28 mb-1 sm:mb-2 lg:mb-3 flex items-center justify-center relative cursor-pointer"
                   animate={{
                     y: anim.y,
                     x: anim.x || 0,
@@ -124,7 +124,7 @@ export function AmbassadorsSection() {
                 </motion.div>
 
                 <span
-                  className="px-2.5 py-0.5 rounded-full text-[11px] font-bold mb-2 shadow-xs"
+                  className="px-1 sm:px-2 lg:px-2.5 py-0.5 rounded-full text-[7px] sm:text-[9px] lg:text-[11px] font-bold mb-1 lg:mb-2 shadow-xs truncate max-w-full block"
                   style={{
                     backgroundColor: ambassador.badgeBg,
                     color: ambassador.badgeColor,
@@ -133,11 +133,11 @@ export function AmbassadorsSection() {
                   {ambassador.level}
                 </span>
 
-                <h3 className="font-headline text-xl font-bold text-slate-900 mb-1">
+                <h3 className="font-headline text-[10px] sm:text-xs lg:text-xl font-bold text-slate-900 mb-0.5 lg:mb-1 truncate max-w-full">
                   {ambassador.name}
                 </h3>
 
-                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                <p className="hidden sm:block text-[9px] sm:text-[10px] lg:text-sm text-slate-600 leading-tight lg:leading-relaxed line-clamp-2 lg:line-clamp-none">
                   {ambassador.description}
                 </p>
               </motion.div>

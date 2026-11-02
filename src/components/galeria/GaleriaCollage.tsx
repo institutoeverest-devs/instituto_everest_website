@@ -275,10 +275,10 @@ const THEMES: CategoryTheme[] = [
         {
           badge: "Primaria",
           badgeBg: "bg-[#DA474A]",
-          title: "Orquesta Escolar, Música Instrumental y Ensambles",
+          title: "Música Curricular, Expresión Instrumental y Coro",
           imgSrc:
             "https://lh3.googleusercontent.com/aida/AEtjO1V1UiwLO8PFuE-fMENr1TQNz08UMeB7yUEhxNGyA2eZ4axpe6wPPW8SI0YjbTktRspwAMH7weCtfsF0S0RdIxcl6YQSTPUPXN2Usu8vCdjLkEzp7zzEh53GhW59LR6RLx4GlfFFCqhD7Cu2xrn0sSt--MOkY8v0K1sR2Ug2bnjMemb56EDis4LN-bxzBLGULI4QyhhZZrW3BSVuztMcCDuvAb_YI-ZE2YufL-_1EGOVOXT6UnuvTXmO1A",
-          alt: "Orquesta Escolar Primaria",
+          alt: "Música Curricular Primaria",
         },
         {
           badge: "Primaria",

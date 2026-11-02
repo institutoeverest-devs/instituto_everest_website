@@ -68,9 +68,9 @@ const PILLARS: PillarType[] = [
     id: 3,
     num: "03",
     callout: "Sensibilidad Estética",
-    title: "Música Curricular: Orquesta y Expresión",
+    title: "Música Curricular: Arte y Expresión",
     description:
-      "Materia troncal indispensable que potencia las conexiones neuronales, la concentración y la disciplina armónica a través del ensamble orquestal escolar y la lectura de partituras.",
+      "Materia troncal indispensable que potencia las conexiones neuronales, la concentración y la disciplina armónica a través de la formación musical escolar y la lectura de partituras.",
     quote:
       "«La música educa la mente y afina el corazón para convivir.»",
     badgeColor: "#8EB674",
@@ -78,7 +78,7 @@ const PILLARS: PillarType[] = [
       "https://lh3.googleusercontent.com/aida/AEtjO1V1UiwLO8PFuE-fMENr1TQNz08UMeB7yUEhxNGyA2eZ4axpe6wPPW8SI0YjbTktRspwAMH7weCtfsF0S0RdIxcl6YQSTPUPXN2Usu8vCdjLkEzp7zzEh53GhW59LR6RLx4GlfFFCqhD7Cu2xrn0sSt--MOkY8v0K1sR2Ug2bnjMemb56EDis4LN-bxzBLGULI4QyhhZZrW3BSVuztMcCDuvAb_YI-ZE2YufL-_1EGOVOXT6UnuvTXmO1A",
     icon: "music_note",
     cardCaption:
-      "Orquesta Escolar Curricular · Sensibilidad, ritmo y oído armónico",
+      "Educación Musical Curricular · Sensibilidad, ritmo y oído armónico",
     bullets: [
       "Ensamble instrumental escolar y coro curricular",
       "Lectura musical, rítmica y educación auditiva",

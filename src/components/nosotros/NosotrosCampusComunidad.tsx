@@ -15,8 +15,8 @@ export function NosotrosCampusComunidad() {
         "https://lh3.googleusercontent.com/aida/AEtjO1W6rZb1Pl4OT83miM2x9WqY2F2c-1KwY4hYY7CSS_uKgmBVu32-3QWWJs0LnT315sOa1MhYf1Up4niz-xW4LJEwjKf7CNEz9TCzqpgZ_zv_zTHL4Uv7KtuPHSuXRnAf3vlNlzK2xi8_En1-ri-13KrMgPiOfbfQZs9n9TrWbmJ6yEgyKoj8_aEmvbaQfau8IDWsDMOJD3jWqFL9SCkQxbvYGWQuNuY9zGtpt2B9dIbG3oi-HgHWTaDwN9I",
     },
     {
-      title: "Salón de Música & Orquesta Infantil",
-      desc: "Aula acústicamente diseñada con instrumentos de cuerda, viento y percusión para el ensamble orquestal curricular y el desarrollo del oído armónico.",
+      title: "Salón de Música & Expresión Artística",
+      desc: "Aula acústicamente diseñada con instrumentos acústicos y percusión para la formación musical curricular y el desarrollo del oído armónico.",
       tag: "Arte Curricular",
       icon: "music_note",
       image:

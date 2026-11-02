@@ -27,7 +27,7 @@ export function MaternalDimensiones() {
       badgeText: "text-[#2DB362]",
       icon: "palette",
       iconBg: "#2DB362",
-      desc: "Taller de pintura dactilar no tóxica, masas sensoriales caseras, modelado orgánico y experimentación auditiva con instrumentos orquestales.",
+      desc: "Taller de pintura dactilar no tóxica, masas sensoriales caseras, modelado orgánico y experimentación auditiva con instrumentos musicales.",
     },
     {
       title: "Física & Psicomotriz",

@@ -64,7 +64,7 @@ export function JsonLd() {
           itemOffered: {
             "@type": "Course",
             name: "Primaria Bilingüe STEAM & Robótica",
-            description: "Laboratorio STEAM, robótica educativa, orquesta infantil y pensamiento computacional para niños de 6 a 12 años.",
+            description: "Laboratorio STEAM, robótica educativa, formación musical curricular y pensamiento computacional para niños de 6 a 12 años.",
           },
         },
         {

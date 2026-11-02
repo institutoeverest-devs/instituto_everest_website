@@ -17,7 +17,7 @@ export function PrimariaHero() {
     },
     {
       title: "Música Curricular Habitual",
-      desc: "Ensamble orquestal, rítmica y lectura de partituras.",
+      desc: "Expresión musical, rítmica y lectura de partituras.",
       badge: "Diario en Horario Escolar",
       badgeBg: "bg-[#DA474A]/90",
       image:

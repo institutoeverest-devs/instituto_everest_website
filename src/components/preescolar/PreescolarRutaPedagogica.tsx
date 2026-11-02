@@ -47,7 +47,7 @@ const ROUTE_STEPS: RouteStep[] = [
     badgeColor: "#cb3c40",
     quote: "«Exploración STEAM y expresión artística para convertir ideas en proyectos reales.»",
     description:
-      "Expresión musical orquestal, artes plásticas, laboratorio STEAM y resolución colaborativa de problemas con Estrella Everest.",
+      "Expresión musical curricular, artes plásticas, laboratorio STEAM y resolución colaborativa de problemas con Estrella Everest.",
     pills: ["Laboratorio STEAM", "Música Curricular", "Artes Plásticas", "Pensamiento Lógico"],
     author: "Mtra. Sofía Valenzuela",
     role: "Coordinadora Pedagógica Preescolar · Instituto Everest",

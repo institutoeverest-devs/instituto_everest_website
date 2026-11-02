@@ -3,8 +3,6 @@ import { SITE_CONFIG } from "@/lib/constants";
 import { NosotrosHero } from "@/components/nosotros/NosotrosHero";
 import { NosotrosMisionVision } from "@/components/nosotros/NosotrosMisionVision";
 import { NosotrosPilaresFilosofia } from "@/components/nosotros/NosotrosPilaresFilosofia";
-import { NosotrosMascotasValores } from "@/components/nosotros/NosotrosMascotasValores";
-import { NosotrosCampusComunidad } from "@/components/nosotros/NosotrosCampusComunidad";
 import { NosotrosDocentesFamilia } from "@/components/nosotros/NosotrosDocentesFamilia";
 
 export const metadata: Metadata = {
@@ -36,8 +34,6 @@ export default function NosotrosPage() {
       <NosotrosHero />
       <NosotrosMisionVision />
       <NosotrosPilaresFilosofia />
-      <NosotrosMascotasValores />
-      <NosotrosCampusComunidad />
       <NosotrosDocentesFamilia />
     </div>
   );

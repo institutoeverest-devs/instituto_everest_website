@@ -40,7 +40,7 @@ export function MaternalRutina() {
     },
     {
       time: "11:00 AM",
-      timeSub: "Docente especialista orquestal",
+      timeSub: "Docente especialista musical",
       badge: "Exclusivo",
       title: "Música Curricular Diaria",
       desc: "Clase formal con campanas afinadas, xilófonos de madera, ritmo corporal y apreciación tímbrica activa.",

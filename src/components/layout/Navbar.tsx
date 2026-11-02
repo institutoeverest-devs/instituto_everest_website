@@ -12,14 +12,16 @@ export function Navbar() {
   const pathname = usePathname();
 
   const isInicio = pathname === "/";
-  const isColegio = pathname === "/galeria" || pathname === "/nosotros";
-  const isNiveles =
-    pathname === "/maternal" ||
-    pathname === "/preescolar" ||
-    pathname === "/primaria";
-  const isContacto = pathname === "/contacto";
-  const isGaleria = pathname === "/galeria";
-  const isNosotros = pathname === "/nosotros";
+  const isGaleria = Boolean(pathname && pathname.startsWith("/galeria"));
+  const isNosotros = Boolean(pathname && pathname.startsWith("/nosotros"));
+  const isColegio = isGaleria || isNosotros;
+  const isNiveles = Boolean(
+    pathname &&
+      (pathname.startsWith("/maternal") ||
+        pathname.startsWith("/preescolar") ||
+        pathname.startsWith("/primaria"))
+  );
+  const isContacto = Boolean(pathname && pathname.startsWith("/contacto"));
 
   useEffect(() => {
     const handleScroll = () => {
@@ -140,7 +142,7 @@ export function Navbar() {
               <div className="bg-white/95 backdrop-blur-md rounded-2xl p-2 shadow-2xl border border-white/40 flex flex-col gap-1 text-slate-800">
                 <Link
                   className={`flex items-center gap-2.5 px-3 py-2 rounded-xl text-sm transition-colors ${
-                    pathname === "/nosotros"
+                    isNosotros
                       ? "bg-slate-100 text-primary font-bold"
                       : "text-slate-700 font-semibold hover:text-primary hover:bg-slate-100/80"
                   }`}
@@ -151,7 +153,7 @@ export function Navbar() {
                 </Link>
                 <Link
                   className={`flex items-center gap-2.5 px-3 py-2 rounded-xl text-sm transition-colors ${
-                    pathname === "/galeria"
+                    isGaleria
                       ? "bg-slate-100 text-primary font-bold"
                       : "text-slate-700 font-semibold hover:text-primary hover:bg-slate-100/80"
                   }`}
@@ -250,7 +252,7 @@ export function Navbar() {
         {/* Action Button & Mobile toggle */}
         <div className="flex items-center gap-3">
           <Link
-            className={`inline-flex items-center justify-center rounded-xl text-white font-bold transition-all duration-300 shadow-md hover:scale-105 active:scale-95 cursor-pointer shrink-0 ${
+            className={`hidden xl:inline-flex items-center justify-center rounded-xl text-white font-bold transition-all duration-300 shadow-md hover:scale-105 active:scale-95 cursor-pointer shrink-0 ${
               scrolled
                 ? "px-4 py-1.5 sm:py-2 text-xs sm:text-[13px]"
                 : "px-5 py-2.5 text-xs sm:text-sm"
@@ -266,8 +268,8 @@ export function Navbar() {
 
           <button
             type="button"
-            className={`xl:hidden rounded-xl bg-white/20 text-white hover:bg-white/30 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#F6D448] ${
-              scrolled ? "p-1.5" : "p-2"
+            className={`xl:hidden flex items-center justify-center rounded-xl bg-white/20 text-white hover:bg-white/30 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#F6D448] ${
+              scrolled ? "p-1.5 h-9 w-9" : "p-2 h-10 w-10"
             }`}
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label={mobileMenuOpen ? "Cerrar menú" : "Abrir menú de navegación"}
@@ -308,7 +310,7 @@ export function Navbar() {
                   href="/nosotros"
                   onClick={() => setMobileMenuOpen(false)}
                   className={`text-sm font-medium transition-colors ${
-                    pathname === "/nosotros"
+                    isNosotros
                       ? "text-[#F6D448] font-bold"
                       : "hover:text-[#F6D448]"
                   }`}
@@ -318,7 +320,11 @@ export function Navbar() {
                 <Link
                   href="/galeria"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="text-sm font-medium hover:text-[#F6D448] transition-colors"
+                  className={`text-sm font-medium transition-colors ${
+                    isGaleria
+                      ? "text-[#F6D448] font-bold"
+                      : "hover:text-[#F6D448]"
+                  }`}
                 >
                   Galería
                 </Link>
@@ -369,6 +375,18 @@ export function Navbar() {
               className="py-2 text-base font-semibold text-[#F6D448]"
             >
               Contacto
+            </Link>
+
+            <Link
+              href="/contacto"
+              onClick={() => setMobileMenuOpen(false)}
+              className="mt-2 w-full py-3 rounded-xl text-center text-white font-bold text-sm shadow-md"
+              style={{
+                backgroundColor: "rgb(218, 71, 74)",
+                boxShadow: "rgba(218, 71, 74, 0.4) 0px 4px 14px",
+              }}
+            >
+              Admisiones 2027
             </Link>
           </motion.div>
         )}
