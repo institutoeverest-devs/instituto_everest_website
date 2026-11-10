@@ -309,19 +309,23 @@ export function RutaCrecimiento() {
                   <span className="material-symbols-outlined text-[20px]">chevron_left</span>
                 </button>
 
-                <div className="flex items-center gap-1.5">
+                <div className="flex items-center gap-0.5">
                   {GROWTH_STAGES.map((s, idx) => (
                     <button
                       key={s.id}
                       type="button"
                       onClick={() => goToStage(idx)}
                       aria-label={`Ir a etapa ${s.shortLabel}`}
-                      className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
-                        idx === currentStage
-                          ? "w-8 bg-[#3b5692]"
-                          : "w-2.5 bg-slate-300 hover:bg-slate-400"
-                      }`}
-                    />
+                      className="min-w-[36px] min-h-[36px] flex items-center justify-center p-1 cursor-pointer"
+                    >
+                      <span
+                        className={`h-2 rounded-full transition-all duration-300 block ${
+                          idx === currentStage
+                            ? "w-8 bg-[#3b5692]"
+                            : "w-2.5 bg-slate-300 hover:bg-slate-400"
+                        }`}
+                      />
+                    </button>
                   ))}
                 </div>
 
@@ -335,7 +339,7 @@ export function RutaCrecimiento() {
                 </button>
               </div>
 
-              <div className="flex items-center gap-1.5 text-xs text-slate-400 font-medium">
+              <div className="flex items-center gap-1.5 text-xs text-slate-600 font-medium">
                 <span className="material-symbols-outlined text-[14px]">swipe</span>
                 <span>Desliza para explorar etapas (0{currentStage + 1} / 0{GROWTH_STAGES.length})</span>
               </div>

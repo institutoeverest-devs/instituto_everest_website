@@ -114,9 +114,25 @@ export default function RootLayout({
         {/* Material Symbols Outlined Icon Suite */}
         {/* eslint-disable-next-line @next/next/no-page-custom-font */}
         <link
+          rel="preload"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap"
+          as="style"
+        />
+        {/* eslint-disable-next-line @next/next/no-page-custom-font */}
+        <link
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap"
           rel="stylesheet"
+          media="print"
+          // @ts-expect-error non-blocking CSS media swap
+          onLoad="this.media='all'"
         />
+        <noscript>
+          {/* eslint-disable-next-line @next/next/no-page-custom-font */}
+          <link
+            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap"
+            rel="stylesheet"
+          />
+        </noscript>
 
         {/* Schema.org JSON-LD Structured Data */}
         <JsonLd />

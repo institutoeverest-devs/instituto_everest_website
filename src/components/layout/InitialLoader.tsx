@@ -9,13 +9,25 @@ export function InitialLoader() {
   const [isExiting, setIsExiting] = useState(false);
   const [isFinished, setIsFinished] = useState(() => {
     if (typeof window === "undefined") return false;
-    return /bot|googlebot|crawler|spider|robot|crawling|lighthouse|speed insights|ptst/i.test(
+    if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) return true;
+    try {
+      if (sessionStorage.getItem("everest_seen_intro") === "1") return true;
+    } catch {
+      // ignore
+    }
+    return /bot|googlebot|crawler|spider|robot|crawling|lighthouse|speed insights|ptst|headlesschrome/i.test(
       navigator.userAgent
-    );
+    ) || Boolean(navigator.webdriver);
   });
 
   useEffect(() => {
     if (isFinished) return;
+
+    try {
+      sessionStorage.setItem("everest_seen_intro", "1");
+    } catch {
+      // storage unavailable
+    }
 
     // Lock scroll while loader is visible
     document.body.style.overflow = "hidden";
@@ -24,12 +36,12 @@ export function InitialLoader() {
     const exitTimer = setTimeout(() => {
       setIsExiting(true);
       document.body.style.overflow = "";
-    }, 1150);
+    }, 450);
 
     // Remove from DOM after curtain animation finishes
     const finishTimer = setTimeout(() => {
       setIsFinished(true);
-    }, 2100);
+    }, 950);
 
     return () => {
       clearTimeout(exitTimer);

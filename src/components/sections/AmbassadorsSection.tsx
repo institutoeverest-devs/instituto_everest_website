@@ -254,7 +254,7 @@ export function AmbassadorsSection() {
               onClick={handlePrev}
               disabled={activeIdx === 0}
               aria-label="Embajador anterior"
-              className={`w-9 h-9 rounded-full flex items-center justify-center transition-all duration-200 border cursor-pointer ${
+              className={`w-10 h-10 min-w-[40px] min-h-[40px] rounded-full flex items-center justify-center transition-all duration-200 border cursor-pointer ${
                 activeIdx === 0
                   ? "opacity-30 cursor-not-allowed bg-slate-100 border-slate-200 text-slate-400"
                   : "bg-white border-slate-200 text-slate-700 hover:bg-slate-50 shadow-sm active:scale-95"
@@ -264,19 +264,23 @@ export function AmbassadorsSection() {
             </button>
 
             {/* Pagination Dots */}
-            <div className="flex items-center gap-1.5">
+            <div className="flex items-center gap-0.5">
               {AMBASSADORS.map((m, idx) => (
                 <button
                   key={m.id}
                   type="button"
                   onClick={() => scrollToMascot(idx)}
                   aria-label={`Ver ${m.name}`}
-                  className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
-                    idx === activeIdx
-                      ? "w-7 bg-[#3b5692]"
-                      : "w-2 bg-slate-300 hover:bg-slate-400"
-                  }`}
-                />
+                  className="min-w-[36px] min-h-[36px] flex items-center justify-center p-1.5 cursor-pointer"
+                >
+                  <span
+                    className={`h-2 rounded-full transition-all duration-300 block ${
+                      idx === activeIdx
+                        ? "w-7 bg-[#3b5692]"
+                        : "w-2 bg-slate-300 hover:bg-slate-400"
+                    }`}
+                  />
+                </button>
               ))}
             </div>
 
@@ -285,7 +289,7 @@ export function AmbassadorsSection() {
               onClick={handleNext}
               disabled={activeIdx === AMBASSADORS.length - 1}
               aria-label="Embajador siguiente"
-              className={`w-9 h-9 rounded-full flex items-center justify-center transition-all duration-200 border cursor-pointer ${
+              className={`w-10 h-10 min-w-[40px] min-h-[40px] rounded-full flex items-center justify-center transition-all duration-200 border cursor-pointer ${
                 activeIdx === AMBASSADORS.length - 1
                   ? "opacity-30 cursor-not-allowed bg-slate-100 border-slate-200 text-slate-400"
                   : "bg-white border-slate-200 text-slate-700 hover:bg-slate-50 shadow-sm active:scale-95"

@@ -245,25 +245,29 @@ export function PilaresSection() {
                 type="button"
                 onClick={handlePrev}
                 aria-label="Pilar anterior"
-                className="w-9 h-9 rounded-full flex items-center justify-center bg-white border border-slate-200 text-slate-700 shadow-sm transition-all duration-200 active:scale-95 cursor-pointer hover:bg-slate-50"
+                className="w-10 h-10 min-w-[40px] min-h-[40px] rounded-full flex items-center justify-center bg-white border border-slate-200 text-slate-700 shadow-sm transition-all duration-200 active:scale-95 cursor-pointer hover:bg-slate-50"
               >
                 <span className="material-symbols-outlined text-[19px]">chevron_left</span>
               </button>
 
               {/* Dots */}
-              <div className="flex items-center gap-1.5">
+              <div className="flex items-center gap-0.5">
                 {PILLARS.map((p, idx) => (
                   <button
                     key={p.id}
                     type="button"
                     onClick={() => selectPillar(idx)}
                     aria-label={`Ver ${p.shortTitle}`}
-                    className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
-                      idx === activeIdx
-                        ? "w-7 bg-[#3b5692]"
-                        : "w-2 bg-slate-300 hover:bg-slate-400"
-                    }`}
-                  />
+                    className="min-w-[36px] min-h-[36px] flex items-center justify-center p-1.5 cursor-pointer"
+                  >
+                    <span
+                      className={`h-2 rounded-full transition-all duration-300 block ${
+                        idx === activeIdx
+                          ? "w-7 bg-[#3b5692]"
+                          : "w-2 bg-slate-300 hover:bg-slate-400"
+                      }`}
+                    />
+                  </button>
                 ))}
               </div>
 
@@ -271,13 +275,13 @@ export function PilaresSection() {
                 type="button"
                 onClick={handleNext}
                 aria-label="Pilar siguiente"
-                className="w-9 h-9 rounded-full flex items-center justify-center bg-white border border-slate-200 text-slate-700 shadow-sm transition-all duration-200 active:scale-95 cursor-pointer hover:bg-slate-50"
+                className="w-10 h-10 min-w-[40px] min-h-[40px] rounded-full flex items-center justify-center bg-white border border-slate-200 text-slate-700 shadow-sm transition-all duration-200 active:scale-95 cursor-pointer hover:bg-slate-50"
               >
                 <span className="material-symbols-outlined text-[19px]">chevron_right</span>
               </button>
             </div>
 
-            <span className="text-[11px] text-slate-400 font-medium">
+            <span className="text-[11px] text-slate-600 font-medium">
               Desliza horizontalmente para explorar (0{activeIdx + 1} / 04)
             </span>
           </div>
@@ -387,19 +391,23 @@ export function PilaresSection() {
                   </button>
 
                   {/* Dots */}
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-1">
                     {PILLARS.map((p, idx) => (
                       <button
                         key={p.id}
                         type="button"
                         onClick={() => selectPillar(idx)}
                         aria-label={`Ver ${p.shortTitle}`}
-                        className={`h-2.5 rounded-full transition-all duration-300 cursor-pointer ${
-                          idx === activeIdx
-                            ? "w-8 bg-[#3b5692]"
-                            : "w-2.5 bg-slate-300 hover:bg-slate-400"
-                        }`}
-                      />
+                        className="min-w-[36px] min-h-[36px] flex items-center justify-center p-1 cursor-pointer"
+                      >
+                        <span
+                          className={`h-2.5 rounded-full transition-all duration-300 block ${
+                            idx === activeIdx
+                              ? "w-8 bg-[#3b5692]"
+                              : "w-2.5 bg-slate-300 hover:bg-slate-400"
+                          }`}
+                        />
+                      </button>
                     ))}
                   </div>
 
@@ -445,9 +453,9 @@ export function PilaresSection() {
                     <span className="text-xs uppercase font-bold text-[#345f9c] tracking-widest block">
                       {activePillar.category}
                     </span>
-                    <h2 className="font-headline text-3xl sm:text-4xl lg:text-[40px] text-slate-900 font-bold leading-tight">
+                    <h3 className="font-headline text-3xl sm:text-4xl lg:text-[40px] text-slate-900 font-bold leading-tight">
                       {activePillar.title}
-                    </h2>
+                    </h3>
                   </div>
 
                   <p className="text-sm sm:text-base text-slate-600 leading-relaxed min-h-[80px]">
@@ -463,7 +471,7 @@ export function PilaresSection() {
                 <span className="text-slate-900 font-bold tracking-wider">
                   0{activeIdx + 1} / 04
                 </span>
-                <span className="text-[11px] uppercase tracking-widest text-slate-400">
+                <span className="text-[11px] uppercase tracking-widest text-slate-500">
                   Desplaza para explorar
                 </span>
               </div>

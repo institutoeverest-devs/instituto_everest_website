@@ -220,20 +220,20 @@ export function TestimonialsSection() {
 
             <div className="border-t border-slate-100 pt-4 flex items-center justify-between">
               <div>
-                <h4 className="font-headline font-bold text-slate-900 text-sm">
+                <h3 className="font-headline font-bold text-slate-900 text-sm">
                   {TESTIMONIALS[activeIndex].author}
-                </h4>
+                </h3>
                 <p className="text-xs text-slate-500">
                   {TESTIMONIALS[activeIndex].role}
                 </p>
               </div>
 
-              <div className="flex items-center gap-1.5">
+              <div className="flex items-center gap-2">
                 <button
                   type="button"
                   onClick={prev}
                   aria-label="Testimonio anterior"
-                  className="w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-700 cursor-pointer"
+                  className="w-10 h-10 min-w-[40px] min-h-[40px] rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-700 cursor-pointer active:scale-95 transition-transform"
                 >
                   <span className="material-symbols-outlined text-[18px]">
                     arrow_back
@@ -243,7 +243,7 @@ export function TestimonialsSection() {
                   type="button"
                   onClick={next}
                   aria-label="Testimonio siguiente"
-                  className="w-9 h-9 rounded-full bg-[#3b5692] text-white flex items-center justify-center cursor-pointer"
+                  className="w-10 h-10 min-w-[40px] min-h-[40px] rounded-full bg-[#3b5692] text-white flex items-center justify-center cursor-pointer active:scale-95 transition-transform"
                 >
                   <span className="material-symbols-outlined text-[18px]">
                     arrow_forward

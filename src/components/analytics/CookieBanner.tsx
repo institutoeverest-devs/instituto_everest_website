@@ -114,7 +114,7 @@ export function CookieBanner() {
                 <div className="flex items-center justify-between text-xs py-1">
                   <div>
                     <span className="font-semibold text-white block">Técnicas y Funcionales</span>
-                    <span className="text-slate-400 text-[11px]">Estrictamente necesarias para el sitio.</span>
+                    <span className="text-slate-300 text-[11px]">Estrictamente necesarias para el sitio.</span>
                   </div>
                   <span className="text-[#8EB674] font-semibold text-xs">Siempre activas</span>
                 </div>
@@ -122,7 +122,7 @@ export function CookieBanner() {
                 <div className="flex items-center justify-between text-xs py-1">
                   <div>
                     <span className="font-semibold text-white block">Analíticas y Medición</span>
-                    <span className="text-slate-400 text-[11px]">Métricas de navegación para mejorar el servicio.</span>
+                    <span className="text-slate-300 text-[11px]">Métricas de navegación para mejorar el servicio.</span>
                   </div>
                   <input
                     type="checkbox"
@@ -136,7 +136,7 @@ export function CookieBanner() {
                 <div className="flex items-center justify-between text-xs py-1">
                   <div>
                     <span className="font-semibold text-white block">Publicidad y Admisiones</span>
-                    <span className="text-slate-400 text-[11px]">Información relevante sobre ciclos escolares.</span>
+                    <span className="text-slate-300 text-[11px]">Información relevante sobre ciclos escolares.</span>
                   </div>
                   <input
                     type="checkbox"
@@ -153,7 +153,7 @@ export function CookieBanner() {
               <button
                 type="button"
                 onClick={() => setShowConfig(!showConfig)}
-                className="text-xs text-slate-400 hover:text-white underline underline-offset-4 transition-colors cursor-pointer"
+                className="text-xs text-slate-200 hover:text-white underline underline-offset-4 transition-colors cursor-pointer"
               >
                 {showConfig ? "Ocultar opciones" : "Personalizar"}
               </button>

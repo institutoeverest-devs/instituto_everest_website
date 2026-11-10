@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { SITE_CONFIG } from "@/lib/constants";
 
@@ -9,13 +10,24 @@ export function HeroSection() {
       id="hero"
       className="relative w-full min-h-[580px] lg:min-h-[660px] overflow-hidden flex items-center justify-center pt-24 pb-14 lg:pt-28 lg:pb-16"
     >
+      {/* High-priority LCP Poster Image */}
+      <Image
+        src="https://lh3.googleusercontent.com/aida-public/AB6AXuBv22vsS_tksxGdKTCU8_tp_KwTRVHi5K_JQS70rF5iT8-ArJVGVxHySZiAMVtxdtG03yQKSeZqrsqKkzh8n3w1MWtDXMDaL0FVG3yrniouEAO-kzjSRQAqcjF4QS-FXYvSTfmTp0ZbCOKw4GIKsghX8DMKBGfMyo1MtX99MJ5EmvqaPY-BsHlFhJpIkiHeW6wEjXcvNApHFWffpl2Z5lyXWVXRrGcunWSPBz0LUedlETTIfIbM2rp1"
+        alt="Instituto Everest León"
+        fill
+        priority
+        fetchPriority="high"
+        sizes="100vw"
+        className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+      />
+
       {/* Background Video with Poster Fallback */}
       <video
         autoPlay
         loop
         muted
         playsInline
-        preload="auto"
+        preload="none"
         poster="https://lh3.googleusercontent.com/aida-public/AB6AXuBv22vsS_tksxGdKTCU8_tp_KwTRVHi5K_JQS70rF5iT8-ArJVGVxHySZiAMVtxdtG03yQKSeZqrsqKkzh8n3w1MWtDXMDaL0FVG3yrniouEAO-kzjSRQAqcjF4QS-FXYvSTfmTp0ZbCOKw4GIKsghX8DMKBGfMyo1MtX99MJ5EmvqaPY-BsHlFhJpIkiHeW6wEjXcvNApHFWffpl2Z5lyXWVXRrGcunWSPBz0LUedlETTIfIbM2rp1"
         className="absolute inset-0 w-full h-full object-cover pointer-events-none"
       >
@@ -75,13 +87,13 @@ export function HeroSection() {
           <div className="flex items-center justify-start gap-2 flex-wrap">
             <span
               className="px-3 py-1 rounded-full text-[12px] font-bold text-white uppercase tracking-wider shadow-sm"
-              style={{ backgroundColor: "rgb(85, 126, 189)" }}
+              style={{ backgroundColor: "rgb(61, 105, 166)" }}
             >
               Maternal
             </span>
             <span
               className="px-3 py-1 rounded-full text-[12px] font-bold text-white uppercase tracking-wider shadow-sm"
-              style={{ backgroundColor: "rgb(142, 182, 116)" }}
+              style={{ backgroundColor: "rgb(68, 122, 54)" }}
             >
               Preescolar
             </span>
