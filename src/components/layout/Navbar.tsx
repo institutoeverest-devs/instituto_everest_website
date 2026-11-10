@@ -12,14 +12,16 @@ export function Navbar() {
   const pathname = usePathname();
 
   const isInicio = pathname === "/";
-  const isColegio = pathname === "/galeria" || pathname === "/nosotros";
-  const isNiveles =
-    pathname === "/maternal" ||
-    pathname === "/preescolar" ||
-    pathname === "/primaria";
-  const isContacto = pathname === "/contacto";
-  const isGaleria = pathname === "/galeria";
-  const isNosotros = pathname === "/nosotros";
+  const isGaleria = Boolean(pathname && pathname.startsWith("/galeria"));
+  const isNosotros = Boolean(pathname && pathname.startsWith("/nosotros"));
+  const isColegio = isGaleria || isNosotros;
+  const isNiveles = Boolean(
+    pathname &&
+      (pathname.startsWith("/maternal") ||
+        pathname.startsWith("/preescolar") ||
+        pathname.startsWith("/primaria"))
+  );
+  const isContacto = Boolean(pathname && pathname.startsWith("/contacto"));
 
   useEffect(() => {
     const handleScroll = () => {
@@ -48,25 +50,25 @@ export function Navbar() {
       }`}
     >
       <div
-        className={`max-w-[1280px] mx-auto px-4 sm:px-6 flex items-center justify-between gap-4 transition-all duration-300 ${
+        className={`max-w-[1280px] mx-auto px-3.5 sm:px-6 flex items-center justify-between gap-2 sm:gap-4 transition-all duration-300 ${
           scrolled ? "h-14 sm:h-15" : "h-20"
         }`}
       >
         {/* Brand / Logo */}
         <Link
           href="/"
-          className="flex items-center gap-2.5 sm:gap-3 focus:outline-none focus:ring-2 focus:ring-[#F6D448] rounded-xl p-1"
+          className="flex items-center gap-2 sm:gap-3 focus:outline-none focus:ring-2 focus:ring-[#F6D448] rounded-xl p-1 min-w-0 shrink"
           aria-label="Ir a inicio de Instituto Everest León"
         >
           <div
-            className={`bg-white/95 shadow-sm flex items-center justify-center transition-all duration-300 ${
+            className={`shrink-0 bg-white/95 shadow-sm flex items-center justify-center transition-all duration-300 ${
               scrolled ? "p-1 rounded-lg" : "p-1.5 rounded-xl"
             }`}
           >
             <Image
               alt="Instituto Everest León Logo"
               className={`w-auto object-contain transition-all duration-300 ${
-                scrolled ? "h-6 sm:h-7" : "h-8"
+                scrolled ? "h-6 sm:h-7" : "h-7 sm:h-8"
               }`}
               src="https://lh3.googleusercontent.com/aida-public/AB6AXuDE6pr2NCPvAinEcdFjDryfeAMXxrSKLzRXl3mKqIJFDH6_yK3KQVnn9wyAamh63Yjjvec0siQbaevmxrQbaIdGIU0AnrFCdf7yac9f_PubscNv99V32dGYttOvSNREjgNAuqrGs_AfT8gjT3cIqMXGQwDwHWLnlJdKFhPfK-8lK6TXwKZ2BuX6IfM0sBq2Xwu1aeOQhLNO37k0Krow0sh32oBLX72sAmhZiTKzCo5MkkBHOiRdSXato60kfGUeXdVDgg"
               width={36}
@@ -75,12 +77,12 @@ export function Navbar() {
               priority
             />
           </div>
-          <div className="flex items-center">
+          <div className="flex items-center min-w-0">
             <span
-              className={`font-headline font-bold text-white tracking-tight drop-shadow-sm leading-tight transition-all duration-300 ${
+              className={`font-headline font-bold text-white tracking-tight drop-shadow-sm leading-tight transition-all duration-300 whitespace-nowrap ${
                 scrolled
-                  ? "text-[16px] sm:text-[18px]"
-                  : "text-[19px] sm:text-[21px]"
+                  ? "text-[15px] sm:text-[18px]"
+                  : "text-[16px] sm:text-[21px]"
               }`}
             >
               Instituto Everest
@@ -90,7 +92,7 @@ export function Navbar() {
 
         {/* Desktop Navigation */}
         <nav
-          className="hidden xl:flex items-center gap-6"
+          className="hidden lg:flex items-center gap-4 xl:gap-6"
           aria-label="Navegación principal"
         >
           {/* Inicio */}
@@ -140,7 +142,7 @@ export function Navbar() {
               <div className="bg-white/95 backdrop-blur-md rounded-2xl p-2 shadow-2xl border border-white/40 flex flex-col gap-1 text-slate-800">
                 <Link
                   className={`flex items-center gap-2.5 px-3 py-2 rounded-xl text-sm transition-colors ${
-                    pathname === "/nosotros"
+                    isNosotros
                       ? "bg-slate-100 text-primary font-bold"
                       : "text-slate-700 font-semibold hover:text-primary hover:bg-slate-100/80"
                   }`}
@@ -151,7 +153,7 @@ export function Navbar() {
                 </Link>
                 <Link
                   className={`flex items-center gap-2.5 px-3 py-2 rounded-xl text-sm transition-colors ${
-                    pathname === "/galeria"
+                    isGaleria
                       ? "bg-slate-100 text-primary font-bold"
                       : "text-slate-700 font-semibold hover:text-primary hover:bg-slate-100/80"
                   }`}
@@ -248,12 +250,12 @@ export function Navbar() {
         </nav>
 
         {/* Action Button & Mobile toggle */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-3 shrink-0">
           <Link
-            className={`inline-flex items-center justify-center rounded-xl text-white font-bold transition-all duration-300 shadow-md hover:scale-105 active:scale-95 cursor-pointer shrink-0 ${
+            className={`hidden lg:inline-flex items-center justify-center rounded-xl text-white font-bold transition-all duration-300 shadow-md hover:scale-105 active:scale-95 cursor-pointer shrink-0 ${
               scrolled
-                ? "px-4 py-1.5 sm:py-2 text-xs sm:text-[13px]"
-                : "px-5 py-2.5 text-xs sm:text-sm"
+                ? "px-3.5 py-1.5 xl:px-4 xl:py-2 text-xs xl:text-[13px]"
+                : "px-4 py-2 xl:px-5 xl:py-2.5 text-xs xl:text-sm"
             }`}
             href="/contacto"
             style={{
@@ -266,11 +268,13 @@ export function Navbar() {
 
           <button
             type="button"
-            className={`xl:hidden rounded-xl bg-white/20 text-white hover:bg-white/30 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#F6D448] ${
-              scrolled ? "p-1.5" : "p-2"
+            className={`lg:hidden shrink-0 flex items-center justify-center rounded-xl bg-white/20 text-white hover:bg-white/30 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#F6D448] ${
+              scrolled ? "p-1.5 h-9 w-9" : "p-2 h-10 w-10"
             }`}
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label={mobileMenuOpen ? "Cerrar menú" : "Abrir menú de navegación"}
+            aria-expanded={mobileMenuOpen}
+            aria-controls="mobile-nav-drawer"
           >
             <span
               className={`material-symbols-outlined transition-all duration-300 ${
@@ -287,28 +291,29 @@ export function Navbar() {
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
+            id="mobile-nav-drawer"
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="xl:hidden border-t border-white/20 bg-[#0A1128]/95 backdrop-blur-2xl px-6 py-6 rounded-b-2xl flex flex-col gap-4 text-white overflow-hidden"
+            className="lg:hidden border-t border-white/20 bg-[#0A1128]/95 backdrop-blur-2xl px-5 py-4 rounded-b-2xl flex flex-col gap-3 text-white max-h-[calc(100dvh-5.5rem)] overflow-y-auto overscroll-contain shadow-2xl"
           >
             <Link
               href="/"
               onClick={() => setMobileMenuOpen(false)}
-              className="py-2 text-base font-semibold border-b border-white/10"
+              className="py-1.5 text-base font-semibold border-b border-white/10"
             >
               Inicio
             </Link>
             
             {/* Nuestro Colegio */}
-            <div className="py-2 border-b border-white/10 flex flex-col gap-2">
+            <div className="py-1.5 border-b border-white/10 flex flex-col gap-1.5">
               <span className="text-xs font-bold uppercase tracking-wider text-[#F6D448]">Nuestro Colegio</span>
-              <div className="pl-3 flex flex-col gap-2">
+              <div className="pl-3 flex flex-col gap-1.5">
                 <Link
                   href="/nosotros"
                   onClick={() => setMobileMenuOpen(false)}
                   className={`text-sm font-medium transition-colors ${
-                    pathname === "/nosotros"
+                    isNosotros
                       ? "text-[#F6D448] font-bold"
                       : "hover:text-[#F6D448]"
                   }`}
@@ -318,7 +323,11 @@ export function Navbar() {
                 <Link
                   href="/galeria"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="text-sm font-medium hover:text-[#F6D448] transition-colors"
+                  className={`text-sm font-medium transition-colors ${
+                    isGaleria
+                      ? "text-[#F6D448] font-bold"
+                      : "hover:text-[#F6D448]"
+                  }`}
                 >
                   Galería
                 </Link>
@@ -326,49 +335,51 @@ export function Navbar() {
             </div>
 
             {/* Niveles Educativos */}
-            <div className="py-2 border-b border-white/10 flex flex-col gap-2">
+            <div className="py-1.5 border-b border-white/10 flex flex-col gap-1.5">
               <span className="text-xs font-bold uppercase tracking-wider text-[#F6D448]">Niveles Educativos</span>
-              <div className="pl-3 flex flex-col gap-2.5">
+              <div className="pl-3 flex flex-col gap-2">
                 <Link
                   href="/maternal"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="text-sm font-medium flex items-center justify-between"
+                  className="text-sm font-medium"
                 >
-                  <span>Maternal</span>
-                  <span className="text-xs px-2.5 py-0.5 rounded-full bg-[#F6D448] text-slate-900 font-bold">1 a 3 años</span>
+                  Maternal
                 </Link>
                 <Link
                   href="/preescolar"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="text-sm font-medium flex items-center justify-between"
+                  className="text-sm font-medium"
                 >
-                  <span>Preescolar</span>
-                  <span className="text-xs px-2.5 py-0.5 rounded-full bg-[#557EBD] text-white font-bold">3 a 6 años</span>
+                  Preescolar
                 </Link>
                 <Link
                   href="/primaria"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="text-sm font-medium flex items-center justify-between"
+                  className="text-sm font-medium"
                 >
-                  <span>Primaria</span>
-                  <span className="text-xs px-2.5 py-0.5 rounded-full bg-[#8EB674] text-white font-bold">STEAM</span>
+                  Primaria
                 </Link>
               </div>
             </div>
 
             <Link
-              href="/#testimonios"
+              href="/contacto"
               onClick={() => setMobileMenuOpen(false)}
-              className="py-2 text-base font-semibold border-b border-white/10"
+              className="py-1.5 text-base font-semibold text-[#F6D448]"
             >
-              La Voz de Nuestra Comunidad
+              Contacto
             </Link>
+
             <Link
               href="/contacto"
               onClick={() => setMobileMenuOpen(false)}
-              className="py-2 text-base font-semibold text-[#F6D448]"
+              className="mt-1 w-full py-2.5 rounded-xl text-center text-white font-bold text-sm shadow-md"
+              style={{
+                backgroundColor: "rgb(218, 71, 74)",
+                boxShadow: "rgba(218, 71, 74, 0.4) 0px 4px 14px",
+              }}
             >
-              Contacto
+              Admisiones 2027
             </Link>
           </motion.div>
         )}

@@ -10,7 +10,7 @@ export function GoogleTagManagerHead() {
       {/* Google Consent Mode v2 Default Settings */}
       <Script
         id="gtm-consent-mode"
-        strategy="beforeInteractive"
+        strategy="afterInteractive"
         dangerouslySetInnerHTML={{
           __html: `
             window.dataLayer = window.dataLayer || [];

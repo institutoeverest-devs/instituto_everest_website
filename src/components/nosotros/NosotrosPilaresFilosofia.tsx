@@ -1,6 +1,6 @@
 "use client";
 
-import React, { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useRef, useState, useCallback } from "react";
 import Image from "next/image";
 import { motion, useInView, AnimatePresence } from "framer-motion";
 
@@ -10,7 +10,6 @@ export type PillarType = {
   callout: string;
   title: string;
   description: string;
-  quote: string;
   bullets: string[];
   contentPosition: "l" | "r";
   badgeColor: string;
@@ -27,8 +26,6 @@ const PILLARS: PillarType[] = [
     title: "Adquisición Natural del Inglés AMCO",
     description:
       "Los estudiantes piensan, dialogan y resuelven retos directamente en inglés sin traducción mental mecánica, desarrollando fluidez comunicativa y seguridad desde Kínder 1.",
-    quote:
-      "«Un segundo idioma que se adquiere con naturalidad, emoción y alegría.»",
     badgeColor: "#557EBD",
     image:
       "https://lh3.googleusercontent.com/aida/AEtjO1X2YcarXyd2DSZwLIt1QZ0ZTAMbIqJGHBYLky2M-IlYBQVC2fG25YiKz9hGsiDAJPhvPKVV4qDUw-PXyfn7aXvaZhdvuUItpHkKKnGDYOuk1MIB_azPtdiH8TNQEdbDrQXteycAwqMk5Y0t6wfjZ2cqOPs9R0cCPn4ESeu38Ce-6x9kH3mJ93EkdFFaypbwK7PJxCD3yHx-8dE2VSxPXsFoPBG8qXW6avBYvRvLSqeofXTLwWt4gcHJtg",
@@ -49,8 +46,6 @@ const PILLARS: PillarType[] = [
     title: "Robótica, Código y Criterio Ético Digital",
     description:
       "Formamos creadores conscientes de tecnología. Con robótica educativa y el programa IMPACT de AMCO, los alumnos abordan la IA con discernimiento humano y pensamiento computacional.",
-    quote:
-      "«Tecnología con propósito para resolver retos del mundo real.»",
     badgeColor: "#DA474A",
     image:
       "https://lh3.googleusercontent.com/aida/AEtjO1Wg91R-_7d_4UpoQBmWkLnpxDrUs4-GRc3wotLoVx2uVwZoW5OXZLeN_pJmFZfLALOnvh2VcHpFG5X1BAm6FJHhV8Axlpsq-zEgfaIBDV4V712pv88NY8yRbhbuSwD0lPWvJ2pIP1wrG5yEJkl-nCfEL56Z48o_j0T5nsy52tt7Da0qv6F411ASwHM_c-ZkpN-5JbNVDOBDN2idE0tcwuAhXS_uHTnhA3d2dauzB6jU_AmecP95BhteEbI",
@@ -68,17 +63,15 @@ const PILLARS: PillarType[] = [
     id: 3,
     num: "03",
     callout: "Sensibilidad Estética",
-    title: "Música Curricular: Orquesta y Expresión",
+    title: "Música Curricular: Arte y Expresión",
     description:
-      "Materia troncal indispensable que potencia las conexiones neuronales, la concentración y la disciplina armónica a través del ensamble orquestal escolar y la lectura de partituras.",
-    quote:
-      "«La música educa la mente y afina el corazón para convivir.»",
+      "Materia troncal indispensable que potencia las conexiones neuronales, la concentración y la disciplina armónica a través de la formación musical escolar y la lectura de partituras.",
     badgeColor: "#8EB674",
     image:
       "https://lh3.googleusercontent.com/aida/AEtjO1V1UiwLO8PFuE-fMENr1TQNz08UMeB7yUEhxNGyA2eZ4axpe6wPPW8SI0YjbTktRspwAMH7weCtfsF0S0RdIxcl6YQSTPUPXN2Usu8vCdjLkEzp7zzEh53GhW59LR6RLx4GlfFFCqhD7Cu2xrn0sSt--MOkY8v0K1sR2Ug2bnjMemb56EDis4LN-bxzBLGULI4QyhhZZrW3BSVuztMcCDuvAb_YI-ZE2YufL-_1EGOVOXT6UnuvTXmO1A",
     icon: "music_note",
     cardCaption:
-      "Orquesta Escolar Curricular · Sensibilidad, ritmo y oído armónico",
+      "Educación Musical Curricular · Sensibilidad, ritmo y oído armónico",
     bullets: [
       "Ensamble instrumental escolar y coro curricular",
       "Lectura musical, rítmica y educación auditiva",
@@ -93,8 +86,6 @@ const PILLARS: PillarType[] = [
     title: "Taekwondo Curricular y Formación Socioemocional",
     description:
       "Equilibrio integral de cuerpo y mente. Inculcamos principios de respeto, autocontrol, resiliencia física y canalización sana de emociones acompañados de las mascotas Everest.",
-    quote:
-      "«La verdadera fuerza es la serenidad ante cada desafío.»",
     badgeColor: "#E5A93C",
     image:
       "https://lh3.googleusercontent.com/aida-public/AB6AXuB5blRNUoZKhPY7vR8rhoNG3Ld3KbZsLZ65E2y-N3V0TCYuaU7H6sqLQ2gB5LCEPN2ldjDXW-e_2rmgIBZM41dE5QFhX3s9k9lR6zsMrFZaGKJQfWwbixKSUqBCMRisepVdjmiWMsROQsVh00VB1butn1cBmi__bSYmtVP6KFOOvVD1-YCe-9qolR-b7KWZAAHUTIgVQB0wjtY4SGituyVJXWBC1Z2HkORldGHD2SO39D2QfjH58n5Akh8fkFe78UAdYA",
@@ -112,7 +103,7 @@ const PILLARS: PillarType[] = [
 
 export function NosotrosPilaresFilosofia() {
   return (
-    <section className="py-16 sm:py-24 bg-[#f7f9fb] relative overflow-visible">
+    <section className="pt-16 pb-6 sm:pt-20 sm:pb-8 lg:pt-24 lg:pb-10 bg-[#f7f9fb] relative overflow-visible">
       {/* Header de la Sección */}
       <div className="text-center max-w-3xl mx-auto space-y-4 px-4 pb-8 sm:pb-12">
         <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#0A1128] text-white text-xs font-bold uppercase tracking-wider shadow-sm">
@@ -129,11 +120,231 @@ export function NosotrosPilaresFilosofia() {
         </p>
       </div>
 
-      {/* Componente Swap Column Features */}
-      <SwapColumnFeatures />
+      {/* Carrusel Móvil (< 768px) idéntico al de Home pero sin imágenes */}
+      <div className="block md:hidden px-4">
+        <MobilePilaresCarousel />
+      </div>
+
+      {/* Componente Swap Column Features para Desktop (>= 768px) */}
+      <div className="hidden md:block">
+        <SwapColumnFeatures />
+      </div>
     </section>
   );
 }
+
+const MobilePilaresCarousel = () => {
+  const [activeIdx, setActiveIdx] = useState(0);
+  const mobileScrollerRef = useRef<HTMLDivElement>(null);
+  const isMobileProgrammatic = useRef(false);
+  const mobileScrollTimeout = useRef<NodeJS.Timeout | null>(null);
+  const mobileTouchStartX = useRef<number | null>(null);
+  const mobileTouchStartY = useRef<number | null>(null);
+  const mobileTouchStartIdx = useRef<number>(0);
+
+  const scrollToMobileCard = useCallback((idx: number) => {
+    if (!mobileScrollerRef.current) return;
+    const container = mobileScrollerRef.current;
+    const items = container.children;
+    if (items[idx]) {
+      isMobileProgrammatic.current = true;
+      setActiveIdx(idx);
+      const cardEl = items[idx] as HTMLElement;
+      const targetLeft = cardEl.offsetLeft - (container.clientWidth - cardEl.offsetWidth) / 2;
+      container.scrollTo({ left: targetLeft, behavior: "smooth" });
+      if (mobileScrollTimeout.current) clearTimeout(mobileScrollTimeout.current);
+      mobileScrollTimeout.current = setTimeout(() => {
+        isMobileProgrammatic.current = false;
+      }, 450);
+    }
+  }, []);
+
+  const handleMobileTouchStart = (e: React.TouchEvent) => {
+    mobileTouchStartIdx.current = activeIdx;
+    mobileTouchStartX.current = e.touches[0].clientX;
+    mobileTouchStartY.current = e.touches[0].clientY;
+  };
+
+  const handleMobileTouchEnd = (e: React.TouchEvent) => {
+    if (mobileTouchStartX.current === null) return;
+    const endX = e.changedTouches[0].clientX;
+    const endY = e.changedTouches[0].clientY;
+    const diffX = mobileTouchStartX.current - endX;
+    const diffY = (mobileTouchStartY.current ?? endY) - endY;
+
+    // Detect horizontal swipe and advance strictly 1 card
+    if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 25) {
+      if (diffX > 0) {
+        const nextIdx = Math.min(mobileTouchStartIdx.current + 1, PILLARS.length - 1);
+        selectPillar(nextIdx);
+      } else {
+        const prevIdx = Math.max(mobileTouchStartIdx.current - 1, 0);
+        selectPillar(prevIdx);
+      }
+    }
+    mobileTouchStartX.current = null;
+    mobileTouchStartY.current = null;
+  };
+
+  const handleMobileScroll = useCallback(() => {
+    if (isMobileProgrammatic.current || !mobileScrollerRef.current) return;
+    const container = mobileScrollerRef.current;
+    const cardEl = container.firstElementChild as HTMLElement | null;
+    if (!cardEl) return;
+    const cardWidth = cardEl.offsetWidth + 14;
+    let current = Math.round(container.scrollLeft / cardWidth);
+
+    // Limit index change to strictly +/- 1 while touch is active
+    if (mobileTouchStartX.current !== null) {
+      if (current > mobileTouchStartIdx.current + 1) current = mobileTouchStartIdx.current + 1;
+      if (current < mobileTouchStartIdx.current - 1) current = mobileTouchStartIdx.current - 1;
+    }
+
+    if (current !== activeIdx && current >= 0 && current < PILLARS.length) {
+      setActiveIdx(current);
+    }
+  }, [activeIdx]);
+
+  const selectPillar = useCallback(
+    (idx: number) => {
+      setActiveIdx(idx);
+      scrollToMobileCard(idx);
+    },
+    [scrollToMobileCard]
+  );
+
+  const handlePrev = () => {
+    const nextIdx = activeIdx > 0 ? activeIdx - 1 : PILLARS.length - 1;
+    selectPillar(nextIdx);
+  };
+
+  const handleNext = () => {
+    const nextIdx = activeIdx < PILLARS.length - 1 ? activeIdx + 1 : 0;
+    selectPillar(nextIdx);
+  };
+
+  useEffect(() => {
+    return () => {
+      if (mobileScrollTimeout.current) clearTimeout(mobileScrollTimeout.current);
+    };
+  }, []);
+
+  return (
+    <div className="space-y-4 select-none">
+      {/* Carrusel Deslizable Horizontal (Snap & Peek) SIN IMÁGENES */}
+      <div
+        ref={mobileScrollerRef}
+        onScroll={handleMobileScroll}
+        onTouchStart={handleMobileTouchStart}
+        onTouchEnd={handleMobileTouchEnd}
+        className="flex gap-3.5 overflow-x-auto snap-x snap-mandatory scroll-smooth -mx-4 px-4 py-2 no-scrollbar"
+        style={{
+          scrollbarWidth: "none",
+          msOverflowStyle: "none",
+          touchAction: "pan-y",
+        }}
+      >
+        {PILLARS.map((p, idx) => {
+          const isActive = idx === activeIdx;
+          return (
+            <article
+              key={p.id}
+              onClick={() => selectPillar(idx)}
+              className={`w-[85vw] max-w-[325px] shrink-0 snap-center snap-always rounded-3xl p-5 sm:p-6 border transition-all duration-300 flex flex-col justify-between cursor-pointer ${
+                isActive
+                  ? "scale-[1.01]"
+                  : "opacity-95"
+              }`}
+              style={{
+                background: `linear-gradient(180deg, ${p.badgeColor}18 0%, ${p.badgeColor}05 35%, #ffffff 65%)`,
+                borderTopColor: p.badgeColor,
+                borderTopWidth: "4px",
+                borderColor: isActive ? p.badgeColor : `${p.badgeColor}40`,
+                boxShadow: isActive
+                  ? `0 16px 30px -8px ${p.badgeColor}40, 0 4px 12px -2px ${p.badgeColor}25`
+                  : "0 4px 14px -3px rgba(0, 0, 0, 0.06)",
+              }}
+            >
+              <div className="space-y-3.5">
+                {/* Título del Pilar */}
+                <h3 className="font-headline text-lg sm:text-xl font-bold text-[#0A1128] leading-snug">
+                  {p.title}
+                </h3>
+
+                {/* Descripción */}
+                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-body">
+                  {p.description}
+                </p>
+
+                {/* Viñetas formativas con íconos de color */}
+                <ul className="space-y-2 pt-1">
+                  {p.bullets.map((b, bIdx) => (
+                    <li key={bIdx} className="flex items-start gap-2.5 text-xs text-slate-700 font-medium">
+                      <span
+                        className="w-4 h-4 rounded-full flex items-center justify-center shrink-0 mt-0.5 text-white shadow-xs"
+                        style={{ backgroundColor: p.badgeColor }}
+                      >
+                        <span className="material-symbols-outlined text-[10px] leading-none">check</span>
+                      </span>
+                      <span className="leading-tight">{b}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </article>
+          );
+        })}
+      </div>
+
+      {/* Controles de Navegación Móvil */}
+      <div className="flex flex-col items-center pt-2 space-y-1.5 max-w-xs mx-auto">
+        <div className="flex items-center justify-between w-full">
+          <button
+            type="button"
+            onClick={handlePrev}
+            aria-label="Pilar formativo anterior"
+            className="w-9 h-9 rounded-full flex items-center justify-center bg-white border border-slate-200 text-slate-700 shadow-sm transition-all duration-200 active:scale-95 cursor-pointer hover:bg-slate-50"
+          >
+            <span className="material-symbols-outlined text-[19px]">chevron_left</span>
+          </button>
+
+          {/* Dots */}
+          <div className="flex items-center gap-1.5">
+            {PILLARS.map((p, idx) => (
+              <button
+                key={p.id}
+                type="button"
+                onClick={() => selectPillar(idx)}
+                aria-label={`Ver ${p.callout}`}
+                className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
+                  idx === activeIdx
+                    ? "w-7"
+                    : "w-2 bg-slate-300 hover:bg-slate-400"
+                }`}
+                style={{
+                  backgroundColor: idx === activeIdx ? PILLARS[activeIdx].badgeColor : undefined,
+                }}
+              />
+            ))}
+          </div>
+
+          <button
+            type="button"
+            onClick={handleNext}
+            aria-label="Pilar formativo siguiente"
+            className="w-9 h-9 rounded-full flex items-center justify-center bg-white border border-slate-200 text-slate-700 shadow-sm transition-all duration-200 active:scale-95 cursor-pointer hover:bg-slate-50"
+          >
+            <span className="material-symbols-outlined text-[19px]">chevron_right</span>
+          </button>
+        </div>
+
+        <span className="text-[11px] text-slate-400 font-medium">
+          Desliza horizontalmente para explorar (0{activeIdx + 1} / 04)
+        </span>
+      </div>
+    </div>
+  );
+};
 
 const SwapColumnFeatures = () => {
   const [featureInView, setFeatureInView] = useState<PillarType>(PILLARS[0]);
@@ -250,14 +461,6 @@ const Content = ({
           <p className="text-slate-600 text-xs sm:text-sm leading-relaxed font-body">
             {featureInView.description}
           </p>
-
-          {/* Quote Compact Callout */}
-          <div
-            className="pl-3 py-1.5 border-l-2 italic text-slate-700 text-xs font-headline leading-relaxed bg-white/80 rounded-r-xl border-slate-300 shadow-xs"
-            style={{ borderLeftColor: featureInView.badgeColor }}
-          >
-            {featureInView.quote}
-          </div>
 
           {/* Bullets */}
           <ul className="space-y-1.5 pt-0.5">

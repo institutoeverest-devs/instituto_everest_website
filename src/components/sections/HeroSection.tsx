@@ -67,7 +67,7 @@ export function HeroSection() {
               style={{ backgroundColor: "#F6D448" }}
             />
             <span className="text-xs sm:text-sm text-white font-bold tracking-wide">
-              Ciclo Escolar 2027 · Inscripciones Abiertas León, Gto.
+              Ciclo Escolar 2027 · Inscripciones Abiertas
             </span>
           </div>
 
@@ -83,13 +83,13 @@ export function HeroSection() {
               className="px-3 py-1 rounded-full text-[12px] font-bold text-white uppercase tracking-wider shadow-sm"
               style={{ backgroundColor: "rgb(142, 182, 116)" }}
             >
-              Preescolar Bilingüe
+              Preescolar
             </span>
             <span
               className="px-3 py-1 rounded-full text-[12px] font-bold text-white uppercase tracking-wider shadow-sm"
               style={{ backgroundColor: "rgb(218, 71, 74)" }}
             >
-              Primaria STEAM
+              Primaria
             </span>
           </div>
 

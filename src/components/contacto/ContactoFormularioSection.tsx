@@ -95,161 +95,349 @@ export function ContactoFormularioSection() {
               </p>
             </div>
 
-            {/* Tarjeta de Información de Contacto */}
-            <div className="bg-white rounded-2xl p-6 border border-slate-200/80 shadow-xs space-y-5">
-              {/* Ubicación / Dirección */}
-              <div className="flex items-start gap-4">
-                <div className="w-10 h-10 rounded-xl bg-[#557EBD]/10 text-[#557EBD] flex items-center justify-center shrink-0 mt-0.5">
-                  <span className="material-symbols-outlined text-[20px]">location_on</span>
-                </div>
-                <div className="space-y-1">
-                  <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400">
-                    Campus León
-                  </h4>
-                  <p className="text-sm font-semibold text-slate-800 leading-snug font-body">
-                    {SITE_CONFIG.address.street}, {SITE_CONFIG.address.neighborhood}, {SITE_CONFIG.address.city}, {SITE_CONFIG.address.state}, CP {SITE_CONFIG.address.postalCode}.
+            {/* VISTA MÓVIL/TABLET (< 1024px): GRID DE CANALES DE CONTACTO (Con Horario y Redes lado a lado) */}
+            <div className="block lg:hidden">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 sm:gap-4">
+                {/* Tarjeta 1: Campus León */}
+                <div className="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200/80 shadow-xs hover:shadow-md transition-all duration-200 flex flex-col justify-between space-y-3">
+                  <div className="flex items-start gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-[#557EBD]/10 text-[#557EBD] flex items-center justify-center shrink-0">
+                      <span className="material-symbols-outlined text-[20px]">location_on</span>
+                    </div>
+                    <div>
+                      <h4 className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
+                        Campus León
+                      </h4>
+                      <p className="text-xs sm:text-sm font-semibold text-slate-800 leading-snug font-body mt-1">
+                        {SITE_CONFIG.address.street}, {SITE_CONFIG.address.neighborhood}
+                      </p>
+                    </div>
+                  </div>
+                  <p className="text-[11px] text-slate-500 font-body">
+                    {SITE_CONFIG.address.city}, {SITE_CONFIG.address.state}. CP {SITE_CONFIG.address.postalCode}
                   </p>
                 </div>
-              </div>
 
-              {/* Teléfono Escolar */}
-              <div className="flex items-start gap-4 pt-3 border-t border-slate-100">
-                <div className="w-10 h-10 rounded-xl bg-[#E5A93C]/15 text-[#E5A93C] flex items-center justify-center shrink-0 mt-0.5">
-                  <span className="material-symbols-outlined text-[20px]">call</span>
-                </div>
-                <div className="space-y-0.5">
-                  <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400">
-                    Teléfono Escolar
-                  </h4>
-                  <a
-                    className="text-sm font-bold text-[#546FAC] hover:underline"
-                    href={`tel:${SITE_CONFIG.phone.replace(/\D/g, "")}`}
-                  >
-                    {SITE_CONFIG.phone}
-                  </a>
-                  <p className="text-xs text-slate-500 font-body">
-                    Atención telefónica y recepción
-                  </p>
-                </div>
-              </div>
-
-              {/* WhatsApp Admisiones */}
-              <div className="flex items-start gap-4 pt-3 border-t border-slate-100">
-                <div className="w-10 h-10 rounded-xl bg-[#25D366]/15 text-[#25D366] flex items-center justify-center shrink-0 mt-0.5">
-                  <svg className="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="none">
-                    <path
-                      d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.63C8.75 21.41 10.37 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2Z"
-                      fill="#25D366"
-                    />
-                    <path
-                      d="M17.52 14.33C17.22 14.18 15.75 13.45 15.48 13.35C15.21 13.25 15.01 13.2 14.81 13.5C14.61 13.79 14.04 14.46 13.87 14.66C13.7 14.86 13.53 14.88 13.23 14.73C12.93 14.58 11.97 14.27 10.84 13.26C9.96 12.47 9.36 11.5 9.19 11.2C9.02 10.9 9.17 10.74 9.32 10.59C9.45 10.46 9.61 10.25 9.76 10.08C9.91 9.9 9.96 9.78 10.06 9.58C10.16 9.38 10.11 9.21 10.04 9.06C9.96 8.91 9.37 7.46 9.12 6.86C8.88 6.28 8.64 6.36 8.46 6.35H7.9C7.7 6.35 7.37 6.42 7.1 6.72C6.83 7.02 6.06 7.74 6.06 9.2C6.06 10.66 7.12 12.07 7.27 12.27C7.42 12.47 9.36 15.47 12.33 16.75C13.04 17.06 13.59 17.24 14.02 17.38C14.73 17.61 15.38 17.57 15.9 17.49C16.47 17.41 17.66 16.77 17.91 16.07C18.16 15.37 18.16 14.78 18.08 14.66C18 14.53 17.82 14.48 17.52 14.33Z"
-                      fill="white"
-                    />
-                  </svg>
-                </div>
-                <div className="space-y-0.5">
-                  <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400">
-                    WhatsApp Admisiones
-                  </h4>
-                  <a
-                    className="text-sm font-bold text-[#25D366] hover:underline flex items-center gap-1"
-                    href={`https://wa.me/${SITE_CONFIG.whatsapp}?text=Hola,%20los%20contacto%20a%20trav%C3%A9s%20del%20sitio%20web%20y%20deseo%20recibir%20informaci%C3%B3n`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <span>{SITE_CONFIG.whatsappDisplay}</span>
-                    <span className="material-symbols-outlined text-[16px]">open_in_new</span>
-                  </a>
-                  <p className="text-xs text-slate-500 font-body">Respuesta rápida e inmediata</p>
-                </div>
-              </div>
-
-              {/* Correo Electrónico */}
-              <div className="flex items-start gap-4 pt-3 border-t border-slate-100">
-                <div className="w-10 h-10 rounded-xl bg-[#2E9F6E]/10 text-[#2E9F6E] flex items-center justify-center shrink-0 mt-0.5">
-                  <span className="material-symbols-outlined text-[20px]">mail</span>
-                </div>
-                <div className="space-y-0.5">
-                  <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400">
-                    Correo Electrónico
-                  </h4>
-                  <a
-                    className="text-sm font-semibold text-slate-800 hover:text-[#546FAC] transition-colors font-body"
-                    href={`mailto:${SITE_CONFIG.email}?subject=Contacto%20desde%20el%20sitio%20web&body=Hola,%20los%20contacto%20a%20trav%C3%A9s%20del%20sitio%20web%20y%20deseo%20recibir%20informaci%C3%B3n`}
-                  >
-                    {SITE_CONFIG.email}
-                  </a>
-                  <p className="text-xs text-slate-500 font-body">
+                {/* Tarjeta 2: Correo Electrónico */}
+                <div className="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200/80 shadow-xs hover:shadow-md transition-all duration-200 flex flex-col justify-between space-y-3">
+                  <div className="flex items-start gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-[#2E9F6E]/10 text-[#2E9F6E] flex items-center justify-center shrink-0">
+                      <span className="material-symbols-outlined text-[20px]">mail</span>
+                    </div>
+                    <div>
+                      <h4 className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
+                        Correo Electrónico
+                      </h4>
+                      <a
+                        className="text-xs sm:text-sm font-semibold text-slate-800 hover:text-[#546FAC] transition-colors font-body block mt-1 break-all"
+                        href={`mailto:${SITE_CONFIG.email}?subject=Contacto%20desde%20el%20sitio%20web&body=Hola,%20los%20contacto%20a%20trav%C3%A9s%20del%20sitio%20web%20y%20deseo%20recibir%20informaci%C3%B3n`}
+                      >
+                        {SITE_CONFIG.email}
+                      </a>
+                    </div>
+                  </div>
+                  <p className="text-[11px] text-slate-500 font-body">
                     Atención a solicitudes y postulaciones
                   </p>
                 </div>
-              </div>
 
-              {/* Horario de Atención */}
-              <div className="flex items-start gap-4 pt-3 border-t border-slate-100">
-                <div className="w-10 h-10 rounded-xl bg-slate-100 text-slate-600 flex items-center justify-center shrink-0 mt-0.5">
-                  <span className="material-symbols-outlined text-[20px]">schedule</span>
-                </div>
-                <div className="space-y-0.5">
-                  <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400">
-                    Horario de Atención
-                  </h4>
-                  <p className="text-sm font-semibold text-slate-800 font-body">
-                    Lunes a Viernes: 7:30 AM a 4:30 PM
+                {/* Tarjeta 3: Teléfono Escolar */}
+                <div className="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200/80 shadow-xs hover:shadow-md transition-all duration-200 flex flex-col justify-between space-y-3">
+                  <div className="flex items-start gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-[#E5A93C]/15 text-[#E5A93C] flex items-center justify-center shrink-0">
+                      <span className="material-symbols-outlined text-[20px]">call</span>
+                    </div>
+                    <div>
+                      <h4 className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
+                        Teléfono Escolar
+                      </h4>
+                      <a
+                        className="text-xs sm:text-sm font-bold text-[#546FAC] hover:underline block mt-1"
+                        href={`tel:${SITE_CONFIG.phone.replace(/\D/g, "")}`}
+                      >
+                        {SITE_CONFIG.phone}
+                      </a>
+                    </div>
+                  </div>
+                  <p className="text-[11px] text-slate-500 font-body">
+                    Atención telefónica y recepción
                   </p>
-                  <p className="text-xs text-slate-500 font-body">
-                    Citas de recorrido disponibles en horario matutino
+                </div>
+
+                {/* Tarjeta 4: WhatsApp Admisiones */}
+                <div className="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200/80 shadow-xs hover:shadow-md transition-all duration-200 flex flex-col justify-between space-y-3">
+                  <div className="flex items-start gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-[#25D366]/15 text-[#25D366] flex items-center justify-center shrink-0">
+                      <svg className="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="none">
+                        <path
+                          d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.63C8.75 21.41 10.37 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2Z"
+                          fill="#25D366"
+                        />
+                        <path
+                          d="M17.52 14.33C17.22 14.18 15.75 13.45 15.48 13.35C15.21 13.25 15.01 13.2 14.81 13.5C14.61 13.79 14.04 14.46 13.87 14.66C13.7 14.86 13.53 14.88 13.23 14.73C12.93 14.58 11.97 14.27 10.84 13.26C9.96 12.47 9.36 11.5 9.19 11.2C9.02 10.9 9.17 10.74 9.32 10.59C9.45 10.46 9.61 10.25 9.76 10.08C9.91 9.9 9.96 9.78 10.06 9.58C10.16 9.38 10.11 9.21 10.04 9.06C9.96 8.91 9.37 7.46 9.12 6.86C8.88 6.28 8.64 6.36 8.46 6.35H7.9C7.7 6.35 7.37 6.42 7.1 6.72C6.83 7.02 6.06 7.74 6.06 9.2C6.06 10.66 7.12 12.07 7.27 12.27C7.42 12.47 9.36 15.47 12.33 16.75C13.04 17.06 13.59 17.24 14.02 17.38C14.73 17.61 15.38 17.57 15.9 17.49C16.47 17.41 17.66 16.77 17.91 16.07C18.16 15.37 18.08 14.66 18.08 14.66C18 14.53 17.82 14.48 17.52 14.33Z"
+                          fill="white"
+                        />
+                      </svg>
+                    </div>
+                    <div>
+                      <h4 className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
+                        WhatsApp Admisiones
+                      </h4>
+                      <a
+                        className="text-xs sm:text-sm font-bold text-[#25D366] hover:underline flex items-center gap-1 mt-1"
+                        href={`https://wa.me/${SITE_CONFIG.whatsapp}?text=Hola,%20los%20contacto%20a%20trav%C3%A9s%20del%20sitio%20web%20y%20deseo%20recibir%20informaci%C3%B3n`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <span>{SITE_CONFIG.whatsappDisplay}</span>
+                        <span className="material-symbols-outlined text-[14px]">open_in_new</span>
+                      </a>
+                    </div>
+                  </div>
+                  <p className="text-[11px] text-slate-500 font-body">
+                    Respuesta inmediata de asesores
+                  </p>
+                </div>
+
+                {/* Tarjeta 5: Horario de Atención (A lado de Redes Sociales en < 1024px) */}
+                <div className="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200/80 shadow-xs hover:shadow-md transition-all duration-200 flex flex-col justify-between space-y-3">
+                  <div className="flex items-start gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-slate-100 text-slate-600 flex items-center justify-center shrink-0">
+                      <span className="material-symbols-outlined text-[20px]">schedule</span>
+                    </div>
+                    <div>
+                      <h4 className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
+                        Horario de Atención
+                      </h4>
+                      <p className="text-xs sm:text-sm font-semibold text-slate-800 leading-snug font-body mt-1">
+                        Lunes a Viernes
+                      </p>
+                    </div>
+                  </div>
+                  <p className="text-[11px] text-slate-500 font-body">
+                    7:30 AM a 4:30 PM (Citas disponibles)
+                  </p>
+                </div>
+
+                {/* Tarjeta 6: Redes Sociales Oficiales (A lado de Horario de Atención en < 1024px) */}
+                <div className="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200/80 shadow-xs hover:shadow-md transition-all duration-200 flex flex-col justify-between space-y-3">
+                  <div className="flex items-start gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-[#546FAC]/10 text-[#546FAC] flex items-center justify-center shrink-0">
+                      <span className="material-symbols-outlined text-[20px]">share</span>
+                    </div>
+                    <div>
+                      <h4 className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
+                        Redes Sociales
+                      </h4>
+                      <div className="flex items-center gap-2 mt-1.5">
+                        <a
+                          aria-label="Facebook Everest"
+                          className="w-8 h-8 rounded-lg bg-[#1877F2]/10 text-[#1877F2] hover:bg-[#1877F2] hover:text-white flex items-center justify-center transition-all duration-200"
+                          href={SITE_CONFIG.social.facebook}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                          </svg>
+                        </a>
+                        <a
+                          aria-label="Instagram Everest"
+                          className="w-8 h-8 rounded-lg bg-[#E1306C]/10 text-[#E1306C] hover:bg-[#E1306C] hover:text-white flex items-center justify-center transition-all duration-200"
+                          href={SITE_CONFIG.social.instagram}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                          </svg>
+                        </a>
+                        <a
+                          aria-label="WhatsApp Everest"
+                          className="w-8 h-8 rounded-lg bg-[#25D366]/10 text-[#25D366] hover:bg-[#25D366] hover:text-white flex items-center justify-center transition-all duration-200"
+                          href={`https://wa.me/${SITE_CONFIG.whatsapp}?text=Hola,%20los%20contacto%20a%20trav%C3%A9s%20del%20sitio%20web%20y%20deseo%20recibir%20informaci%C3%B3n`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none">
+                            <path
+                              d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.63C8.75 21.41 10.37 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2Z"
+                              fill="#25D366"
+                            />
+                            <path
+                              d="M17.52 14.33C17.22 14.18 15.75 13.45 15.48 13.35C15.21 13.25 15.01 13.2 14.81 13.5C14.61 13.79 14.04 14.46 13.87 14.66C13.7 14.86 13.53 14.88 13.23 14.73C12.93 14.58 11.97 14.27 10.84 13.26C9.96 12.47 9.36 11.5 9.19 11.2C9.02 10.9 9.17 10.74 9.32 10.59C9.45 10.46 9.61 10.25 9.76 10.08C9.91 9.9 9.96 9.78 10.06 9.58C10.16 9.38 10.11 9.21 10.04 9.06C9.96 8.91 9.37 7.46 9.12 6.86C8.88 6.28 8.64 6.36 8.46 6.35H7.9C7.7 6.35 7.37 6.42 7.1 6.72C6.83 7.02 6.06 7.74 6.06 9.2C6.06 10.66 7.12 12.07 7.27 12.27C7.42 12.47 9.36 15.47 12.33 16.75C13.04 17.06 13.59 17.24 14.02 17.38C14.73 17.61 15.38 17.57 15.9 17.49C16.47 17.41 17.66 16.77 17.91 16.07C18.16 15.37 18.08 14.66 18.08 14.66C18 14.53 17.82 14.48 17.52 14.33Z"
+                              fill="white"
+                            />
+                          </svg>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                  <p className="text-[11px] text-slate-500 font-body">
+                    Comunidad activa y eventos
                   </p>
                 </div>
               </div>
             </div>
 
-            {/* Redes Sociales Oficiales */}
-            <div className="p-6 rounded-2xl bg-white border border-slate-200/80 shadow-xs flex flex-col space-y-3">
-              <span className="text-xs font-bold uppercase tracking-wider text-slate-400">
-                Redes Sociales Oficiales
-              </span>
-              <div className="flex items-center gap-3">
-                <a
-                  aria-label="Facebook Everest"
-                  className="w-10 h-10 rounded-xl bg-[#1877F2]/10 text-[#1877F2] hover:bg-[#1877F2] hover:text-white flex items-center justify-center transition-all duration-200 shadow-xs"
-                  href={SITE_CONFIG.social.facebook}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
-                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
-                  </svg>
-                </a>
-                <a
-                  aria-label="Instagram Everest"
-                  className="w-10 h-10 rounded-xl bg-[#E1306C]/10 text-[#E1306C] hover:bg-[#E1306C] hover:text-white flex items-center justify-center transition-all duration-200 shadow-xs"
-                  href={SITE_CONFIG.social.instagram}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
-                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
-                  </svg>
-                </a>
-                <a
-                  aria-label="WhatsApp Everest"
-                  className="w-10 h-10 rounded-xl bg-[#25D366]/10 text-[#25D366] hover:bg-[#25D366] hover:text-white flex items-center justify-center transition-all duration-200 shadow-xs"
-                  href={`https://wa.me/${SITE_CONFIG.whatsapp}?text=Hola,%20los%20contacto%20a%20trav%C3%A9s%20del%20sitio%20web%20y%20deseo%20recibir%20informaci%C3%B3n`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <svg className="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="none">
-                    <path
-                      d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.63C8.75 21.41 10.37 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2Z"
-                      fill="#25D366"
-                    />
-                    <path
-                      d="M17.52 14.33C17.22 14.18 15.75 13.45 15.48 13.35C15.21 13.25 15.01 13.2 14.81 13.5C14.61 13.79 14.04 14.46 13.87 14.66C13.7 14.86 13.53 14.88 13.23 14.73C12.93 14.58 11.97 14.27 10.84 13.26C9.96 12.47 9.36 11.5 9.19 11.2C9.02 10.9 9.17 10.74 9.32 10.59C9.45 10.46 9.61 10.25 9.76 10.08C9.91 9.9 9.96 9.78 10.06 9.58C10.16 9.38 10.11 9.21 10.04 9.06C9.96 8.91 9.37 7.46 9.12 6.86C8.88 6.28 8.64 6.36 8.46 6.35H7.9C7.7 6.35 7.37 6.42 7.1 6.72C6.83 7.02 6.06 7.74 6.06 9.2C6.06 10.66 7.12 12.07 7.27 12.27C7.42 12.47 9.36 15.47 12.33 16.75C13.04 17.06 13.59 17.24 14.02 17.38C14.73 17.61 15.38 17.57 15.9 17.49C16.47 17.41 17.66 16.77 17.91 16.07C18.16 15.37 18.16 14.78 18.08 14.66C18 14.53 17.82 14.48 17.52 14.33Z"
-                      fill="white"
-                    />
-                  </svg>
-                </a>
+            {/* VISTA DESKTOP (>= 1024px): DISEÑO ORIGINAL (Tarjeta Unificada + Redes Sociales) */}
+            <div className="hidden lg:flex flex-col space-y-6">
+              {/* Tarjeta de Información de Contacto */}
+              <div className="bg-white rounded-2xl p-6 border border-slate-200/80 shadow-xs space-y-5">
+                {/* Ubicación / Dirección */}
+                <div className="flex items-start gap-4">
+                  <div className="w-10 h-10 rounded-xl bg-[#557EBD]/10 text-[#557EBD] flex items-center justify-center shrink-0 mt-0.5">
+                    <span className="material-symbols-outlined text-[20px]">location_on</span>
+                  </div>
+                  <div className="space-y-1">
+                    <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400">
+                      Campus León
+                    </h4>
+                    <p className="text-sm font-semibold text-slate-800 leading-snug font-body">
+                      {SITE_CONFIG.address.street}, {SITE_CONFIG.address.neighborhood}, {SITE_CONFIG.address.city}, {SITE_CONFIG.address.state}, CP {SITE_CONFIG.address.postalCode}.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Teléfono Escolar */}
+                <div className="flex items-start gap-4 pt-3 border-t border-slate-100">
+                  <div className="w-10 h-10 rounded-xl bg-[#E5A93C]/15 text-[#E5A93C] flex items-center justify-center shrink-0 mt-0.5">
+                    <span className="material-symbols-outlined text-[20px]">call</span>
+                  </div>
+                  <div className="space-y-0.5">
+                    <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400">
+                      Teléfono Escolar
+                    </h4>
+                    <a
+                      className="text-sm font-bold text-[#546FAC] hover:underline"
+                      href={`tel:${SITE_CONFIG.phone.replace(/\D/g, "")}`}
+                    >
+                      {SITE_CONFIG.phone}
+                    </a>
+                    <p className="text-xs text-slate-500 font-body">
+                      Atención telefónica y recepción
+                    </p>
+                  </div>
+                </div>
+
+                {/* WhatsApp Admisiones */}
+                <div className="flex items-start gap-4 pt-3 border-t border-slate-100">
+                  <div className="w-10 h-10 rounded-xl bg-[#25D366]/15 text-[#25D366] flex items-center justify-center shrink-0 mt-0.5">
+                    <svg className="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="none">
+                      <path
+                        d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.63C8.75 21.41 10.37 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2Z"
+                        fill="#25D366"
+                      />
+                      <path
+                        d="M17.52 14.33C17.22 14.18 15.75 13.45 15.48 13.35C15.21 13.25 15.01 13.2 14.81 13.5C14.61 13.79 14.04 14.46 13.87 14.66C13.7 14.86 13.53 14.88 13.23 14.73C12.93 14.58 11.97 14.27 10.84 13.26C9.96 12.47 9.36 11.5 9.19 11.2C9.02 10.9 9.17 10.74 9.32 10.59C9.45 10.46 9.61 10.25 9.76 10.08C9.91 9.9 9.96 9.78 10.06 9.58C10.16 9.38 10.11 9.21 10.04 9.06C9.96 8.91 9.37 7.46 9.12 6.86C8.88 6.28 8.64 6.36 8.46 6.35H7.9C7.7 6.35 7.37 6.42 7.1 6.72C6.83 7.02 6.06 7.74 6.06 9.2C6.06 10.66 7.12 12.07 7.27 12.27C7.42 12.47 9.36 15.47 12.33 16.75C13.04 17.06 13.59 17.24 14.02 17.38C14.73 17.61 15.38 17.57 15.9 17.49C16.47 17.41 17.66 16.77 17.91 16.07C18.16 15.37 18.08 14.66 18.08 14.66C18 14.53 17.82 14.48 17.52 14.33Z"
+                        fill="white"
+                      />
+                    </svg>
+                  </div>
+                  <div className="space-y-0.5">
+                    <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400">
+                      WhatsApp Admisiones
+                    </h4>
+                    <a
+                      className="text-sm font-bold text-[#25D366] hover:underline flex items-center gap-1"
+                      href={`https://wa.me/${SITE_CONFIG.whatsapp}?text=Hola,%20los%20contacto%20a%20trav%C3%A9s%20del%20sitio%20web%20y%20deseo%20recibir%20informaci%C3%B3n`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <span>{SITE_CONFIG.whatsappDisplay}</span>
+                      <span className="material-symbols-outlined text-[16px]">open_in_new</span>
+                    </a>
+                    <p className="text-xs text-slate-500 font-body">Respuesta rápida e inmediata</p>
+                  </div>
+                </div>
+
+                {/* Correo Electrónico */}
+                <div className="flex items-start gap-4 pt-3 border-t border-slate-100">
+                  <div className="w-10 h-10 rounded-xl bg-[#2E9F6E]/10 text-[#2E9F6E] flex items-center justify-center shrink-0 mt-0.5">
+                    <span className="material-symbols-outlined text-[20px]">mail</span>
+                  </div>
+                  <div className="space-y-0.5">
+                    <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400">
+                      Correo Electrónico
+                    </h4>
+                    <a
+                      className="text-sm font-bold text-slate-800 hover:text-[#546FAC] transition-colors font-body"
+                      href={`mailto:${SITE_CONFIG.email}?subject=Contacto%20desde%20el%20sitio%20web&body=Hola,%20los%20contacto%20a%20trav%C3%A9s%20del%20sitio%20web%20y%20deseo%20recibir%20informaci%C3%B3n`}
+                    >
+                      {SITE_CONFIG.email}
+                    </a>
+                    <p className="text-xs text-slate-500 font-body">
+                      Atención a solicitudes y postulaciones
+                    </p>
+                  </div>
+                </div>
+
+                {/* Horario de Atención */}
+                <div className="flex items-start gap-4 pt-3 border-t border-slate-100">
+                  <div className="w-10 h-10 rounded-xl bg-slate-100 text-slate-600 flex items-center justify-center shrink-0 mt-0.5">
+                    <span className="material-symbols-outlined text-[20px]">schedule</span>
+                  </div>
+                  <div className="space-y-0.5">
+                    <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400">
+                      Horario de Atención
+                    </h4>
+                    <p className="text-sm font-semibold text-slate-800 font-body">
+                      Lunes a Viernes de 7:30 AM a 4:30 PM
+                    </p>
+                    <p className="text-xs text-slate-500 font-body">
+                      Citas de recorrido disponibles en horario matutino
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Redes Sociales Oficiales */}
+              <div className="p-6 rounded-2xl bg-white border border-slate-200/80 shadow-xs flex flex-col space-y-3">
+                <span className="text-xs font-bold uppercase tracking-wider text-slate-400">
+                  Redes Sociales Oficiales
+                </span>
+                <div className="flex items-center gap-3">
+                  <a
+                    aria-label="Facebook Everest"
+                    className="w-10 h-10 rounded-xl bg-[#1877F2]/10 text-[#1877F2] hover:bg-[#1877F2] hover:text-white flex items-center justify-center transition-all duration-200 shadow-xs"
+                    href={SITE_CONFIG.social.facebook}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                      <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                    </svg>
+                  </a>
+                  <a
+                    aria-label="Instagram Everest"
+                    className="w-10 h-10 rounded-xl bg-[#E1306C]/10 text-[#E1306C] hover:bg-[#E1306C] hover:text-white flex items-center justify-center transition-all duration-200 shadow-xs"
+                    href={SITE_CONFIG.social.instagram}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                      <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                    </svg>
+                  </a>
+                  <a
+                    aria-label="WhatsApp Everest"
+                    className="w-10 h-10 rounded-xl bg-[#25D366]/10 text-[#25D366] hover:bg-[#25D366] hover:text-white flex items-center justify-center transition-all duration-200 shadow-xs"
+                    href={`https://wa.me/${SITE_CONFIG.whatsapp}?text=Hola,%20los%20contacto%20a%20trav%C3%A9s%20del%20sitio%20web%20y%20deseo%20recibir%20informaci%C3%B3n`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <svg className="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="none">
+                      <path
+                        d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.63C8.75 21.41 10.37 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2Z"
+                        fill="#25D366"
+                      />
+                      <path
+                        d="M17.52 14.33C17.22 14.18 15.75 13.45 15.48 13.35C15.21 13.25 15.01 13.2 14.81 13.5C14.61 13.79 14.04 14.46 13.87 14.66C13.7 14.86 13.53 14.88 13.23 14.73C12.93 14.58 11.97 14.27 10.84 13.26C9.96 12.47 9.36 11.5 9.19 11.2C9.02 10.9 9.17 10.74 9.32 10.59C9.45 10.46 9.61 10.25 9.76 10.08C9.91 9.9 9.96 9.78 10.06 9.58C10.16 9.38 10.11 9.21 10.04 9.06C9.96 8.91 9.37 7.46 9.12 6.86C8.88 6.28 8.64 6.36 8.46 6.35H7.9C7.7 6.35 7.37 6.42 7.1 6.72C6.83 7.02 6.06 7.74 6.06 9.2C6.06 10.66 7.12 12.07 7.27 12.27C7.42 12.47 9.36 15.47 12.33 16.75C13.04 17.06 13.59 17.24 14.02 17.38C14.73 17.61 15.38 17.57 15.9 17.49C16.47 17.41 17.66 16.77 17.91 16.07C18.16 15.37 18.08 14.66 18.08 14.66C18 14.53 17.82 14.48 17.52 14.33Z"
+                        fill="white"
+                      />
+                    </svg>
+                  </a>
+                </div>
               </div>
             </div>
           </div>
@@ -274,8 +462,8 @@ export function ContactoFormularioSection() {
                 </p>
               </div>
 
-              {/* Búho Mascot */}
-              <div className="shrink-0 flex flex-col items-center relative -mt-2">
+              {/* Búho Mascot: Oculto en < 768px */}
+              <div className="hidden md:flex shrink-0 flex-col items-center relative -mt-2">
                 <div className="w-16 h-16 rounded-2xl bg-white/15 p-1 flex items-center justify-center border border-white/20 shadow-md backdrop-blur-sm">
                   <Image
                     alt="Búho Everest Asistente"

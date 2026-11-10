@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Playfair_Display, Plus_Jakarta_Sans } from "next/font/google";
+import { Lilita_One, Belleza } from "next/font/google";
 import "./globals.css";
 import { SITE_CONFIG } from "@/lib/constants";
 import { JsonLd } from "@/components/seo/JsonLd";
@@ -9,19 +9,19 @@ import { SmoothScrollProvider } from "@/components/layout/SmoothScroll";
 import { SkipToContent } from "@/components/layout/SkipToContent";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import { InitialLoader } from "@/components/layout/InitialLoader";
 
-const playfair = Playfair_Display({
+const lilitaOne = Lilita_One({
   subsets: ["latin"],
-  weight: ["500", "600", "700"],
-  style: ["normal", "italic"],
-  variable: "--font-playfair",
+  weight: "400",
+  variable: "--font-lilita",
   display: "swap",
 });
 
-const plusJakarta = Plus_Jakarta_Sans({
+const belleza = Belleza({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-jakarta",
+  weight: "400",
+  variable: "--font-belleza",
   display: "swap",
 });
 
@@ -102,7 +102,7 @@ export default function RootLayout({
   return (
     <html
       lang="es"
-      className={`${playfair.variable} ${plusJakarta.variable} scroll-smooth`}
+      className={`${lilitaOne.variable} ${belleza.variable} scroll-smooth`}
     >
       <head>
         {/* Preconnect to external assets */}
@@ -112,8 +112,9 @@ export default function RootLayout({
         <link rel="preconnect" href="https://assets.mixkit.co" />
 
         {/* Material Symbols Outlined Icon Suite */}
+        {/* eslint-disable-next-line @next/next/no-page-custom-font */}
         <link
-          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap"
           rel="stylesheet"
         />
 
@@ -124,6 +125,9 @@ export default function RootLayout({
         <GoogleTagManagerHead />
       </head>
       <body className="font-body bg-[#f7f9fb] text-[#191c1e] antialiased min-h-screen relative selection:bg-[#F6D448] selection:text-[#0A1128]">
+        {/* Initial Brand Loader with Curved Curtain Transition */}
+        <InitialLoader />
+
         {/* GTM Noscript Fallback */}
         <GoogleTagManagerBody />
 

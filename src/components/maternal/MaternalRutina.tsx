@@ -4,8 +4,6 @@ export function MaternalRutina() {
   const routine = [
     {
       time: "8:00 AM",
-      timeSub: "Entrada personalizada con apego",
-      badge: "Bienvenida",
       title: "Recepción & Filtro de Salud",
       desc: "Bienvenida cálida a cada familia, filtro médico preventivo matutino y círculo de canciones de buenos días.",
       timeColor: "text-amber-700",
@@ -16,8 +14,6 @@ export function MaternalRutina() {
     },
     {
       time: "9:00 AM",
-      timeSub: "Circuitos y control postural",
-      badge: "Top Neuro",
       title: "Psicomotricidad Guiada",
       desc: "Desplazamiento en rampas y túneles acolchados, equilibrio motriz, tonicidad postural y fortalecimiento del agarre.",
       timeColor: "text-[#345f9c]",
@@ -28,8 +24,6 @@ export function MaternalRutina() {
     },
     {
       time: "10:15 AM",
-      timeSub: "Comedor adaptado a escala",
-      badge: "Nutritivo",
       title: "Snack Saludable Supervisado",
       desc: "Menú avalado por especialistas con frutas frescas, agua purificada y fomento cariñoso de autonomía y buenos modales.",
       timeColor: "text-amber-700",
@@ -40,8 +34,6 @@ export function MaternalRutina() {
     },
     {
       time: "11:00 AM",
-      timeSub: "Docente especialista orquestal",
-      badge: "Exclusivo",
       title: "Música Curricular Diaria",
       desc: "Clase formal con campanas afinadas, xilófonos de madera, ritmo corporal y apreciación tímbrica activa.",
       timeColor: "text-[#2DB362]",
@@ -53,14 +45,14 @@ export function MaternalRutina() {
   ];
 
   return (
-    <section className="w-full bg-white pt-24 pb-36">
+    <section className="w-full bg-white py-14 sm:py-20 lg:pt-24 lg:pb-36">
       <div className="max-w-[1280px] mx-auto px-4 sm:px-6">
         {/* Section Header */}
-        <div className="flex flex-col items-center text-center max-w-2xl mx-auto mb-16 space-y-3">
+        <div className="flex flex-col items-center text-center max-w-2xl mx-auto mb-10 sm:mb-12 lg:mb-16 space-y-2.5 sm:space-y-3">
           <span className="text-xs uppercase font-bold tracking-wider px-3.5 py-1 rounded-full text-slate-900 bg-[#F2B23E]">
             Rutina Diaria de Calidez
           </span>
-          <h2 className="font-headline text-3xl sm:text-4xl lg:text-[42px] font-bold text-slate-900 tracking-tight">
+          <h2 className="font-headline text-2xl sm:text-4xl lg:text-[42px] font-bold text-slate-900 tracking-tight">
             Un Día en Maternal Everest
           </h2>
           <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
@@ -69,16 +61,16 @@ export function MaternalRutina() {
         </div>
 
         {/* 4 Cards Grid with Staggered layout on md+ */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-start">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6 items-start">
           {routine.map((item) => (
             <div
               key={item.title}
-              className={`rounded-3xl bg-white border border-slate-200/80 shadow-xs hover:shadow-xl transition-all duration-300 p-2.5 flex flex-col justify-between group ${
-                item.stagger ? "md:translate-y-8" : ""
+              className={`rounded-3xl bg-white border border-slate-200/80 shadow-xs hover:shadow-xl transition-all duration-300 p-2.5 sm:p-3 flex flex-col justify-between group ${
+                item.stagger ? "md:translate-y-6 lg:translate-y-8" : ""
               }`}
             >
               {/* Image Container */}
-              <div className="relative w-full h-64 rounded-2xl overflow-hidden bg-slate-100">
+              <div className="relative w-full h-52 xs:h-56 sm:h-60 lg:h-64 rounded-2xl overflow-hidden bg-slate-100">
                 <Image
                   alt={item.title}
                   src={item.image}
@@ -89,31 +81,23 @@ export function MaternalRutina() {
               </div>
 
               {/* Card Body */}
-              <div className="px-2 pt-4 pb-2 flex flex-col flex-1 space-y-2.5">
+              <div className="px-2 pt-3.5 sm:pt-4 pb-2 flex flex-col flex-1 space-y-2.5">
                 {/* Time Badge */}
-                <div className="flex items-center gap-2">
+                <div>
                   <span
-                    className={`px-2.5 py-1 rounded-lg text-xs font-bold text-slate-900 border inline-flex items-center gap-1 whitespace-nowrap shrink-0 ${item.timeBg}`}
+                    className={`px-2.5 py-1 rounded-lg text-xs font-bold text-slate-900 border inline-flex items-center gap-1 whitespace-nowrap w-fit ${item.timeBg}`}
                   >
                     <span className={`material-symbols-outlined text-[15px] ${item.timeColor}`}>
                       schedule
                     </span>
                     <span>{item.time}</span>
                   </span>
-                  <span className="text-xs font-semibold text-slate-500 truncate">
-                    {item.timeSub}
-                  </span>
                 </div>
 
-                {/* Title & Badge */}
-                <div className="flex items-start justify-between gap-2">
-                  <h3 className="font-headline text-[19px] sm:text-[20px] font-bold text-slate-900 leading-snug">
-                    {item.title}
-                  </h3>
-                  <span className="px-2.5 py-0.5 rounded-full text-[11px] font-semibold text-slate-700 bg-slate-100 border border-slate-200 shrink-0">
-                    {item.badge}
-                  </span>
-                </div>
+                {/* Title */}
+                <h3 className="font-headline text-[18px] sm:text-[19px] lg:text-[20px] font-bold text-slate-900 leading-snug">
+                  {item.title}
+                </h3>
 
                 {/* Description */}
                 <p className="text-xs text-slate-600 leading-relaxed font-body">

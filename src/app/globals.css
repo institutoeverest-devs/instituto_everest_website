@@ -1,5 +1,12 @@
 @import "tailwindcss";
 
+@theme {
+  --font-headline: var(--font-lilita), "Lilita One", cursive, sans-serif;
+  --font-body: var(--font-belleza), "Belleza", sans-serif;
+  --font-lilita: var(--font-lilita), "Lilita One", cursive, sans-serif;
+  --font-belleza: var(--font-belleza), "Belleza", sans-serif;
+}
+
 :root {
   --color-surface-bright: #f7f9fb;
   --color-surface-container-low: #f2f4f6;
@@ -25,8 +32,29 @@
   --color-everest-red: #da474a;
   --color-everest-orange: #e9a25e;
 
-  --font-headline: var(--font-playfair), "Playfair Display", Georgia, serif;
-  --font-body: var(--font-jakarta), "Plus Jakarta Sans", system-ui, sans-serif;
+  --font-lilita: var(--font-lilita), "Lilita One", cursive, sans-serif;
+  --font-belleza: var(--font-belleza), "Belleza", sans-serif;
+  --font-headline: var(--font-lilita), "Lilita One", cursive, sans-serif;
+  --font-body: var(--font-belleza), "Belleza", sans-serif;
+  --font-playfair: var(--font-headline);
+  --font-jakarta: var(--font-body);
+}
+
+/* Explicit font family utilities for absolute consistency */
+.font-headline {
+  font-family: var(--font-headline);
+}
+
+.font-body {
+  font-family: var(--font-body);
+}
+
+.font-lilita {
+  font-family: var(--font-lilita);
+}
+
+.font-belleza {
+  font-family: var(--font-belleza);
 }
 
 @layer base {
@@ -37,6 +65,10 @@
     color: #191c1e;
     background-color: #f7f9fb;
     font-family: var(--font-body);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-headline);
   }
 
   /* Lenis smooth scrolling rules */
@@ -109,6 +141,11 @@
 .no-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+/* Ensure horizontal snap carousels advance strictly one card per swipe */
+.snap-always {
+  scroll-snap-stop: always !important;
 }
 
 .custom-scrollbar::-webkit-scrollbar {
