@@ -699,10 +699,13 @@ function BentoSlotCarousel({
           transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
           className="absolute inset-0 w-full h-full"
         >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             alt={item.alt}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
             src={item.imgSrc}
+            loading="lazy"
+            decoding="async"
           />
           {/* Overlay gradiente con badge, título e icono de zoom al pasar el cursor */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-between p-3.5 sm:p-4 pointer-events-none">
@@ -1017,11 +1020,14 @@ export function GaleriaCollage() {
                 style={{ touchAction: "pan-y" }}
                 className="absolute inset-0 w-full h-full cursor-grab active:cursor-grabbing select-none"
               >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={currentMobileItem.imgSrc}
                   alt={currentMobileItem.alt}
                   draggable={false}
                   className="w-full h-full object-cover pointer-events-none select-none"
+                  loading="lazy"
+                  decoding="async"
                 />
 
                 {/* Gradiente oscuro inferior con badge y título */}
@@ -1300,6 +1306,9 @@ export function GaleriaCollage() {
               exit={{ scale: 0.92, opacity: 0, y: 15 }}
               transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
               onClick={(e) => e.stopPropagation()}
+              role="dialog"
+              aria-modal="true"
+              aria-label={modalItem.title}
               className="relative max-w-5xl w-full max-h-[92vh] bg-slate-900 rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border border-white/15 flex flex-col cursor-default"
             >
               {/* Botón de cerrar "X" */}
@@ -1314,6 +1323,7 @@ export function GaleriaCollage() {
 
               {/* Contenedor de la Imagen */}
               <div className="relative w-full flex-1 flex items-center justify-center bg-black/60 overflow-hidden min-h-[300px]">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={modalItem.imgSrc}
                   alt={modalItem.alt}

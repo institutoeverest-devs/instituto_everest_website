@@ -1,7 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback } from "react";
-import Image from "next/image";
+import { useState, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { GROWTH_STAGES } from "@/lib/constants";
 

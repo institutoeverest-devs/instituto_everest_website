@@ -31,22 +31,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.95,
     },
     {
-      url: `${baseUrl}#ruta-crecimiento`,
-      lastModified,
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}#niveles-educativos`,
+      url: `${baseUrl}/nosotros`,
       lastModified,
       changeFrequency: "weekly",
       priority: 0.9,
-    },
-    {
-      url: `${baseUrl}#pilares-showcase`,
-      lastModified,
-      changeFrequency: "monthly",
-      priority: 0.8,
     },
     {
       url: `${baseUrl}/galeria`,

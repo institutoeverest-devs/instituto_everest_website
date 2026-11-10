@@ -7,20 +7,15 @@ import { SITE_CONFIG } from "@/lib/constants";
 
 export function InitialLoader() {
   const [isExiting, setIsExiting] = useState(false);
-  const [isFinished, setIsFinished] = useState(false);
-
-  useEffect(() => {
-    // Check if running in browser
-    if (typeof window === "undefined") return;
-
-    // Check for search engine bots to not delay SEO indexing
-    const isBot = /bot|googlebot|crawler|spider|robot|crawling|lighthouse|speed insights|ptst/i.test(
+  const [isFinished, setIsFinished] = useState(() => {
+    if (typeof window === "undefined") return false;
+    return /bot|googlebot|crawler|spider|robot|crawling|lighthouse|speed insights|ptst/i.test(
       navigator.userAgent
     );
-    if (isBot) {
-      setIsFinished(true);
-      return;
-    }
+  });
+
+  useEffect(() => {
+    if (isFinished) return;
 
     // Lock scroll while loader is visible
     document.body.style.overflow = "hidden";
@@ -41,7 +36,7 @@ export function InitialLoader() {
       clearTimeout(finishTimer);
       document.body.style.overflow = "";
     };
-  }, []);
+  }, [isFinished]);
 
   if (isFinished) return null;
 

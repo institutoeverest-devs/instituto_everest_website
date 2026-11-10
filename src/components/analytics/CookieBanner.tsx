@@ -7,14 +7,12 @@ import { trackCookieConsent, ConsentPreferences } from "@/lib/analytics";
 const COOKIE_STORAGE_KEY = "everest_cookie_consent_v1";
 
 export function CookieBanner() {
-  const [mounted, setMounted] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [showConfig, setShowConfig] = useState(false);
   const [analyticsAllowed, setAnalyticsAllowed] = useState(true);
   const [marketingAllowed, setMarketingAllowed] = useState(true);
 
   useEffect(() => {
-    setMounted(true);
     try {
       const stored = localStorage.getItem(COOKIE_STORAGE_KEY);
       if (!stored) {
@@ -26,7 +24,8 @@ export function CookieBanner() {
         trackCookieConsent("custom", parsed);
       }
     } catch {
-      setIsVisible(true);
+      const timer = setTimeout(() => setIsVisible(true), 1200);
+      return () => clearTimeout(timer);
     }
   }, []);
 
@@ -77,8 +76,6 @@ export function CookieBanner() {
     trackCookieConsent("custom", preferences);
     setIsVisible(false);
   };
-
-  if (!mounted) return null;
 
   return (
     <AnimatePresence>

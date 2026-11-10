@@ -273,6 +273,8 @@ export function Navbar() {
             }`}
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label={mobileMenuOpen ? "Cerrar menú" : "Abrir menú de navegación"}
+            aria-expanded={mobileMenuOpen}
+            aria-controls="mobile-nav-drawer"
           >
             <span
               className={`material-symbols-outlined transition-all duration-300 ${
@@ -289,6 +291,7 @@ export function Navbar() {
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
+            id="mobile-nav-drawer"
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
