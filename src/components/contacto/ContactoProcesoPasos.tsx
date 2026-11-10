@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { SITE_CONFIG } from "@/lib/constants";
 
@@ -58,6 +58,77 @@ type DocTab = "maternal" | "preescolar" | "primaria";
 export function ContactoProcesoPasos() {
   const [activeStep, setActiveStep] = useState<number>(1);
   const [activeDocTab, setActiveDocTab] = useState<DocTab>("maternal");
+  const mobileContainerRef = useRef<HTMLDivElement>(null);
+  const isScrollingProgrammatic = useRef(false);
+  const scrollTimeout = useRef<NodeJS.Timeout | null>(null);
+  const touchStartX = useRef<number | null>(null);
+  const touchStartY = useRef<number | null>(null);
+  const touchStartStep = useRef<number>(1);
+
+  const selectStepMobile = (stepNumber: number) => {
+    setActiveStep(stepNumber);
+    if (!mobileContainerRef.current) return;
+    isScrollingProgrammatic.current = true;
+    const container = mobileContainerRef.current;
+    const el = document.getElementById(`step-card-mobile-${stepNumber}`);
+    if (el) {
+      const targetLeft = el.offsetLeft - (container.clientWidth - el.offsetWidth) / 2;
+      container.scrollTo({ left: targetLeft, behavior: "smooth" });
+    }
+    if (scrollTimeout.current) clearTimeout(scrollTimeout.current);
+    scrollTimeout.current = setTimeout(() => {
+      isScrollingProgrammatic.current = false;
+    }, 450);
+  };
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartStep.current = activeStep;
+    touchStartX.current = e.touches[0].clientX;
+    touchStartY.current = e.touches[0].clientY;
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX.current === null) return;
+    const endX = e.changedTouches[0].clientX;
+    const endY = e.changedTouches[0].clientY;
+    const diffX = touchStartX.current - endX;
+    const diffY = (touchStartY.current ?? endY) - endY;
+
+    // Detect horizontal swipe and move strictly 1 card
+    if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 25) {
+      if (diffX > 0) {
+        const nextStep = Math.min(touchStartStep.current + 1, STEPS.length);
+        selectStepMobile(nextStep);
+      } else {
+        const prevStep = Math.max(touchStartStep.current - 1, 1);
+        selectStepMobile(prevStep);
+      }
+    }
+    touchStartX.current = null;
+    touchStartY.current = null;
+  };
+
+  const handleMobileScroll = () => {
+    if (isScrollingProgrammatic.current || !mobileContainerRef.current) return;
+    const container = mobileContainerRef.current;
+    const card = container.firstElementChild as HTMLElement;
+    if (!card) return;
+    const cardWidth = card.offsetWidth + 14;
+    let index = Math.round(container.scrollLeft / cardWidth);
+
+    // When touching, lock maximum advance to strictly +/- 1 step
+    if (touchStartX.current !== null) {
+      const minStep = Math.max(touchStartStep.current - 1, 1);
+      const maxStep = Math.min(touchStartStep.current + 1, STEPS.length);
+      const stepCandidate = index + 1;
+      if (stepCandidate > maxStep) index = maxStep - 1;
+      if (stepCandidate < minStep) index = minStep - 1;
+    }
+
+    if (index >= 0 && index < STEPS.length && activeStep !== STEPS[index].number) {
+      setActiveStep(STEPS[index].number);
+    }
+  };
 
   return (
     <section className="w-full py-16 bg-white border-y border-slate-100">
@@ -75,20 +146,22 @@ export function ContactoProcesoPasos() {
           </p>
         </div>
 
-        {/* Horizontal Steps Accordion */}
-        <div className="w-full max-w-6xl mx-auto py-4">
-          <div className="flex flex-col md:flex-row items-stretch gap-3.5 md:gap-4 w-full md:h-[240px]">
+        {/* PROCESO DE ADMISIÓN: DISEÑO CONDICIONAL SEGÚN RESOLUCIÓN */}
+
+        {/* VISTA DESKTOP (>= 1024px): Acordeón Horizontal Interactivo Original */}
+        <div className="hidden lg:block w-full max-w-6xl mx-auto py-4">
+          <div className="flex flex-row items-stretch gap-4 w-full h-[240px]">
             {STEPS.map((step) => {
               const isActive = activeStep === step.number;
 
               return (
                 <div
-                  key={step.number}
+                  key={`desktop-${step.number}`}
                   onClick={() => setActiveStep(step.number)}
-                  className={`p-5 sm:p-6 rounded-2xl flex flex-col justify-between cursor-pointer overflow-hidden transition-[flex,box-shadow,border-color] duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] border ${
+                  className={`p-6 rounded-2xl flex flex-col justify-between cursor-pointer overflow-hidden transition-[flex,box-shadow,border-color] duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] border ${
                     isActive
-                      ? "md:flex-[3.5] bg-white shadow-[0_20px_45px_-10px_rgba(10,17,40,0.22)] border-slate-300 ring-1 ring-black/5"
-                      : "md:flex-[0.9] bg-white hover:bg-slate-50/90 shadow-md hover:shadow-xl border-slate-200/90"
+                      ? "flex-[3.5] bg-white shadow-[0_20px_45px_-10px_rgba(10,17,40,0.22)] border-slate-300 ring-1 ring-black/5"
+                      : "flex-[0.9] bg-white hover:bg-slate-50/90 shadow-md hover:shadow-xl border-slate-200/90"
                   }`}
                   style={{
                     borderTop: `5px solid ${step.color}`,
@@ -104,7 +177,7 @@ export function ContactoProcesoPasos() {
                     />
                     {isActive && (
                       <span
-                        className="text-[10px] sm:text-xs font-bold uppercase tracking-wider"
+                        className="text-xs font-bold uppercase tracking-wider"
                         style={{ color: step.color }}
                       >
                         {step.badge}
@@ -114,48 +187,34 @@ export function ContactoProcesoPasos() {
 
                   {/* Number & Content Container */}
                   <div
-                    className={`flex items-center gap-4 sm:gap-6 w-full flex-1 overflow-hidden ${
+                    className={`flex items-center gap-6 w-full flex-1 overflow-hidden ${
                       !isActive ? "justify-center" : ""
                     }`}
                   >
                     <div className="shrink-0 flex items-center justify-center select-none">
                       <span
-                        className="text-6xl sm:text-7xl md:text-8xl font-bold font-headline leading-none"
+                        className="text-7xl xl:text-8xl font-bold font-headline leading-none"
                         style={{ color: step.color }}
                       >
                         {step.number}
                       </span>
                     </div>
 
-                    {/* Active Content: Opens horizontally with zero squishing or text wrapping jitter */}
+                    {/* Active Content: Opens horizontally */}
                     <AnimatePresence mode="wait">
                       {isActive && (
                         <motion.div
-                          key={`step-active-${step.number}`}
+                          key={`step-active-desktop-${step.number}`}
                           initial={{ opacity: 0 }}
                           animate={{ opacity: 1 }}
                           exit={{ opacity: 0 }}
                           transition={{ duration: 0.25, delay: 0.12, ease: "easeOut" }}
-                          className="flex-1 min-w-[260px] sm:min-w-[300px] max-w-xl py-1 overflow-hidden"
+                          className="flex-1 min-w-[300px] max-w-xl py-1 overflow-hidden"
                         >
-                          <div className="flex items-center gap-1.5 mb-1.5">
-                            <span
-                              className="material-symbols-outlined text-[18px]"
-                              style={{ color: step.color }}
-                            >
-                              {step.icon}
-                            </span>
-                            <span
-                              className="text-[11px] font-bold uppercase tracking-wider"
-                              style={{ color: step.color }}
-                            >
-                              {step.subHeader}
-                            </span>
-                          </div>
-                          <h3 className="font-headline text-base sm:text-lg font-bold text-slate-900 leading-snug mb-1">
+                          <h3 className="font-headline text-lg font-bold text-slate-900 leading-snug mb-1">
                             {step.title}
                           </h3>
-                          <p className="text-xs sm:text-[13px] text-slate-600 leading-relaxed font-body">
+                          <p className="text-[13px] text-slate-600 leading-relaxed font-body">
                             {step.desc}
                           </p>
                         </motion.div>
@@ -165,6 +224,143 @@ export function ContactoProcesoPasos() {
                 </div>
               );
             })}
+          </div>
+        </div>
+
+        {/* VISTA MÓVIL Y TABLET (< 1024px): DISEÑO CREATIVO NO VERTICAL */}
+        {/* En Tablet (sm a lg): Grid 2x2 Bento con información completa */}
+        {/* En Móvil (< sm): Carrusel horizontal con scroll-snap (lado a lado) + barra de pasos interactiva */}
+        <div className="block lg:hidden w-full max-w-6xl mx-auto py-4">
+          {/* Barra superior de pasos para navegación rápida */}
+          <div className="flex items-center justify-between mb-3.5 px-0.5">
+            <div className="grid grid-cols-4 gap-1.5 sm:gap-2.5 w-full sm:w-auto">
+              {STEPS.map((step) => {
+                const isActive = activeStep === step.number;
+                const shortNames = ["Solicitud", "Valoración", "Admisión", "Inscripción"];
+                return (
+                  <button
+                    key={`btn-nav-${step.number}`}
+                    type="button"
+                    onClick={() => selectStepMobile(step.number)}
+                    className={`py-1.5 px-2.5 sm:px-3 rounded-xl border text-left transition-all duration-200 cursor-pointer flex items-center justify-between gap-1.5 ${
+                      isActive
+                        ? "bg-white border-slate-300 shadow-md ring-2 ring-black/5"
+                        : "bg-slate-50/90 border-slate-200 hover:bg-white text-slate-500"
+                    }`}
+                  >
+                    <div className="flex items-center gap-1.5">
+                      <span
+                        className="font-headline font-extrabold text-xs sm:text-sm"
+                        style={{ color: step.color }}
+                      >
+                        0{step.number}
+                      </span>
+                      <span className="hidden sm:inline text-[11px] font-semibold text-slate-700">
+                        {shortNames[step.number - 1]}
+                      </span>
+                    </div>
+                    <span
+                      className="w-1.5 h-1.5 rounded-full shrink-0"
+                      style={{ backgroundColor: isActive ? step.color : "transparent" }}
+                    />
+                  </button>
+                );
+              })}
+            </div>
+            <div className="hidden sm:flex items-center gap-1 text-[11px] font-semibold text-slate-400">
+              <span className="material-symbols-outlined text-[15px]">grid_view</span>
+              <span>4 Pasos</span>
+            </div>
+          </div>
+
+          {/* Contenedor de Tarjetas: Horizontal Snap en móvil / Grid 2x2 en tablet */}
+          <div
+            ref={mobileContainerRef}
+            onScroll={handleMobileScroll}
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
+            style={{ touchAction: "pan-y" }}
+            className="flex sm:grid sm:grid-cols-2 gap-3.5 sm:gap-4 overflow-x-auto sm:overflow-visible snap-x snap-mandatory scroll-smooth pb-3 sm:pb-0 no-scrollbar"
+          >
+            {STEPS.map((step) => {
+              const isActive = activeStep === step.number;
+
+              return (
+                <div
+                  key={`card-mobile-${step.number}`}
+                  id={`step-card-mobile-${step.number}`}
+                  onClick={() => selectStepMobile(step.number)}
+                  className={`w-[86vw] sm:w-auto shrink-0 snap-center snap-always bg-white rounded-2xl p-4 sm:p-5 border transition-all duration-300 flex flex-col justify-between shadow-sm hover:shadow-md cursor-pointer ${
+                    isActive
+                      ? "border-slate-300 ring-2 ring-black/5 shadow-md"
+                      : "border-slate-200/90 hover:border-slate-300"
+                  }`}
+                  style={{
+                    borderTop: `4px solid ${step.color}`,
+                    scrollSnapStop: "always",
+                  }}
+                >
+                  <div>
+                    {/* Header: Icono y Número (sin subHeader) */}
+                    <div className="flex items-center justify-between mb-3">
+                      <div
+                        className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0"
+                        style={{ backgroundColor: `${step.color}15`, color: step.color }}
+                      >
+                        <span className="material-symbols-outlined text-[20px]">{step.icon}</span>
+                      </div>
+                      <span
+                        className="font-headline font-black text-2xl sm:text-3xl leading-none select-none opacity-85"
+                        style={{ color: step.color }}
+                      >
+                        0{step.number}
+                      </span>
+                    </div>
+
+                    <div className="mb-2">
+                      <span
+                        className="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider mb-1.5"
+                        style={{ backgroundColor: `${step.color}15`, color: step.color }}
+                      >
+                        {step.badge}
+                      </span>
+                      <h3 className="font-headline text-base sm:text-lg font-bold text-slate-900 leading-snug">
+                        {step.title}
+                      </h3>
+                    </div>
+
+                    <p className="text-xs sm:text-[13px] text-slate-600 leading-relaxed font-body">
+                      {step.desc}
+                    </p>
+                  </div>
+
+                  {/* Barra de progreso inferior decorativa */}
+                  <div className="pt-3 mt-3 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-400">
+                    <span className="font-medium">Paso {step.number} de 4</span>
+                    <div
+                      className="h-1.5 rounded-full w-14 overflow-hidden"
+                      style={{ backgroundColor: `${step.color}20` }}
+                    >
+                      <div
+                        className="h-full rounded-full transition-all duration-300"
+                        style={{
+                          backgroundColor: step.color,
+                          width: isActive ? "100%" : "30%",
+                        }}
+                      />
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Indicador táctil en móvil */}
+          <div className="flex sm:hidden items-center justify-center gap-1.5 mt-2">
+            <span className="text-[11px] font-medium text-slate-400 flex items-center gap-1">
+              <span className="material-symbols-outlined text-[14px]">swipe</span>
+              <span>Desliza para ver los 4 pasos</span>
+            </span>
           </div>
         </div>
 
@@ -197,10 +393,97 @@ export function ContactoProcesoPasos() {
             </div>
           </div>
 
+          {/* Selector de Nivel en móvil y tablet (< 1024px): Opciones horizontales ARRIBA de la información */}
+          <div className="grid grid-cols-3 gap-2.5 sm:gap-4 mb-6 sm:mb-8 lg:hidden">
+            <button
+              type="button"
+              onClick={() => setActiveDocTab("maternal")}
+              className={`p-3 sm:p-4 rounded-2xl border transition-all duration-300 text-left flex flex-col justify-between cursor-pointer ${
+                activeDocTab === "maternal"
+                  ? "bg-white border-[#557EBD] shadow-lg ring-2 ring-[#557EBD]/20"
+                  : "bg-slate-50/80 border-slate-200/90 hover:bg-white hover:border-slate-300 text-slate-600"
+              }`}
+            >
+              <div className="flex items-center justify-between gap-1 mb-1">
+                <span
+                  className={`font-headline text-base sm:text-xl font-bold ${
+                    activeDocTab === "maternal" ? "text-[#546FAC]" : "text-slate-800"
+                  }`}
+                >
+                  Maternal
+                </span>
+                <span
+                  className={`w-2.5 h-2.5 rounded-full shrink-0 hidden md:block ${
+                    activeDocTab === "maternal" ? "bg-[#546FAC]" : "bg-transparent"
+                  }`}
+                />
+              </div>
+              <span className="text-[11px] sm:text-xs font-semibold text-slate-500">
+                1 a 3 años
+              </span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setActiveDocTab("preescolar")}
+              className={`p-3 sm:p-4 rounded-2xl border transition-all duration-300 text-left flex flex-col justify-between cursor-pointer ${
+                activeDocTab === "preescolar"
+                  ? "bg-white border-[#557EBD] shadow-lg ring-2 ring-[#557EBD]/20"
+                  : "bg-slate-50/80 border-slate-200/90 hover:bg-white hover:border-slate-300 text-slate-600"
+              }`}
+            >
+              <div className="flex items-center justify-between gap-1 mb-1">
+                <span
+                  className={`font-headline text-base sm:text-xl font-bold ${
+                    activeDocTab === "preescolar" ? "text-[#546FAC]" : "text-slate-800"
+                  }`}
+                >
+                  Preescolar
+                </span>
+                <span
+                  className={`w-2.5 h-2.5 rounded-full shrink-0 hidden md:block ${
+                    activeDocTab === "preescolar" ? "bg-[#546FAC]" : "bg-transparent"
+                  }`}
+                />
+              </div>
+              <span className="text-[11px] sm:text-xs font-semibold text-slate-500">
+                K1, K2 y K3
+              </span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setActiveDocTab("primaria")}
+              className={`p-3 sm:p-4 rounded-2xl border transition-all duration-300 text-left flex flex-col justify-between cursor-pointer ${
+                activeDocTab === "primaria"
+                  ? "bg-white border-[#557EBD] shadow-lg ring-2 ring-[#557EBD]/20"
+                  : "bg-slate-50/80 border-slate-200/90 hover:bg-white hover:border-slate-300 text-slate-600"
+              }`}
+            >
+              <div className="flex items-center justify-between gap-1 mb-1">
+                <span
+                  className={`font-headline text-base sm:text-xl font-bold ${
+                    activeDocTab === "primaria" ? "text-[#546FAC]" : "text-slate-800"
+                  }`}
+                >
+                  Primaria
+                </span>
+                <span
+                  className={`w-2.5 h-2.5 rounded-full shrink-0 hidden md:block ${
+                    activeDocTab === "primaria" ? "bg-[#546FAC]" : "bg-transparent"
+                  }`}
+                />
+              </div>
+              <span className="text-[11px] sm:text-xs font-semibold text-slate-500">
+                1° a 6° Grado
+              </span>
+            </button>
+          </div>
+
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            {/* Left Card: Blue container with requirements list */}
-            <div className="lg:col-span-8 bg-[#557EBD] rounded-2xl shadow-2xl p-4">
-              <div className="p-6 sm:p-8 rounded-xl border border-white/30 text-white">
+            {/* Tarjeta Azul de Requisitos (Ancho completo en < 1024px, 8 Cols en Desktop) */}
+            <div className="w-full lg:col-span-8 bg-[#557EBD] rounded-2xl sm:rounded-3xl shadow-xl lg:shadow-2xl p-4 sm:p-6 lg:p-4">
+              <div className="p-5 sm:p-8 rounded-xl border border-white/30 text-white">
                 <AnimatePresence mode="wait">
                   {activeDocTab === "maternal" && (
                     <motion.div
@@ -219,11 +502,11 @@ export function ContactoProcesoPasos() {
                             Maternal (1 a 3 años)
                           </h4>
                         </div>
-                        <span className="px-3 py-1 rounded-full text-xs font-semibold bg-white/20 text-white border border-white/30">
+                        <span className="hidden md:inline-flex px-3 py-1 rounded-full text-xs font-semibold bg-white/20 text-white border border-white/30">
                           6 Requisitos
                         </span>
                       </div>
-                      <ul className="space-y-3.5 text-sm text-white font-body">
+                      <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-x-8 gap-y-3.5 text-sm text-white font-body">
                         <li className="flex items-start gap-3">
                           <span className="material-symbols-outlined text-[#E5A93C] text-[18px] mt-0.5 shrink-0">
                             check_circle
@@ -281,11 +564,11 @@ export function ContactoProcesoPasos() {
                             Preescolar (K1, K2 y K3)
                           </h4>
                         </div>
-                        <span className="px-3 py-1 rounded-full text-xs font-semibold bg-white/20 text-white border border-white/30">
+                        <span className="hidden md:inline-flex px-3 py-1 rounded-full text-xs font-semibold bg-white/20 text-white border border-white/30">
                           6 Requisitos
                         </span>
                       </div>
-                      <ul className="space-y-3.5 text-sm text-white font-body">
+                      <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-x-8 gap-y-3.5 text-sm text-white font-body">
                         <li className="flex items-start gap-3">
                           <span className="material-symbols-outlined text-white text-[18px] mt-0.5 shrink-0">
                             check_circle
@@ -343,11 +626,11 @@ export function ContactoProcesoPasos() {
                             Primaria (1° a 6° Grado)
                           </h4>
                         </div>
-                        <span className="px-3 py-1 rounded-full text-xs font-semibold bg-white/20 text-white border border-white/30">
+                        <span className="hidden md:inline-flex px-3 py-1 rounded-full text-xs font-semibold bg-white/20 text-white border border-white/30">
                           6 Requisitos
                         </span>
                       </div>
-                      <ul className="space-y-3.5 text-sm text-white font-body">
+                      <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-x-8 gap-y-3.5 text-sm text-white font-body">
                         <li className="flex items-start gap-3">
                           <span className="material-symbols-outlined text-white text-[18px] mt-0.5 shrink-0">
                             check_circle
@@ -391,8 +674,8 @@ export function ContactoProcesoPasos() {
               </div>
             </div>
 
-            {/* Right Side: Tab Switchers */}
-            <div className="lg:col-span-4 flex flex-col justify-center pl-2 lg:pl-6">
+            {/* Columna Derecha de Selectores (Solo en Desktop >= 1024px: diseño original) */}
+            <div className="hidden lg:flex lg:col-span-4 flex-col justify-center pl-2 lg:pl-6">
               <div className="relative flex flex-col space-y-6 border-l-4 border-slate-200 pl-6">
                 <button
                   type="button"
@@ -444,5 +727,6 @@ export function ContactoProcesoPasos() {
         </div>
       </div>
     </section>
+
   );
 }

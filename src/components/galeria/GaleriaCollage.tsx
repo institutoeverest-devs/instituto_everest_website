@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface GalleryItem {
@@ -19,7 +19,7 @@ interface CategoryTheme {
   pages: GalleryItem[][];
 }
 
-const THEMES: CategoryTheme[] = [
+const RAW_THEMES: CategoryTheme[] = [
   {
     id: "maternal",
     name: "Maternal",
@@ -407,57 +407,6 @@ const THEMES: CategoryTheme[] = [
           alt: "Torneos y Exhibición",
         },
       ],
-      // Página 2 (6 fotos)
-      [
-        {
-          badge: "Taekwondo",
-          badgeBg: "bg-[#0A1128]/80",
-          title: "Formas Poomsae y Precisión Técnica",
-          imgSrc:
-            "https://lh3.googleusercontent.com/aida/AEtjO1Vegy8i6vuay10D7wMMWM0js_NUz8mCTf5S71aPI7ZeZenL7SwcXrOkUNbFxylalfdXEAhtP5_qOgFcMMBBE-xXYy3mNk93H2ZKr7O61RPcafXN_JK4X_70IU5cdPTidxsoQLFp23JJbyJkVOLUfA_FRb-TNULarJ4fQRdm4Noytv9ciL8ezOTvq1ZfnbsO8zSye6jb-IlSFndiruWXc4CYQXnEIqjPoxmi-DodkRA6TkyJu6OCpIY_3no",
-          alt: "Poomsae Everest",
-        },
-        {
-          badge: "Taekwondo",
-          badgeBg: "bg-[#0A1128]/80",
-          title: "Acondicionamiento y Fortaleza Física",
-          imgSrc:
-            "https://lh3.googleusercontent.com/aida/AEtjO1V1UiwLO8PFuE-fMENr1TQNz08UMeB7yUEhxNGyA2eZ4axpe6wPPW8SI0YjbTktRspwAMH7weCtfsF0S0RdIxcl6YQSTPUPXN2Usu8vCdjLkEzp7zzEh53GhW59LR6RLx4GlfFFCqhD7Cu2xrn0sSt--MOkY8v0K1sR2Ug2bnjMemb56EDis4LN-bxzBLGULI4QyhhZZrW3BSVuztMcCDuvAb_YI-ZE2YufL-_1EGOVOXT6UnuvTXmO1A",
-          alt: "Acondicionamiento",
-        },
-        {
-          badge: "Taekwondo",
-          badgeBg: "bg-[#0A1128]/80",
-          title: "Combate Formativo con Protección Certificada",
-          imgSrc:
-            "https://lh3.googleusercontent.com/aida/AEtjO1Vegy8i6vuay10D7wMMWM0js_NUz8mCTf5S71aPI7ZeZenL7SwcXrOkUNbFxylalfdXEAhtP5_qOgFcMMBBE-xXYy3mNk93H2ZKr7O61RPcafXN_JK4X_70IU5cdPTidxsoQLFp23JJbyJkVOLUfA_FRb-TNULarJ4fQRdm4Noytv9ciL8ezOTvq1ZfnbsO8zSye6jb-IlSFndiruWXc4CYQXnEIqjPoxmi-DodkRA6TkyJu6OCpIY_3no",
-          alt: "Combate Formativo",
-        },
-        {
-          badge: "Taekwondo",
-          badgeBg: "bg-[#0A1128]/80",
-          title: "Compañerismo, Fraternidad y Espíritu Deportivo",
-          imgSrc:
-            "https://lh3.googleusercontent.com/aida/AEtjO1Urn-CEP0EfE82HddbtWq4UO3L6nHR_NqsG0P7Uax8E4tygoncTxpscuB00L3Ih4S4LD-7Q2SnFHCUVswELndFqm_1brX8f_HPRWC_gzSWkeVBFZupJs-RU63gEhI_adHOmwb3XiEW1OB8tk0q0IN04TdRBwn7-_z-Umq_-Q-gsecWK7s9zUW-ppWQXyRKazwzbsuFzBpPEDas2DuAGWzFbhjUEa8YIsBd4TwXmPIKvPty9w8I0ODUGl64",
-          alt: "Espíritu Deportivo",
-        },
-        {
-          badge: "Taekwondo",
-          badgeBg: "bg-[#0A1128]/80",
-          title: "Instrucción de Maestros Cintas Negras Certificados",
-          imgSrc:
-            "https://lh3.googleusercontent.com/aida/AEtjO1W6rZb1Pl4OT83miM2x9WqY2F2c-1KwY4hYY7CSS_uKgmBVu32-3QWWJs0LnT315sOa1MhYf1Up4niz-xW4LJEwjKf7CNEz9TCzqpgZ_zv_zTHL4Uv7KtuPHSuXRnAf3vlNlzK2xi8_En1-ri-13KrMgPiOfbfQZs9n9TrWbmJ6yEgyKoj8_aEmvbaQfau8IDWsDMOJD3jWqFL9SCkQxbvYGWQuNuY9zGtpt2B9dIbG3oi-HgHWTaDwN9I",
-          alt: "Maestros Certificados",
-        },
-        {
-          badge: "Taekwondo",
-          badgeBg: "bg-[#0A1128]/80",
-          title: "Confianza, Autocontrol y Superación Personal",
-          imgSrc:
-            "https://lh3.googleusercontent.com/aida/AEtjO1Wx4A_yiAni49w4yrMD7HtmbewT4IAYEHJhsJ_yDymo9Nben7jEabxD0KpPaqQRaszzXAr8OEq-zywrJ1xTIKXOTjgJiOPauZfi87kelg4_bRxypaQmApv_pmZ-C9g8FvBXRX1Gzx0nxyGzmwmGcQZyjDpz2Y5H57U8OkYh7IpwI4sN8PNjjbluiPNIRLEC0APNMlA4n1eN3tNyJp23YL8JMxlXKDhj9-8V_IbmW3Zwci2ibQJw2dVk-6s",
-          alt: "Autocontrol y Superación",
-        },
-      ],
     ],
   },
   {
@@ -515,57 +464,6 @@ const THEMES: CategoryTheme[] = [
           imgSrc:
             "https://lh3.googleusercontent.com/aida/AEtjO1WEkywM1dCUfkQw6IGGd8loUL6ZUijoufDtn0AC6ILxPQ765AbYxGd8wL88ijzhKcVoThfcADutSzyzovJoIDg-NfjuP55ep2o2RY9AmUZMYOuDqp7gKh0eDQ2eS7OohYj9KXfX1FjzxgRicBooSrZsL91D3vP_TQ9uov97pJj2Fo6fRRd4i_sDmaX3mfTHXQde1t5zZlYCMagLclui2N6lyeCpCIdKn1iSwTmfycqMficONqhB1ixux1Y",
           alt: "Muralismo Colectivo",
-        },
-      ],
-      // Página 2 (6 fotos)
-      [
-        {
-          badge: "Arte",
-          badgeBg: "bg-[#2E9F6E]",
-          title: "Dibujo Artístico y Proporciones Visuales",
-          imgSrc:
-            "https://lh3.googleusercontent.com/aida-public/AB6AXuC_Ag3jatczZGX-NDdxAhxeOVMr2iW2RNX65of2LgIjUSPsM8XKlnctv6n8wSuLnMb0OLHVpjpzZO-KgsEa-7rpjoCrTYtptaCi4TdH9itwJkfCLya7eMAOxno37vbprykSxFZGyHpnhEpYDdTAmhCG-IT0ObSJoeLS9H4IToMMajNoCILKgmaz7L8xv7VMaNvSpxA0R5hCLvBkZ51Wlo2-OlpU19Ev5XYvJpdl6zoRMe4cGrcb4Fe68V_1foWgYqwGzA",
-          alt: "Dibujo Artístico",
-        },
-        {
-          badge: "Arte",
-          badgeBg: "bg-[#2E9F6E]",
-          title: "Arte con Materiales Reciclados y Sustentabilidad",
-          imgSrc:
-            "https://lh3.googleusercontent.com/aida/AEtjO1WcxChqsdHHGmXHi83hOJvI-sZbK8DmPOJwNTekxglQSX_ePDyrYjgQdPdvg5hb3k84pj-pl9D_IFnjIfwiRINg0Ah892FM8R_T0_vXMoQzo2aCO32_ElUjL4kO9Jt5pNPEOrnu_-WekCmW3SPtas_3IJpPaIQfsxkv1_UTCmTOmeNKtRUAEAxupVapwCHeHHiGUNWu0AL4DvoaODjw5yfeGRnSy-I0FDnSLraih5oS1kyEZWuC3BdoMRg",
-          alt: "Arte Sustentable",
-        },
-        {
-          badge: "Arte",
-          badgeBg: "bg-[#2E9F6E]",
-          title: "Apreciación del Arte Universal e Historia",
-          imgSrc:
-            "https://lh3.googleusercontent.com/aida/AEtjO1Urn-CEP0EfE82HddbtWq4UO3L6nHR_NqsG0P7Uax8E4tygoncTxpscuB00L3Ih4S4LD-7Q2SnFHCUVswELndFqm_1brX8f_HPRWC_gzSWkeVBFZupJs-RU63gEhI_adHOmwb3XiEW1OB8tk0q0IN04TdRBwn7-_z-Umq_-Q-gsecWK7s9zUW-ppWQXyRKazwzbsuFzBpPEDas2DuAGWzFbhjUEa8YIsBd4TwXmPIKvPty9w8I0ODUGl64",
-          alt: "Apreciación del Arte",
-        },
-        {
-          badge: "Arte",
-          badgeBg: "bg-[#2E9F6E]",
-          title: "Técnicas de Ilustración y Creación Gráfica",
-          imgSrc:
-            "https://lh3.googleusercontent.com/aida/AEtjO1Wx4A_yiAni49w4yrMD7HtmbewT4IAYEHJhsJ_yDymo9Nben7jEabxD0KpPaqQRaszzXAr8OEq-zywrJ1xTIKXOTjgJiOPauZfi87kelg4_bRxypaQmApv_pmZ-C9g8FvBXRX1Gzx0nxyGzmwmGcQZyjDpz2Y5H57U8OkYh7IpwI4sN8PNjjbluiPNIRLEC0APNMlA4n1eN3tNyJp23YL8JMxlXKDhj9-8V_IbmW3Zwci2ibQJw2dVk-6s",
-          alt: "Ilustración Infantil",
-        },
-        {
-          badge: "Arte",
-          badgeBg: "bg-[#2E9F6E]",
-          title: "Exploración de Texturas y Sensibilidad Visual",
-          imgSrc:
-            "https://lh3.googleusercontent.com/aida/AEtjO1W6rZb1Pl4OT83miM2x9WqY2F2c-1KwY4hYY7CSS_uKgmBVu32-3QWWJs0LnT315sOa1MhYf1Up4niz-xW4LJEwjKf7CNEz9TCzqpgZ_zv_zTHL4Uv7KtuPHSuXRnAf3vlNlzK2xi8_En1-ri-13KrMgPiOfbfQZs9n9TrWbmJ6yEgyKoj8_aEmvbaQfau8IDWsDMOJD3jWqFL9SCkQxbvYGWQuNuY9zGtpt2B9dIbG3oi-HgHWTaDwN9I",
-          alt: "Exploración Sensorial",
-        },
-        {
-          badge: "Arte",
-          badgeBg: "bg-[#2E9F6E]",
-          title: "Exposición Anual para Familias de Campus León",
-          imgSrc:
-            "https://lh3.googleusercontent.com/aida/AEtjO1WEkywM1dCUfkQw6IGGd8loUL6ZUijoufDtn0AC6ILxPQ765AbYxGd8wL88ijzhKcVoThfcADutSzyzovJoIDg-NfjuP55ep2o2RY9AmUZMYOuDqp7gKh0eDQ2eS7OohYj9KXfX1FjzxgRicBooSrZsL91D3vP_TQ9uov97pJj2Fo6fRRd4i_sDmaX3mfTHXQde1t5zZlYCMagLclui2N6lyeCpCIdKn1iSwTmfycqMficONqhB1ixux1Y",
-          alt: "Exposición Anual de Arte",
         },
       ],
     ],
@@ -627,98 +525,340 @@ const THEMES: CategoryTheme[] = [
           alt: "Festival de Teatro Everest",
         },
       ],
-      // Página 2 (6 fotos)
-      [
-        {
-          badge: "Teatro",
-          badgeBg: "bg-[#E5A93C]",
-          title: "Obras Bilingües en Inglés y Español",
-          imgSrc:
-            "https://lh3.googleusercontent.com/aida/AEtjO1Urn-CEP0EfE82HddbtWq4UO3L6nHR_NqsG0P7Uax8E4tygoncTxpscuB00L3Ih4S4LD-7Q2SnFHCUVswELndFqm_1brX8f_HPRWC_gzSWkeVBFZupJs-RU63gEhI_adHOmwb3XiEW1OB8tk0q0IN04TdRBwn7-_z-Umq_-Q-gsecWK7s9zUW-ppWQXyRKazwzbsuFzBpPEDas2DuAGWzFbhjUEa8YIsBd4TwXmPIKvPty9w8I0ODUGl64",
-          alt: "Obras Bilingües",
-        },
-        {
-          badge: "Teatro",
-          badgeBg: "bg-[#E5A93C]",
-          title: "Montajes Escénicos Musicales Infantiles",
-          imgSrc:
-            "https://lh3.googleusercontent.com/aida-public/AB6AXuDdr305AZc30Zq6yJSlu1wDXClCZnjshiwoJ52XJESqQD0iUri0xknBeT-GKMiGZi1kgU3nFLIx3timKyEhAawvcKqZAfZm0jBeJ6qPhz96rGuKOw2Bba9mbUQzY0cHaXL7MEFOevKxUEI5CWODfK31joyXQOI-_r8lXq99xmBxrgLsj2wCtp6pGWJuYCWjHK9WW7NVmB8aa0IYbwRDun5VZbf4te0cIPXQTycwGANSqY7Au6Dax-Qi",
-          alt: "Musicales Infantiles",
-        },
-        {
-          badge: "Teatro",
-          badgeBg: "bg-[#E5A93C]",
-          title: "Títeres, Guiñol y Cuentos Representados",
-          imgSrc:
-            "https://lh3.googleusercontent.com/aida/AEtjO1Wx4A_yiAni49w4yrMD7HtmbewT4IAYEHJhsJ_yDymo9Nben7jEabxD0KpPaqQRaszzXAr8OEq-zywrJ1xTIKXOTjgJiOPauZfi87kelg4_bRxypaQmApv_pmZ-C9g8FvBXRX1Gzx0nxyGzmwmGcQZyjDpz2Y5H57U8OkYh7IpwI4sN8PNjjbluiPNIRLEC0APNMlA4n1eN3tNyJp23YL8JMxlXKDhj9-8V_IbmW3Zwci2ibQJw2dVk-6s",
-          alt: "Títeres y Guiñol",
-        },
-        {
-          badge: "Teatro",
-          badgeBg: "bg-[#E5A93C]",
-          title: "Expresión Corporal y Presencia en Escenario",
-          imgSrc:
-            "https://lh3.googleusercontent.com/aida/AEtjO1V1UiwLO8PFuE-fMENr1TQNz08UMeB7yUEhxNGyA2eZ4axpe6wPPW8SI0YjbTktRspwAMH7weCtfsF0S0RdIxcl6YQSTPUPXN2Usu8vCdjLkEzp7zzEh53GhW59LR6RLx4GlfFFCqhD7Cu2xrn0sSt--MOkY8v0K1sR2Ug2bnjMemb56EDis4LN-bxzBLGULI4QyhhZZrW3BSVuztMcCDuvAb_YI-ZE2YufL-_1EGOVOXT6UnuvTXmO1A",
-          alt: "Expresión Corporal",
-        },
-        {
-          badge: "Teatro",
-          badgeBg: "bg-[#E5A93C]",
-          title: "Creación de Escenografía y Utilería Teatral",
-          imgSrc:
-            "https://lh3.googleusercontent.com/aida/AEtjO1W6rZb1Pl4OT83miM2x9WqY2F2c-1KwY4hYY7CSS_uKgmBVu32-3QWWJs0LnT315sOa1MhYf1Up4niz-xW4LJEwjKf7CNEz9TCzqpgZ_zv_zTHL4Uv7KtuPHSuXRnAf3vlNlzK2xi8_En1-ri-13KrMgPiOfbfQZs9n9TrWbmJ6yEgyKoj8_aEmvbaQfau8IDWsDMOJD3jWqFL9SCkQxbvYGWQuNuY9zGtpt2B9dIbG3oi-HgHWTaDwN9I",
-          alt: "Escenografía y Utilería",
-        },
-        {
-          badge: "Teatro",
-          badgeBg: "bg-[#E5A93C]",
-          title: "Aclamaciones, Aplausos y Crecimiento Artístico",
-          imgSrc:
-            "https://lh3.googleusercontent.com/aida/AEtjO1WCcDiezrR-5URfEUBYR2yVqsuRLZSoq1PoXTH52Ib3aJjPxT3wbTPQ9xfFE8jk7rAjtsXohODvMnJ7TlVT7l1i5DMhGFPpwD5Q_VSNb2VuS8CJMxlaAR-KU6Zn-5jSrG3lw698u0niRdEwc-hFYjOzCi7PzgygmdQIQRjaHQTpCVAQ_krm6i5Zq0QsX7M5UyQDLD8pUCpZTDj7Mnqt-zGcRKbFNRgQqr4pU40LZL5lF3i5z5ulQpzowQ4",
-          alt: "Crecimiento Artístico",
-        },
-      ],
     ],
   },
 ];
+
+// Colección completa con todas las fotos de todos los temas
+const ALL_GALLERY_ITEMS: GalleryItem[] = RAW_THEMES.flatMap((t) => t.pages.flat());
+
+const ALL_GALLERY_PAGES: GalleryItem[][] = [];
+for (let i = 0; i < ALL_GALLERY_ITEMS.length; i += 6) {
+  ALL_GALLERY_PAGES.push(ALL_GALLERY_ITEMS.slice(i, i + 6));
+}
+
+const TODAS_THEME: CategoryTheme = {
+  id: "todas",
+  name: "Todas",
+  icon: "photo_library",
+  subtitle: "Colección Completa — Todos los momentos y actividades en Campus León",
+  pages: ALL_GALLERY_PAGES,
+};
+
+const THEMES: CategoryTheme[] = [
+  TODAS_THEME,
+  ...RAW_THEMES,
+];
+
+// Variantes de transición para cada uno de los 6 contenedores bento en Tablet / Desktop
+// Cada contenedor cuenta con una dirección y eje de entrada/salida único e independiente
+const SLOT_VARIANTS = [
+  // Slot 0: Vertical (Arriba -> Abajo al avanzar)
+  {
+    initial: (dir: 1 | -1) => ({
+      y: dir === 1 ? "-100%" : "100%",
+      opacity: 0,
+    }),
+    animate: {
+      y: "0%",
+      opacity: 1,
+    },
+    exit: (dir: 1 | -1) => ({
+      y: dir === 1 ? "100%" : "-100%",
+      opacity: 0,
+    }),
+  },
+  // Slot 1: Horizontal (Derecha -> Izquierda al avanzar)
+  {
+    initial: (dir: 1 | -1) => ({
+      x: dir === 1 ? "100%" : "-100%",
+      opacity: 0,
+    }),
+    animate: {
+      x: "0%",
+      opacity: 1,
+    },
+    exit: (dir: 1 | -1) => ({
+      x: dir === 1 ? "-100%" : "100%",
+      opacity: 0,
+    }),
+  },
+  // Slot 2: Vertical Invertido (Abajo -> Arriba al avanzar)
+  {
+    initial: (dir: 1 | -1) => ({
+      y: dir === 1 ? "100%" : "-100%",
+      opacity: 0,
+    }),
+    animate: {
+      y: "0%",
+      opacity: 1,
+    },
+    exit: (dir: 1 | -1) => ({
+      y: dir === 1 ? "-100%" : "100%",
+      opacity: 0,
+    }),
+  },
+  // Slot 3: Horizontal Invertido (Izquierda -> Derecha al avanzar)
+  {
+    initial: (dir: 1 | -1) => ({
+      x: dir === 1 ? "-100%" : "100%",
+      opacity: 0,
+    }),
+    animate: {
+      x: "0%",
+      opacity: 1,
+    },
+    exit: (dir: 1 | -1) => ({
+      x: dir === 1 ? "100%" : "-100%",
+      opacity: 0,
+    }),
+  },
+  // Slot 4: Diagonal (Arriba-Izquierda -> Abajo-Derecha al avanzar)
+  {
+    initial: (dir: 1 | -1) => ({
+      x: dir === 1 ? "-100%" : "100%",
+      y: dir === 1 ? "-100%" : "100%",
+      opacity: 0,
+    }),
+    animate: {
+      x: "0%",
+      y: "0%",
+      opacity: 1,
+    },
+    exit: (dir: 1 | -1) => ({
+      x: dir === 1 ? "100%" : "-100%",
+      y: dir === 1 ? "100%" : "-100%",
+      opacity: 0,
+    }),
+  },
+  // Slot 5: Diagonal Invertido (Abajo-Derecha -> Arriba-Izquierda al avanzar)
+  {
+    initial: (dir: 1 | -1) => ({
+      x: dir === 1 ? "100%" : "-100%",
+      y: dir === 1 ? "100%" : "-100%",
+      opacity: 0,
+    }),
+    animate: {
+      x: "0%",
+      y: "0%",
+      opacity: 1,
+    },
+    exit: (dir: 1 | -1) => ({
+      x: dir === 1 ? "-100%" : "100%",
+      y: dir === 1 ? "-100%" : "100%",
+      opacity: 0,
+    }),
+  },
+];
+
+interface BentoSlotCarouselProps {
+  slotIdx: number;
+  item: GalleryItem;
+  direction: 1 | -1;
+  themeId: string;
+  className: string;
+  titleSize?: string;
+  badgeSize?: string;
+  onClick?: () => void;
+}
+
+function BentoSlotCarousel({
+  slotIdx,
+  item,
+  direction,
+  themeId,
+  className,
+  titleSize = "text-sm",
+  badgeSize = "px-2.5 py-0.5 mb-1 text-[11px]",
+  onClick,
+}: BentoSlotCarouselProps) {
+  if (!item) return null;
+
+  return (
+    <div
+      onClick={onClick}
+      className={`${className} select-none cursor-pointer group`}
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          onClick?.();
+        }
+      }}
+      aria-label={`Ver foto ampliada: ${item.title}`}
+    >
+      <AnimatePresence initial={false} custom={direction}>
+        <motion.div
+          key={`${themeId}-slot-${slotIdx}-${item.imgSrc}`}
+          custom={direction}
+          variants={SLOT_VARIANTS[slotIdx]}
+          initial="initial"
+          animate="animate"
+          exit="exit"
+          transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+          className="absolute inset-0 w-full h-full"
+        >
+          <img
+            alt={item.alt}
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+            src={item.imgSrc}
+          />
+          {/* Overlay gradiente con badge, título e icono de zoom al pasar el cursor */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-between p-3.5 sm:p-4 pointer-events-none">
+            <div className="min-w-0 pr-2">
+              <span
+                className={`inline-block font-bold uppercase tracking-wider text-white ${item.badgeBg} rounded-md shadow-xs ${badgeSize}`}
+              >
+                {item.badge}
+              </span>
+              <p className={`text-white font-medium ${titleSize} drop-shadow-sm leading-snug`}>
+                {item.title}
+              </p>
+            </div>
+            <div className="w-8 h-8 rounded-full bg-white/25 backdrop-blur-xs flex items-center justify-center text-white shrink-0 mb-1 shadow-sm border border-white/20">
+              <span className="material-symbols-outlined text-[18px]">zoom_in</span>
+            </div>
+          </div>
+        </motion.div>
+      </AnimatePresence>
+    </div>
+  );
+}
 
 export function GaleriaCollage() {
   const [selectedThemeIdx, setSelectedThemeIdx] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
   const [pageDirection, setPageDirection] = useState<1 | -1>(1);
 
+  // Estado para el modal de vista ampliada
+  const [modalItem, setModalItem] = useState<GalleryItem | null>(null);
+
+  // Cerrar modal con tecla Escape y bloquear scroll del body
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setModalItem(null);
+      }
+    };
+    if (modalItem) {
+      document.addEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = "hidden";
+    }
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = "";
+    };
+  }, [modalItem]);
+
+  // Estado para el carrusel móvil (< 768px)
+  const [mobileItemIdx, setMobileItemIdx] = useState(0);
+  const [mobileDirection, setMobileDirection] = useState<1 | -1>(1);
+
+  // Referencias para swipe táctil sincrónico
+  const touchStartXRef = useRef<number | null>(null);
+  const touchStartYRef = useRef<number | null>(null);
+
   const activeTheme = THEMES[selectedThemeIdx];
   const totalPages = activeTheme.pages.length;
-  const currentItems = activeTheme.pages[currentPage] || activeTheme.pages[0];
+  const isNavDisabled = totalPages <= 1;
+
+  // Elementos para el carrusel móvil (todas las imágenes del tema actual aplanadas)
+  const activeMobileItems = activeTheme.pages.flat();
+  const totalMobileItems = activeMobileItems.length;
+  const currentMobileItem = activeMobileItems[mobileItemIdx] || activeMobileItems[0];
 
   const handleSelectTheme = (idx: number) => {
     if (idx === selectedThemeIdx) return;
     setSelectedThemeIdx(idx);
     setCurrentPage(0);
+    setMobileItemIdx(0);
     setPageDirection(1);
+    setMobileDirection(1);
   };
 
   const handlePrevPage = () => {
+    if (totalPages <= 1) return;
     setPageDirection(-1);
     setCurrentPage((prev) => (prev - 1 + totalPages) % totalPages);
   };
 
   const handleNextPage = () => {
+    if (totalPages <= 1) return;
     setPageDirection(1);
     setCurrentPage((prev) => (prev + 1) % totalPages);
   };
 
   const handleSelectPage = (targetPage: number) => {
-    if (targetPage === currentPage) return;
+    if (totalPages <= 1 || targetPage === currentPage) return;
     setPageDirection(targetPage > currentPage ? 1 : -1);
     setCurrentPage(targetPage);
+  };
+
+  const getSlotItem = (slotIdx: number): GalleryItem | null => {
+    const current = activeTheme.pages[currentPage]?.[slotIdx];
+    if (current) return current;
+    for (let p = currentPage - 1; p >= 0; p--) {
+      if (activeTheme.pages[p]?.[slotIdx]) {
+        return activeTheme.pages[p][slotIdx];
+      }
+    }
+    return activeTheme.pages[0]?.[slotIdx] || null;
+  };
+
+  // Controles de navegación móvil (avanzar / retroceder una imagen)
+  const handlePrevMobileItem = () => {
+    setMobileDirection(-1);
+    setMobileItemIdx((prev) => (prev - 1 + totalMobileItems) % totalMobileItems);
+  };
+
+  const handleNextMobileItem = () => {
+    setMobileDirection(1);
+    setMobileItemIdx((prev) => (prev + 1) % totalMobileItems);
+  };
+
+  // Controladores de Swipe táctil
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartXRef.current = e.touches[0].clientX;
+    touchStartYRef.current = e.touches[0].clientY;
+  };
+
+  const handleTouchEndDesktop = (e: React.TouchEvent) => {
+    if (totalPages <= 1) return;
+    if (touchStartXRef.current === null || touchStartYRef.current === null) return;
+    const deltaX = e.changedTouches[0].clientX - touchStartXRef.current;
+    const deltaY = e.changedTouches[0].clientY - touchStartYRef.current;
+    if (Math.abs(deltaX) > 35 && Math.abs(deltaX) > Math.abs(deltaY) * 0.9) {
+      if (deltaX < 0) {
+        handleNextPage();
+      } else {
+        handlePrevPage();
+      }
+    }
+    touchStartXRef.current = null;
+    touchStartYRef.current = null;
+  };
+
+  const handleTouchEndMobile = (e: React.TouchEvent) => {
+    if (touchStartXRef.current === null || touchStartYRef.current === null) return;
+    const deltaX = e.changedTouches[0].clientX - touchStartXRef.current;
+    const deltaY = e.changedTouches[0].clientY - touchStartYRef.current;
+    if (Math.abs(deltaX) > 30 && Math.abs(deltaX) > Math.abs(deltaY) * 0.8) {
+      if (deltaX < 0) {
+        handleNextMobileItem();
+      } else {
+        handlePrevMobileItem();
+      }
+    }
+    touchStartXRef.current = null;
+    touchStartYRef.current = null;
   };
 
   return (
     <div className="w-full bg-[#F8FAFC] font-sans text-slate-800 antialiased min-h-screen pt-28 pb-16 selection:bg-[#557EBD]/20 selection:text-[#546FAC]">
       <div className="w-full max-w-[98%] xl:max-w-[1360px] mx-auto px-2 sm:px-4 md:px-5 pt-8 sm:pt-12">
         {/* Encabezado de Galería & Filtros por tema */}
-        <div className="px-1 sm:px-2 mb-8">
+        <div className="px-1 sm:px-2 mb-6 sm:mb-8">
           <div>
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#557EBD]/10 text-[#0A1128] text-xs font-semibold tracking-wider uppercase mb-2">
               <span className="w-2 h-2 rounded-full bg-[#0A1128] animate-pulse" />
@@ -732,7 +872,7 @@ export function GaleriaCollage() {
             </p>
           </div>
 
-          {/* Selector de los 6 temas: uno a lado del otro debajo del texto */}
+          {/* Selector de temas (Todas + los 6 temas formativos) */}
           <div
             className="mt-6 flex flex-wrap items-center gap-2 sm:gap-2.5 select-none"
             id="category-filters"
@@ -757,153 +897,285 @@ export function GaleriaCollage() {
           </div>
         </div>
 
-        {/* Collage de Galería: Sólo imágenes del tema seleccionado */}
-        <div className="relative w-full rounded-2xl bg-slate-100/70 border border-slate-200/80 shadow-sm p-1 overflow-hidden">
-          <AnimatePresence mode="wait" custom={pageDirection}>
-            <motion.div
-              key={`${activeTheme.id}-page-${currentPage}`}
-              custom={pageDirection}
-              initial={{ opacity: 0, x: pageDirection * 40 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: pageDirection * -40 }}
-              transition={{ duration: 0.35, ease: [0.25, 1, 0.5, 1] }}
-              className="grid grid-cols-1 md:grid-cols-12 gap-1 sm:gap-1.5"
-            >
-              {/* Slot 0: Superior Izquierda Grande (Col-8) */}
-              {currentItems[0] && (
-                <div className="md:col-span-8 h-64 sm:h-[300px] md:h-[330px] rounded-xl overflow-hidden relative group bg-slate-900 shadow-sm">
-                  <img
-                    alt={currentItems[0].alt}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-                    src={currentItems[0].imgSrc}
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-5">
-                    <div>
-                      <span
-                        className={`inline-block px-2.5 py-0.5 mb-1 text-[11px] font-bold uppercase tracking-wider text-white ${currentItems[0].badgeBg} rounded-md`}
-                      >
-                        {currentItems[0].badge}
-                      </span>
-                      <p className="text-white font-medium text-sm sm:text-base tracking-tight">
-                        {currentItems[0].title}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {/* Slot 1: Superior Derecha (Col-4) */}
-              {currentItems[1] && (
-                <div className="md:col-span-4 h-64 sm:h-[300px] md:h-[330px] rounded-xl overflow-hidden relative group bg-slate-900 shadow-sm">
-                  <img
-                    alt={currentItems[1].alt}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-                    src={currentItems[1].imgSrc}
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
-                    <div>
-                      <span
-                        className={`inline-block px-2.5 py-0.5 mb-1 text-[11px] font-bold uppercase tracking-wider text-white ${currentItems[1].badgeBg} rounded-md`}
-                      >
-                        {currentItems[1].badge}
-                      </span>
-                      <p className="text-white font-medium text-sm">{currentItems[1].title}</p>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {/* Slot 2: Inferior Izquierda (Col-4) */}
-              {currentItems[2] && (
-                <div className="md:col-span-4 h-80 sm:h-[350px] md:h-[380px] rounded-xl overflow-hidden relative group bg-slate-900 shadow-sm">
-                  <img
-                    alt={currentItems[2].alt}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-                    src={currentItems[2].imgSrc}
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
-                    <div>
-                      <span
-                        className={`inline-block px-2.5 py-0.5 mb-1 text-[11px] font-bold uppercase tracking-wider text-white ${currentItems[2].badgeBg} rounded-md`}
-                      >
-                        {currentItems[2].badge}
-                      </span>
-                      <p className="text-white font-medium text-sm">{currentItems[2].title}</p>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {/* Col-5 con dos slots apilados verticalmente (Slots 3 y 4) */}
-              <div className="md:col-span-5 flex flex-col gap-1 sm:gap-1.5 h-80 sm:h-[350px] md:h-[380px]">
-                {/* Slot 3: Centro Superior */}
-                {currentItems[3] && (
-                  <div className="h-1/2 w-full rounded-xl overflow-hidden relative group bg-slate-900 shadow-sm">
-                    <img
-                      alt={currentItems[3].alt}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-                      src={currentItems[3].imgSrc}
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-3">
-                      <div>
-                        <span
-                          className={`inline-block px-2 py-0.5 mb-0.5 text-[10px] font-bold uppercase tracking-wider text-white ${currentItems[3].badgeBg} rounded`}
-                        >
-                          {currentItems[3].badge}
-                        </span>
-                        <p className="text-white font-medium text-xs sm:text-sm">{currentItems[3].title}</p>
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-                {/* Slot 4: Centro Inferior */}
-                {currentItems[4] && (
-                  <div className="h-1/2 w-full rounded-xl overflow-hidden relative group bg-slate-900 shadow-sm">
-                    <img
-                      alt={currentItems[4].alt}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-                      src={currentItems[4].imgSrc}
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-3">
-                      <div>
-                        <span
-                          className={`inline-block px-2 py-0.5 mb-0.5 text-[10px] font-bold uppercase tracking-wider text-white ${currentItems[4].badgeBg} rounded`}
-                        >
-                          {currentItems[4].badge}
-                        </span>
-                        <p className="text-white font-medium text-xs sm:text-sm">{currentItems[4].title}</p>
-                      </div>
-                    </div>
-                  </div>
-                )}
+        {/* Barra Superior de Controles y Flechas de Navegación */}
+        <div className="mb-4 flex items-center justify-between gap-3 px-3.5 sm:px-5 py-2.5 sm:py-3 bg-white/80 backdrop-blur-md rounded-2xl border border-slate-200/80 shadow-xs">
+          {/* Identificador del tema actual */}
+          <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
+            <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-[#0A1128]/10 text-[#0A1128] flex items-center justify-center shrink-0">
+              <span className="material-symbols-outlined text-[18px] sm:text-[20px]">{activeTheme.icon}</span>
+            </div>
+            <div className="min-w-0">
+              <div className="flex items-center gap-2">
+                <span className="text-xs sm:text-sm font-bold tracking-tight text-slate-800">
+                  {activeTheme.name}
+                </span>
+                {/* Contador Desktop */}
+                <span className="hidden md:inline-flex items-center font-mono text-[11px] px-2 py-0.5 rounded-md bg-slate-100 text-slate-600 font-semibold">
+                  Pág. 0{currentPage + 1} / {totalPages < 10 ? `0${totalPages}` : totalPages}
+                </span>
+                {/* Contador Mobile */}
+                <span className="inline-flex md:hidden items-center font-mono text-[11px] px-2 py-0.5 rounded-md bg-slate-100 text-slate-600 font-semibold">
+                  {mobileItemIdx + 1} / {totalMobileItems}
+                </span>
               </div>
+            </div>
+          </div>
 
-              {/* Slot 5: Inferior Derecha (Col-3) */}
-              {currentItems[5] && (
-                <div className="md:col-span-3 h-80 sm:h-[350px] md:h-[380px] rounded-xl overflow-hidden relative group bg-slate-900 shadow-sm">
-                  <img
-                    alt={currentItems[5].alt}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-                    src={currentItems[5].imgSrc}
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
-                    <div>
-                      <span
-                        className={`inline-block px-2.5 py-0.5 mb-1 text-[11px] font-bold uppercase tracking-wider text-white ${currentItems[5].badgeBg} rounded-md`}
-                      >
-                        {currentItems[5].badge}
-                      </span>
-                      <p className="text-white font-medium text-sm">{currentItems[5].title}</p>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </motion.div>
-          </AnimatePresence>
+          {/* Flechas de Navegación Superiores (Prev / Next) */}
+          <div className="flex items-center gap-2 shrink-0">
+            {/* Controles Desktop */}
+            <div className="hidden md:flex items-center gap-2">
+              <button
+                type="button"
+                aria-label={`Ver fotos anteriores de ${activeTheme.name}`}
+                onClick={handlePrevPage}
+                disabled={isNavDisabled}
+                className={`w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white border border-slate-200 shadow-xs flex items-center justify-center text-slate-700 transition-all duration-200 ${
+                  isNavDisabled
+                    ? "opacity-35 cursor-not-allowed pointer-events-none"
+                    : "hover:border-[#0A1128] hover:text-[#0A1128] hover:shadow-sm active:scale-90 cursor-pointer"
+                }`}
+                title={isNavDisabled ? "No hay más páginas disponibles" : "Página anterior"}
+              >
+                <span className="material-symbols-outlined text-[20px]">arrow_back</span>
+              </button>
+              <button
+                type="button"
+                aria-label={`Ver más fotos de ${activeTheme.name}`}
+                onClick={handleNextPage}
+                disabled={isNavDisabled}
+                className={`w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#0A1128] text-white shadow-xs flex items-center justify-center transition-all duration-200 ${
+                  isNavDisabled
+                    ? "opacity-35 cursor-not-allowed pointer-events-none"
+                    : "hover:bg-slate-900 hover:shadow-md active:scale-90 cursor-pointer"
+                }`}
+                title={isNavDisabled ? "No hay más páginas disponibles" : "Página siguiente"}
+              >
+                <span className="material-symbols-outlined text-[20px]">arrow_forward</span>
+              </button>
+            </div>
+
+            {/* Controles Mobile */}
+            <div className="flex md:hidden items-center gap-1.5">
+              <button
+                type="button"
+                aria-label="Ver foto anterior"
+                onClick={handlePrevMobileItem}
+                className="w-8 h-8 rounded-full bg-white border border-slate-200 shadow-xs hover:border-[#0A1128] hover:text-[#0A1128] active:scale-90 transition-all duration-200 flex items-center justify-center text-slate-700 cursor-pointer"
+              >
+                <span className="material-symbols-outlined text-[18px]">arrow_back</span>
+              </button>
+              <button
+                type="button"
+                aria-label="Ver siguiente foto"
+                onClick={handleNextMobileItem}
+                className="w-8 h-8 rounded-full bg-[#0A1128] text-white shadow-xs hover:bg-slate-900 active:scale-90 transition-all duration-200 flex items-center justify-center cursor-pointer"
+              >
+                <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
+              </button>
+            </div>
+          </div>
         </div>
 
-        {/* Carrusel Nav & Controles de paginación del tema activo */}
+        {/* Carrusel Único para Móviles (< 768px): Muestra todas las fotos con swipe táctil */}
+        <div
+          className="block md:hidden relative w-full select-none"
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEndMobile}
+        >
+          {/* Mensaje de swipe en móviles (< 768px) */}
+          <div className="flex items-center justify-center gap-2 py-1.5 px-3 mb-2.5 rounded-full bg-slate-100/90 border border-slate-200/90 text-slate-600 text-xs font-medium mx-auto w-fit shadow-xs">
+            <span className="material-symbols-outlined text-[17px] text-[#557EBD] animate-pulse">swipe</span>
+            <span>Desliza para cambiar de imagen</span>
+          </div>
+
+          {/* Contenedor del Slide Activo con Animación Framer Motion y Swipe Gestual */}
+          <div
+            className="relative w-full h-[380px] xs:h-[420px] sm:h-[460px] rounded-2xl overflow-hidden bg-slate-900 shadow-md border border-slate-200/80"
+            style={{ touchAction: "pan-y" }}
+          >
+            <AnimatePresence mode="wait" custom={mobileDirection}>
+              <motion.div
+                key={`${activeTheme.id}-mobile-${mobileItemIdx}`}
+                custom={mobileDirection}
+                initial={{ opacity: 0, x: mobileDirection * 70 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: mobileDirection * -70 }}
+                transition={{ duration: 0.28, ease: [0.25, 1, 0.5, 1] }}
+                drag="x"
+                dragConstraints={{ left: 0, right: 0 }}
+                dragElastic={0.25}
+                onDragEnd={(_, info) => {
+                  const offsetX = info.offset.x;
+                  const velocityX = info.velocity.x;
+                  if (offsetX < -35 || velocityX < -250) {
+                    handleNextMobileItem();
+                  } else if (offsetX > 35 || velocityX > 250) {
+                    handlePrevMobileItem();
+                  }
+                }}
+                style={{ touchAction: "pan-y" }}
+                className="absolute inset-0 w-full h-full cursor-grab active:cursor-grabbing select-none"
+              >
+                <img
+                  src={currentMobileItem.imgSrc}
+                  alt={currentMobileItem.alt}
+                  draggable={false}
+                  className="w-full h-full object-cover pointer-events-none select-none"
+                />
+
+                {/* Gradiente oscuro inferior con badge y título */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent flex flex-col justify-end p-5 pointer-events-none">
+                  <div className="flex items-center justify-between gap-2 mb-2">
+                    <span
+                      className={`inline-block px-2.5 py-0.5 text-[11px] font-bold uppercase tracking-wider text-white ${currentMobileItem.badgeBg} rounded-md shadow-sm`}
+                    >
+                      {currentMobileItem.badge}
+                    </span>
+                    <span className="font-mono text-xs font-semibold text-white/90 bg-black/50 px-2 py-0.5 rounded-md backdrop-blur-xs border border-white/10">
+                      {mobileItemIdx + 1} / {totalMobileItems}
+                    </span>
+                  </div>
+                  <p className="text-white font-bold text-base sm:text-lg leading-snug drop-shadow-sm">
+                    {currentMobileItem.title}
+                  </p>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+
+            {/* Flechas flotantes laterales para tap rápido */}
+            <button
+              type="button"
+              aria-label="Ver foto anterior"
+              onClick={handlePrevMobileItem}
+              className="absolute left-2.5 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/45 hover:bg-black/65 active:scale-90 text-white flex items-center justify-center border border-white/20 shadow-md backdrop-blur-xs transition-all z-20 cursor-pointer"
+            >
+              <span className="material-symbols-outlined text-[24px]">chevron_left</span>
+            </button>
+            <button
+              type="button"
+              aria-label="Ver siguiente foto"
+              onClick={handleNextMobileItem}
+              className="absolute right-2.5 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/45 hover:bg-black/65 active:scale-90 text-white flex items-center justify-center border border-white/20 shadow-md backdrop-blur-xs transition-all z-20 cursor-pointer"
+            >
+              <span className="material-symbols-outlined text-[24px]">chevron_right</span>
+            </button>
+          </div>
+
+          {/* Barra de progreso inferior del carrusel */}
+          <div className="mt-3 px-1">
+            <div className="w-full bg-slate-200 h-1.5 rounded-full overflow-hidden">
+              <div
+                className="bg-[#0A1128] h-full transition-all duration-300 rounded-full"
+                style={{
+                  width: `${((mobileItemIdx + 1) / totalMobileItems) * 100}%`,
+                }}
+              />
+            </div>
+            <div className="flex items-center justify-between text-[11px] text-slate-500 font-medium mt-1.5 px-0.5">
+              <span>Foto {mobileItemIdx + 1} de {totalMobileItems}</span>
+              <span className="font-semibold text-slate-700">{activeTheme.name}</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Collage de Galería Desktop (>= 768px): Cuadrícula Bento de 6 fotos con carruseles independientes multidireccionales */}
+        <div
+          className="hidden md:block relative w-full rounded-2xl bg-slate-100/70 border border-slate-200/80 shadow-sm p-1 overflow-hidden"
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEndDesktop}
+        >
+          <div className="grid grid-cols-12 gap-1 sm:gap-1.5">
+            {/* Slot 0: Superior Izquierda Grande (Col-8) - Eje Vertical (Arriba -> Abajo) */}
+            {getSlotItem(0) && (
+              <BentoSlotCarousel
+                slotIdx={0}
+                item={getSlotItem(0)!}
+                direction={pageDirection}
+                themeId={activeTheme.id}
+                className="col-span-8 h-64 sm:h-[300px] md:h-[330px] rounded-xl overflow-hidden relative group bg-slate-900 shadow-sm"
+                titleSize="text-sm sm:text-base tracking-tight"
+                badgeSize="px-2.5 py-0.5 mb-1 text-[11px]"
+                onClick={() => setModalItem(getSlotItem(0))}
+              />
+            )}
+
+            {/* Slot 1: Superior Derecha (Col-4) - Eje Horizontal (Derecha -> Izquierda) */}
+            {getSlotItem(1) && (
+              <BentoSlotCarousel
+                slotIdx={1}
+                item={getSlotItem(1)!}
+                direction={pageDirection}
+                themeId={activeTheme.id}
+                className="col-span-4 h-64 sm:h-[300px] md:h-[330px] rounded-xl overflow-hidden relative group bg-slate-900 shadow-sm"
+                titleSize="text-sm"
+                badgeSize="px-2.5 py-0.5 mb-1 text-[11px]"
+                onClick={() => setModalItem(getSlotItem(1))}
+              />
+            )}
+
+            {/* Slot 2: Inferior Izquierda (Col-4) - Eje Vertical Invertido (Abajo -> Arriba) */}
+            {getSlotItem(2) && (
+              <BentoSlotCarousel
+                slotIdx={2}
+                item={getSlotItem(2)!}
+                direction={pageDirection}
+                themeId={activeTheme.id}
+                className="col-span-4 h-80 sm:h-[350px] md:h-[380px] rounded-xl overflow-hidden relative group bg-slate-900 shadow-sm"
+                titleSize="text-sm"
+                badgeSize="px-2.5 py-0.5 mb-1 text-[11px]"
+                onClick={() => setModalItem(getSlotItem(2))}
+              />
+            )}
+
+            {/* Col-5 con dos slots apilados verticalmente (Slots 3 y 4) */}
+            <div className="col-span-5 flex flex-col gap-1 sm:gap-1.5 h-80 sm:h-[350px] md:h-[380px]">
+              {/* Slot 3: Centro Superior - Eje Horizontal Invertido (Izquierda -> Derecha) */}
+              {getSlotItem(3) && (
+                <BentoSlotCarousel
+                  slotIdx={3}
+                  item={getSlotItem(3)!}
+                  direction={pageDirection}
+                  themeId={activeTheme.id}
+                  className="h-1/2 w-full rounded-xl overflow-hidden relative group bg-slate-900 shadow-sm"
+                  titleSize="text-xs sm:text-sm"
+                  badgeSize="px-2 py-0.5 mb-0.5 text-[10px]"
+                  onClick={() => setModalItem(getSlotItem(3))}
+                />
+              )}
+
+              {/* Slot 4: Centro Inferior - Eje Diagonal (Arriba-Izquierda -> Abajo-Derecha) */}
+              {getSlotItem(4) && (
+                <BentoSlotCarousel
+                  slotIdx={4}
+                  item={getSlotItem(4)!}
+                  direction={pageDirection}
+                  themeId={activeTheme.id}
+                  className="h-1/2 w-full rounded-xl overflow-hidden relative group bg-slate-900 shadow-sm"
+                  titleSize="text-xs sm:text-sm"
+                  badgeSize="px-2 py-0.5 mb-0.5 text-[10px]"
+                  onClick={() => setModalItem(getSlotItem(4))}
+                />
+              )}
+            </div>
+
+            {/* Slot 5: Inferior Derecha (Col-3) - Eje Diagonal Invertido (Abajo-Derecha -> Arriba-Izquierda) */}
+            {getSlotItem(5) && (
+              <BentoSlotCarousel
+                slotIdx={5}
+                item={getSlotItem(5)!}
+                direction={pageDirection}
+                themeId={activeTheme.id}
+                className="col-span-3 h-80 sm:h-[350px] md:h-[380px] rounded-xl overflow-hidden relative group bg-slate-900 shadow-sm"
+                titleSize="text-sm"
+                badgeSize="px-2.5 py-0.5 mb-1 text-[11px]"
+                onClick={() => setModalItem(getSlotItem(5))}
+              />
+            )}
+          </div>
+        </div>
+
+        {/* Carrusel Nav & Controles de paginación inferiores */}
         <div className="mt-6 flex flex-col sm:flex-row items-center justify-between gap-4 px-4 py-3 bg-white/70 backdrop-blur-md rounded-2xl border border-slate-200/80 shadow-sm">
           <div className="flex items-center gap-3">
             <div className="w-9 h-9 rounded-xl bg-[#0A1128]/10 text-[#0A1128] flex items-center justify-center">
@@ -919,54 +1191,153 @@ export function GaleriaCollage() {
             </div>
           </div>
 
-          {/* Controles de paginación dentro del mismo tema */}
+          {/* Controles de paginación */}
           <div className="flex items-center gap-3 sm:gap-4">
-            {/* Contador de páginas del tema */}
-            <div className="flex items-center font-mono text-sm px-3.5 py-1.5 rounded-full bg-slate-100 border border-slate-200 text-slate-700 font-semibold tracking-wider">
+            {/* Contador Desktop */}
+            <div className="hidden md:flex items-center font-mono text-sm px-3.5 py-1.5 rounded-full bg-slate-100 border border-slate-200 text-slate-700 font-semibold tracking-wider">
               <span className="text-[#0A1128] font-bold">0{currentPage + 1}</span>
               <span className="mx-1.5 text-slate-400">/</span>
-              <span className="text-slate-500">0{totalPages}</span>
+              <span className="text-slate-500">
+                {totalPages < 10 ? `0${totalPages}` : totalPages}
+              </span>
             </div>
 
-            {/* Indicador de puntos (dots de página del tema activo) */}
-            <div className="flex items-center gap-1.5">
-              {Array.from({ length: totalPages }).map((_, idx) => {
-                const isActive = idx === currentPage;
-                return (
-                  <button
-                    key={idx}
-                    aria-label={`Página ${idx + 1} de ${activeTheme.name}`}
-                    onClick={() => handleSelectPage(idx)}
-                    className={`dot-btn transition-all duration-300 cursor-pointer ${
-                      isActive
-                        ? "w-6 h-2 rounded-full bg-[#0A1128]"
-                        : "w-2 h-2 rounded-full bg-slate-300 hover:bg-slate-400"
-                    }`}
-                  />
-                );
-              })}
+            {/* Contador Mobile */}
+            <div className="flex md:hidden items-center font-mono text-xs px-3 py-1.5 rounded-full bg-slate-100 border border-slate-200 text-slate-700 font-semibold tracking-wider">
+              <span className="text-[#0A1128] font-bold">{mobileItemIdx + 1}</span>
+              <span className="mx-1.5 text-slate-400">/</span>
+              <span className="text-slate-500">{totalMobileItems}</span>
             </div>
 
-            {/* Flechas de paginación (muestran más fotos del mismo tema) */}
-            <div className="flex items-center gap-2">
+            {/* Indicador de puntos Desktop */}
+            {totalPages > 1 && (
+              <div className="hidden md:flex items-center gap-1.5 max-w-[200px] overflow-x-auto py-1">
+                {Array.from({ length: totalPages }).map((_, idx) => {
+                  const isActive = idx === currentPage;
+                  return (
+                    <button
+                      key={idx}
+                      aria-label={`Página ${idx + 1} de ${activeTheme.name}`}
+                      onClick={() => handleSelectPage(idx)}
+                      className={`dot-btn transition-all duration-300 cursor-pointer shrink-0 ${
+                        isActive
+                          ? "w-6 h-2 rounded-full bg-[#0A1128]"
+                          : "w-2 h-2 rounded-full bg-slate-300 hover:bg-slate-400"
+                      }`}
+                    />
+                  );
+                })}
+              </div>
+            )}
+
+            {/* Flechas Desktop */}
+            <div className="hidden md:flex items-center gap-2">
               <button
+                type="button"
                 aria-label={`Ver fotos anteriores de ${activeTheme.name}`}
                 onClick={handlePrevPage}
-                className="w-11 h-11 rounded-full bg-white border border-slate-200 shadow-sm hover:border-[#0A1128] hover:text-[#0A1128] hover:shadow-md active:scale-90 transition-all duration-200 flex items-center justify-center text-slate-700 cursor-pointer"
+                disabled={isNavDisabled}
+                className={`w-11 h-11 rounded-full bg-white border border-slate-200 shadow-sm flex items-center justify-center text-slate-700 transition-all duration-200 ${
+                  isNavDisabled
+                    ? "opacity-35 cursor-not-allowed pointer-events-none"
+                    : "hover:border-[#0A1128] hover:text-[#0A1128] hover:shadow-md active:scale-90 cursor-pointer"
+                }`}
               >
                 <span className="material-symbols-outlined text-[22px]">arrow_back</span>
               </button>
               <button
+                type="button"
                 aria-label={`Ver más fotos de ${activeTheme.name}`}
                 onClick={handleNextPage}
-                className="w-11 h-11 rounded-full bg-[#0A1128] text-white shadow-md hover:bg-slate-900 hover:shadow-lg active:scale-90 transition-all duration-200 flex items-center justify-center cursor-pointer"
+                disabled={isNavDisabled}
+                className={`w-11 h-11 rounded-full bg-[#0A1128] text-white shadow-md flex items-center justify-center transition-all duration-200 ${
+                  isNavDisabled
+                    ? "opacity-35 cursor-not-allowed pointer-events-none"
+                    : "hover:bg-slate-900 hover:shadow-lg active:scale-90 cursor-pointer"
+                }`}
               >
                 <span className="material-symbols-outlined text-[22px]">arrow_forward</span>
+              </button>
+            </div>
+
+            {/* Flechas Mobile */}
+            <div className="flex md:hidden items-center gap-2">
+              <button
+                type="button"
+                aria-label="Ver foto anterior"
+                onClick={handlePrevMobileItem}
+                className="w-10 h-10 rounded-full bg-white border border-slate-200 shadow-sm hover:border-[#0A1128] hover:text-[#0A1128] hover:shadow-md active:scale-90 transition-all duration-200 flex items-center justify-center text-slate-700 cursor-pointer"
+              >
+                <span className="material-symbols-outlined text-[20px]">arrow_back</span>
+              </button>
+              <button
+                type="button"
+                aria-label="Ver siguiente foto"
+                onClick={handleNextMobileItem}
+                className="w-10 h-10 rounded-full bg-[#0A1128] text-white shadow-md hover:bg-slate-900 hover:shadow-lg active:scale-90 transition-all duration-200 flex items-center justify-center cursor-pointer"
+              >
+                <span className="material-symbols-outlined text-[20px]">arrow_forward</span>
               </button>
             </div>
           </div>
         </div>
       </div>
+
+      {/* Modal / Lightbox de imagen ampliada para Desktop y Tablet */}
+      <AnimatePresence>
+        {modalItem && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            onClick={() => setModalItem(null)}
+            className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-5 md:p-8 bg-black/85 backdrop-blur-md cursor-zoom-out"
+          >
+            <motion.div
+              initial={{ scale: 0.92, opacity: 0, y: 15 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.92, opacity: 0, y: 15 }}
+              transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
+              onClick={(e) => e.stopPropagation()}
+              className="relative max-w-5xl w-full max-h-[92vh] bg-slate-900 rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border border-white/15 flex flex-col cursor-default"
+            >
+              {/* Botón de cerrar "X" */}
+              <button
+                type="button"
+                onClick={() => setModalItem(null)}
+                aria-label="Cerrar vista de imagen"
+                className="absolute top-3 right-3 sm:top-4 sm:right-4 z-20 w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-black/70 hover:bg-black/90 active:scale-90 text-white flex items-center justify-center backdrop-blur-md border border-white/20 shadow-lg transition-all cursor-pointer"
+              >
+                <span className="material-symbols-outlined text-[24px]">close</span>
+              </button>
+
+              {/* Contenedor de la Imagen */}
+              <div className="relative w-full flex-1 flex items-center justify-center bg-black/60 overflow-hidden min-h-[300px]">
+                <img
+                  src={modalItem.imgSrc}
+                  alt={modalItem.alt}
+                  className="w-full h-auto max-h-[72vh] object-contain select-none"
+                />
+              </div>
+
+              {/* Pie del modal con información */}
+              <div className="px-5 py-4 sm:px-6 sm:py-4.5 bg-slate-950/95 border-t border-white/10 flex items-center justify-between gap-4">
+                <div>
+                  <span
+                    className={`inline-block px-2.5 py-0.5 mb-1 text-[11px] font-bold uppercase tracking-wider text-white ${modalItem.badgeBg} rounded-md shadow-xs`}
+                  >
+                    {modalItem.badge}
+                  </span>
+                  <h3 className="text-white font-semibold text-base sm:text-lg leading-snug">
+                    {modalItem.title}
+                  </h3>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

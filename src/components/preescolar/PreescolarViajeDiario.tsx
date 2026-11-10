@@ -58,14 +58,14 @@ export function PreescolarViajeDiario() {
   ];
 
   return (
-    <section className="w-full bg-white py-20 lg:py-24">
+    <section className="w-full bg-white py-14 sm:py-18 lg:py-24">
       <div className="max-w-[1280px] mx-auto px-4 sm:px-6">
         {/* Section Header */}
-        <div className="flex flex-col items-center text-center max-w-2xl mx-auto mb-16 space-y-3">
+        <div className="flex flex-col items-center text-center max-w-2xl mx-auto mb-10 sm:mb-12 lg:mb-16 space-y-2.5 sm:space-y-3">
           <span className="text-xs uppercase font-bold tracking-wider px-3.5 py-1 rounded-full text-slate-900 bg-[#F6D448]">
             Ruta de la Jornada Escolar
           </span>
-          <h2 className="font-headline text-3xl sm:text-4xl lg:text-[42px] font-bold text-slate-900 tracking-tight">
+          <h2 className="font-headline text-2xl sm:text-4xl lg:text-[42px] font-bold text-slate-900 tracking-tight">
             El Viaje Diario: Horarios & Rutinas que Inspiran
           </h2>
           <p className="text-sm sm:text-base text-slate-600 leading-relaxed font-body">
@@ -77,27 +77,44 @@ export function PreescolarViajeDiario() {
         <div className="relative max-w-4xl mx-auto">
           <div className="absolute left-4 md:left-1/2 top-4 bottom-4 w-0.5 bg-slate-200 -translate-x-1/2 hidden md:block" />
 
-          <div className="space-y-8 relative">
+          <div className="space-y-6 sm:space-y-8 relative">
             {milestones.map((item) => (
               <div
                 key={item.num}
-                className={`flex flex-col md:flex-row items-center justify-between gap-6 ${
+                className={`flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3 sm:gap-4 md:gap-6 p-4 sm:p-5 md:p-0 rounded-2xl md:rounded-none bg-slate-50/60 md:bg-transparent border md:border-none border-slate-200/80 ${
                   item.reverse ? "md:flex-row-reverse" : ""
                 }`}
               >
                 {/* Lado Contenido Principal */}
                 <div
-                  className={`w-full md:w-[45%] text-left space-y-2 ${
+                  className={`w-full md:w-[45%] text-left space-y-1.5 sm:space-y-2 ${
                     !item.reverse ? "md:text-right" : ""
                   }`}
                 >
+                  {/* Header en mobile: Número + Hora juntos */}
+                  <div className={`flex items-center gap-2.5 md:hidden mb-1`}>
+                    <div
+                      className={`w-7 h-7 rounded-full flex items-center justify-center font-bold text-xs shadow-xs shrink-0 ${item.circleBg}`}
+                    >
+                      {item.num}
+                    </div>
+                    <span
+                      className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold ${item.timeBg}`}
+                    >
+                      <span className="material-symbols-outlined text-[13px]">schedule</span>
+                      {item.time}
+                    </span>
+                  </div>
+
+                  {/* Badge en desktop y tablet */}
                   <span
-                    className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold ${item.timeBg}`}
+                    className={`hidden md:inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold ${item.timeBg}`}
                   >
                     <span className="material-symbols-outlined text-[14px]">schedule</span>
                     {item.time}
                   </span>
-                  <h3 className="font-headline text-[20px] font-bold text-slate-900">
+
+                  <h3 className="font-headline text-[18px] sm:text-[19px] lg:text-[20px] font-bold text-slate-900">
                     {item.title}
                   </h3>
                   <p className="text-xs text-slate-600 leading-relaxed font-body">
@@ -105,16 +122,16 @@ export function PreescolarViajeDiario() {
                   </p>
                 </div>
 
-                {/* Círculo Central con Número */}
+                {/* Círculo Central con Número (Visible solo en desktop y tablet) */}
                 <div
-                  className={`w-9 h-9 rounded-full flex items-center justify-center font-bold text-xs shadow-md z-10 shrink-0 ${item.circleBg}`}
+                  className={`hidden md:flex w-9 h-9 rounded-full items-center justify-center font-bold text-xs shadow-md z-10 shrink-0 ${item.circleBg}`}
                 >
                   {item.num}
                 </div>
 
-                {/* Lado Objetivo Pedagógico */}
+                {/* Lado Objetivo Pedagógico (Oculto en mobile según lo solicitado) */}
                 <div
-                  className={`w-full md:w-[45%] p-4 rounded-2xl bg-[#f2f4f6] border border-slate-200/70 text-xs text-slate-600 ${
+                  className={`hidden md:block w-full md:w-[45%] p-3.5 sm:p-4 rounded-xl sm:rounded-2xl bg-white md:bg-[#f2f4f6] border border-slate-200/70 text-xs text-slate-600 shadow-xs md:shadow-none ${
                     item.reverse ? "md:text-right" : ""
                   }`}
                 >

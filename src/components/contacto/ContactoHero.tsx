@@ -13,39 +13,31 @@ export function ContactoHero() {
       <div className="absolute top-1/2 left-[-10%] w-[380px] h-[380px] rounded-full bg-[#E5A93C]/15 blur-3xl pointer-events-none" />
 
       <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-center">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8 lg:gap-10 items-center">
           {/* Columna Izquierda: Copy y Acciones */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
-            className="lg:col-span-7"
+            className="md:col-span-7"
           >
             <div className="flex flex-wrap items-center gap-1.5 sm:gap-2.5 mb-3 sm:mb-4">
               <span className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full text-[11px] sm:text-xs font-bold tracking-wide bg-[#DA474A]/10 text-[#DA474A] border border-[#DA474A]/20">
                 <span className="w-2 h-2 rounded-full bg-[#DA474A] animate-pulse" />
                 Ciclo Escolar 2027 - 2028 | Inscripciones Abiertas
               </span>
-              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] sm:text-xs font-semibold bg-[#557EBD]/10 text-[#546FAC] border border-[#557EBD]/20">
-                <span className="material-symbols-outlined text-[14px]">verified</span>
-                Atención Personalizada
-              </span>
-              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] sm:text-xs font-medium bg-slate-200/80 text-slate-700">
-                <span className="material-symbols-outlined text-[14px]">location_on</span>
-                Campus León, Gto.
-              </span>
             </div>
 
-            <h1 className="font-headline text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 tracking-tight leading-[1.15] mb-2 sm:mb-3">
+            <h1 className="font-headline text-3xl sm:text-4xl md:text-[32px] lg:text-5xl font-bold text-slate-900 tracking-tight leading-[1.15] mb-2 sm:mb-3">
               Comienza su Futuro en{" "}
               <span className="text-[#546FAC] italic">Instituto Everest</span>
             </h1>
 
-            <p className="font-headline text-base sm:text-lg lg:text-xl text-[#557EBD] italic font-medium mb-3 sm:mb-4">
+            <p className="font-headline text-base sm:text-lg md:text-lg lg:text-xl text-[#557EBD] italic font-medium mb-3 sm:mb-4">
               &ldquo;Donde tus sueños alcanzan la cima. Aquí crecemos juntos.&rdquo;
             </p>
 
-            <p className="text-xs sm:text-sm lg:text-[15px] text-slate-600 leading-relaxed mb-5 sm:mb-6 font-body max-w-xl">
+            <p className="text-xs sm:text-sm md:text-sm lg:text-[15px] text-slate-600 leading-relaxed mb-5 sm:mb-6 font-body max-w-xl">
               Acompañamos a tu familia en cada etapa del proceso de ingreso a Maternal, Preescolar o Primaria. Agenda tu visita guiada personalizada y conoce nuestras instalaciones, metodología bilingüe AMCO y enfoque STEAM en un entorno cálido, seguro y estimulante.
             </p>
 
@@ -88,9 +80,9 @@ export function ContactoHero() {
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
-            className="lg:col-span-5 relative"
+            className="md:col-span-5 relative"
           >
-            <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white bg-slate-100 h-[320px] sm:h-[380px] lg:h-[410px] xl:h-[430px]">
+            <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white bg-slate-100 h-[320px] sm:h-[380px] md:h-[370px] lg:h-[410px] xl:h-[430px]">
               <Image
                 alt="Consulta de admisiones y bienvenida a padres de familia en Instituto Everest León"
                 src="https://lh3.googleusercontent.com/aida/AEtjO1Wd4EVGsOe3B7TDtJAz4a84_tSYRM0FeYyjaJO5yTPJEnFgwQjpniwnr1BMaewBbn5Pk2OJHPnXer3x4MluV09rP4ga9Jch3_XHDRZxj-fq-k9aHF_D4dZ5Dd6ckNH6C2Xd045LYNycRqlkQ3SsvSX9Mp6vNQTp89LyLFUZCnFJM8YlSswJ08P6gw6j_2zf5o5sMnKvSxGqi5JhoQb2_bj7jVuwapgyzN_DKbfu6OMMoDaU2vXXCx8ZTLE"
@@ -99,16 +91,6 @@ export function ContactoHero() {
                 sizes="(max-width: 1024px) 100vw, 480px"
                 className="object-cover hover:scale-105 transition-transform duration-300"
               />
-            </div>
-
-            <div className="absolute -bottom-3 -left-3 bg-white/95 backdrop-blur-md p-3 rounded-2xl shadow-xl border border-slate-100 flex items-center gap-2.5">
-              <div className="w-9 h-9 rounded-xl bg-[#557EBD]/10 text-[#546FAC] flex items-center justify-center shrink-0">
-                <span className="material-symbols-outlined text-[20px]">support_agent</span>
-              </div>
-              <div>
-                <p className="font-bold text-[11px] sm:text-xs text-slate-900">Atención Cálida y Guiada</p>
-                <p className="text-[10px] text-slate-500">Comité de Admisiones Everest</p>
-              </div>
             </div>
           </motion.div>
         </div>
